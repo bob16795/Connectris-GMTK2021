@@ -28,6 +28,13 @@ namespace theNamespace.Tiles
         public TileType Type;
         public TileConnection Connection;
         public Sprite Sprite;
+        public bool controlled;
+
+        public Tile(Point position, TileConnection connection = TileConnection.NONE, TileType type = TileType.NO_TILE) {
+            this.Position = position;
+            this.Connection = connection;
+            this.Type = type;
+        }
 
         public void UpdateSprite() {
             Sprite = new Sprite(new Rectangle(8 * (int)(Type), 8 * (int)(Connection), 8, 8), -new Vector2(0, 0), Color.White);

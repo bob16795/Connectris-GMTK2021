@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using theNamespace.FSM;
 
 namespace theNamespace.Tiles
 {
@@ -23,7 +22,10 @@ namespace theNamespace.Tiles
             {
                 for (int y = 28; y < 0; y--)
                 {
-
+                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldWeird(Tile.Map[x, y + 1])) {
+                        Tile.Map[x, y + 1] = Tile.Map[x, y];
+                        Tile.Map[x, y + 1] = new Tile(new Point(x, y));
+                    }
                 }
             }
         }
