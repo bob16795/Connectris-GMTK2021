@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace theNamespace.UI
+namespace Connect4Puzzle.UI
 {
     public class UIGroup : UIElement
     {

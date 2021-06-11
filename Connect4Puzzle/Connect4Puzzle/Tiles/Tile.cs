@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using theNamespace.Graphics;
+using Connect4Puzzle.Graphics;
 
-namespace theNamespace.Tiles
+namespace Connect4Puzzle.Tiles
 {
     public enum TileType {
         RED_TILE = 0,
@@ -40,13 +40,22 @@ namespace theNamespace.Tiles
             Sprite = new Sprite(new Rectangle(8 * (int)(Type), 8 * (int)(Connection), 8, 8), -new Vector2(0, 0), Color.White);
         }
 
-        public static bool CheckHeldWeird(Tile t) {
+        public static bool CheckHeldHeight(Tile t) {
             if (t.Connection == TileConnection.RIGHT) {
                 return (Tile.Map[t.Position.X + 1, t.Position.Y - 1].Type == TileType.NO_TILE);
             } else if (t.Connection == TileConnection.LEFT) {
                 return (Tile.Map[t.Position.X - 1, t.Position.Y - 1].Type == TileType.NO_TILE);
             }
-            return false;
+            return t.Type != TileType.NO_TILE;
+        }
+
+        public static bool CheckHeldWidth(Tile t, int direction) {
+            if (t.Connection == TileConnection.UP) {
+                return (Tile.Map[t.Position.X + direction, t.Position.Y - 1].Type == TileType.NO_TILE);
+            } else if (t.Connection == TileConnection.DOWN) {
+                return (Tile.Map[t.Position.X + direction, t.Position.Y + 1].Type == TileType.NO_TILE);
+            }
+            return true;
         }
     }
 }

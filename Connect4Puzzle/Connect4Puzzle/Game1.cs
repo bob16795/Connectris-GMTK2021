@@ -2,8 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using theNamespace.Graphics;
-using theNamespace.Tiles;
+using Connect4Puzzle.Graphics;
+using Connect4Puzzle.Tiles;
 
 namespace Connect4Puzzle
 {
@@ -55,7 +55,7 @@ namespace Connect4Puzzle
             _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
             _graphics.PreferredBackBufferHeight = (int)Sprite.DEF_HEIGHT;
             _graphics.ApplyChanges();
-            
+
             Sprite.graphics = _graphics;
             Sprite.texture = Content.Load<Texture2D>("SpriteSheet");
 

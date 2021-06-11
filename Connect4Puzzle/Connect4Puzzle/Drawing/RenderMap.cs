@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using theNamespace.Tiles;
+using Connect4Puzzle.Tiles;
 
 namespace Connect4Puzzle.Drawing
 {

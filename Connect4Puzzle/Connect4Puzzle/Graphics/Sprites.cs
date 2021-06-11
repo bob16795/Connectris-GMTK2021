@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace theNamespace.Graphics
+namespace Connect4Puzzle.Graphics
 {
     public class Sprite
     {

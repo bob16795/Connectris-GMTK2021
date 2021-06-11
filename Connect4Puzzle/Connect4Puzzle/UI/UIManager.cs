@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using theNamespace.Graphics;
+using Connect4Puzzle.Graphics;
 
-namespace theNamespace.UI
+namespace Connect4Puzzle.UI
 {
     public delegate void UIAction(int i);
     class UIManager

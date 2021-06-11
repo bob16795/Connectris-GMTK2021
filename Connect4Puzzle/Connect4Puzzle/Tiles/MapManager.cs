@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Connect4Puzzle.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace theNamespace.Tiles
+namespace Connect4Puzzle.Tiles
 {
     class MapManager
     {
@@ -32,25 +33,44 @@ namespace theNamespace.Tiles
                 for (int x = 0; x < 7; x++)
                 {
                     if (Tile.Map[x, y].Position != new Point(x, y)) Tile.Map[x, y] = new Tile(new Point(x, y));
-                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldWeird(Tile.Map[x, y + 1])) {
-                        Tile.Map[x, y + 1] = Tile.Map[x, y];
-                        Tile.Map[x, y + 1] = new Tile(new Point(x, y));
+                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(Tile.Map[x, y - 1])) {
+                        Tile.Map[x, y] = Tile.Map[x, y - 1];
+                        Tile.Map[x, y - 1] = new Tile(new Point(x, y - 1));
                     }
                 }
             }
         }
 
         public void MoveTiles() {
+            List<Direction> Keys = InputManager.Instance.TrackInput();
+            if (Keys.Contains(Direction.LEFT)) {
+                Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.NONE, TileType.RED_TILE);
+                Move(-1);
+            }
+            if (Keys.Contains(Direction.RIGHT)) {
+                Move(1);
+            }
+        }
+
+        public void Move(int direction) {
             for (int x = 0; x < 7; x++)
             {
                 for (int y = 0; y < 27; y++)
                 {
+                    if (!Tile.Map[x, y].controlled) return;
+                    if (Tile.Map[x, y].Position != new Point(x, y)) Tile.Map[x, y] = new Tile(new Point(x, y));
+                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldWidth(Tile.Map[x+ direction, y], direction)) {
+                        Tile.Map[x, y + direction] = Tile.Map[x, y];
+                        Tile.Map[x, y + direction] = new Tile(new Point(x, y));
+                    }
                 }
             }
         }
 
         public void Update(GameTime gt) {
             DropTiles();
+            MoveTiles();
+            //SpawnTiles();
         }
     }
 }
