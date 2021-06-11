@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace theNamespace.Graphics
+namespace theNamespace.Tiles
 {
     public enum TileType {
         NO_TILE = 0,
