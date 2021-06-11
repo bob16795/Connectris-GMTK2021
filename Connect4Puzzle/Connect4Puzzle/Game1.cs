@@ -36,6 +36,7 @@ namespace Connect4Puzzle
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            MapManager.Instance.Update(gameTime);
 
             // TODO: Add your update logic here
 
