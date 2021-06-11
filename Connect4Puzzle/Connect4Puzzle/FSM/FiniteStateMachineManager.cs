@@ -94,8 +94,7 @@ namespace Connect4Puzzle.FSM
 
             switch (currentState)
             {
-                case GameState.MAIN_MENU:
-                    
+                case GameState.MAIN_MENU:                   
                     break;
                 case GameState.INSTRUCTIONS:
                     break;
