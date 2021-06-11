@@ -100,6 +100,7 @@ namespace Connect4Puzzle.UI
         /// <param name="spriteBatch">the spritebatch object</param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (!IsActive) return;
             Text.Bounds = Bounds;
             Text.Bounds.Inflate(-5, -5);
             Text.Bounds.X += Icon != null ? Text.Bounds.Height + 5 : 0;
