@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using theNamespace.Graphics;
-using theNamespace.Input;
 
 namespace theNamespace.UI
 {
@@ -37,14 +36,6 @@ namespace theNamespace.UI
         /// <param name="gameTime">a gameTime Object</param>
         public void Update(GameTime gameTime)
         {
-            Event ev = EventManager.Instance.Pop("MOUSE_DOWN");
-
-            if (ev != null)
-            {
-                if (!ProcessClick(ev.MousePosition, ev.Data))
-                    EventManager.Instance.Push(ev);
-            }
-
             foreach (UIElement e in UIElements)
                 e.ResetActive();
               
@@ -128,32 +119,6 @@ namespace theNamespace.UI
                     focused = focused.nextFocus;
                 }
             } while (focused.IsActive == false && focused != start);
-        }
-
-        /// <summary>
-        /// finds the first active ui element
-        /// </summary>
-        /// <returns>the uielement or null if none active</returns>
-        public UIElement GetActive()
-        {
-            foreach (UIElement e in UIElements)
-            {
-                UIElement n = e.GetActive();
-                if (n != null) return n;
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// selects a uiElement
-        /// </summary>
-        /// <param name="reverse">wether to go backwards</param>
-        public void Select(bool reverse)
-        {
-            if (reverse)
-                EventManager.Instance.Push(new Event("STATE_MACHINE", 4, new Point()));
-            else
-                focused.WhenClicked(new Point(0));
         }
 
         /// <summary>

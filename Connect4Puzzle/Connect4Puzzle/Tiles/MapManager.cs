@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using theNamespace.FSM;
 
 namespace theNamespace.Tiles
 {
@@ -21,9 +20,12 @@ namespace theNamespace.Tiles
         public void DropTiles() {
             for (int x = 0; x < 7; x++)
             {
-                for (int y = 28; y < 0; y--)
+                for (int y = 0; y < 27; y++)
                 {
-
+                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldWeird(Tile.Map[x, y + 1])) {
+                        Tile.Map[x, y + 1] = Tile.Map[x, y];
+                        Tile.Map[x, y + 1] = new Tile(new Point(x, y));
+                    }
                 }
             }
         }
