@@ -34,6 +34,7 @@ namespace Connect4Puzzle
             _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
             _graphics.PreferredBackBufferHeight = (int)Sprite.DEF_HEIGHT;
             _graphics.ApplyChanges();
+            Sprite.graphics = _graphics;
 
             base.Initialize();
         }
@@ -51,16 +52,6 @@ namespace Connect4Puzzle
 
         protected override void Update(GameTime gameTime)
         {
-            frames++;
-
-            if(frames % 60 == 0)
-            {
-                MapManager.Instance.Update(gameTime);
-                frames = 0;
-            }
-
-            FiniteStateMachineManager.Instance.Update(gameTime);
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             if(frames++ % 60 == 0)
@@ -68,7 +59,6 @@ namespace Connect4Puzzle
                 MapManager.Instance.DropTiles();
             }
             MapManager.Instance.Update(gameTime);
-            Sprite.graphics = _graphics;
             Sprite.texture = Content.Load<Texture2D>("SpriteSheet");
 
             base.Update(gameTime);
