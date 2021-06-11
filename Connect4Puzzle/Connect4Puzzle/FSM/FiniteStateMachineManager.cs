@@ -58,6 +58,9 @@ namespace Connect4Puzzle.FSM
             });
 
             UIManager.Instance.Add(playButton);
+
+
+
         }
 
         /// <summary>

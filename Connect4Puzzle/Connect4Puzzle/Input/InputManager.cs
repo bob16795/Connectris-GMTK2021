@@ -81,7 +81,7 @@ namespace Connect4Puzzle.Input
 
             if(ms.LeftButton == ButtonState.Pressed)
             {
-                UIManager.Instance.ProcessClick(ms.Position, 1);
+                UIManager.Instance.ProcessClick(ms.Position);
             }
 
             prevkb = kb;
