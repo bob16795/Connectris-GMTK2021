@@ -19,15 +19,6 @@ namespace Connect4Puzzle.Tiles
         public static MapManager Instance { get { return lazy.Value; } }
     
         public void DropTiles() {
-            if (Tile.Map[0, 0] == null) {
-                for (int y = 0; y < 28; y++)
-                {
-                    for (int x = 0; x < 7; x++)
-                    {
-                            Tile.Map[x, y] = new Tile(new Point(x, y));
-                    }
-                }
-            }
             for (int y = 27; y > 0; y--)
             {
                 for (int x = 0; x < 7; x++)
@@ -70,6 +61,15 @@ namespace Connect4Puzzle.Tiles
         }
 
         public void Update(GameTime gt) {
+            if (Tile.Map[0, 0] == null) {
+                for (int y = 0; y < 28; y++)
+                {
+                    for (int x = 0; x < 7; x++)
+                    {
+                            Tile.Map[x, y] = new Tile(new Point(x, y));
+                    }
+                }
+            }
             MoveTiles();
             //SpawnTiles();
         }
