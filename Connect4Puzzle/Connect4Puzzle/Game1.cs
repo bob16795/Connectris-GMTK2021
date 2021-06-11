@@ -2,9 +2,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using theNamespace.Graphics;
-using theNamespace.Tiles;
+using Connect4Puzzle.Graphics;
+using Connect4Puzzle.Tiles;
 using Connect4Puzzle.FSM;
+using Connect4Puzzle.UI;
 
 namespace Connect4Puzzle
 {

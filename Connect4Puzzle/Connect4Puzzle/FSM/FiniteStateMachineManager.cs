@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using theNamespace.UI;
+using Connect4Puzzle.UI;
 
 namespace Connect4Puzzle.FSM
 {
