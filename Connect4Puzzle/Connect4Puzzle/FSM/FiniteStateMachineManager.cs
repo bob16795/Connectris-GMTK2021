@@ -65,12 +65,12 @@ namespace Connect4Puzzle.FSM
         /// </summary>
         public void Draw(SpriteBatch sb, GameTime gt)
         {
-            switch (currentState)
-            {
-                case GameState.MAIN_MENU:
-                    UIManager.Instance.Draw(gt, sb);                  
-                    break;
+            UIManager.Instance.Draw(gt, sb);
 
+            switch (currentState)
+            {                
+                case GameState.MAIN_MENU:                    
+                    break;
                 case GameState.INSTRUCTIONS:
                     break;
                 case GameState.MENU:
@@ -94,9 +94,11 @@ namespace Connect4Puzzle.FSM
 
             switch (currentState)
             {
-                case GameState.MAIN_MENU:                   
+                case GameState.MAIN_MENU:
+                    playButton.IsActive = true;
                     break;
                 case GameState.INSTRUCTIONS:
+                    playButton.IsActive = false;
                     break;
                 case GameState.MENU:
                     break;
