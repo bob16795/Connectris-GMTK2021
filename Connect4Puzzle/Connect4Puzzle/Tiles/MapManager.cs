@@ -18,14 +18,24 @@ namespace theNamespace.Tiles
         public static MapManager Instance { get { return lazy.Value; } }
     
         public void DropTiles() {
-            for (int x = 0; x < 7; x++)
+            for (int y = 0; y < 27; y++)
             {
-                for (int y = 0; y < 27; y++)
+                for (int x = 0; x < 7; x++)
                 {
+                    if (Tile.Map[x, y].Position != new Point(x, y)) Tile.Map[x, y] = new Tile(new Point(x, y));
                     if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldWeird(Tile.Map[x, y + 1])) {
                         Tile.Map[x, y + 1] = Tile.Map[x, y];
                         Tile.Map[x, y + 1] = new Tile(new Point(x, y));
                     }
+                }
+            }
+        }
+
+        public void MoveTiles() {
+            for (int x = 0; x < 7; x++)
+            {
+                for (int y = 0; y < 27; y++)
+                {
                 }
             }
         }
