@@ -37,6 +37,7 @@ namespace Connect4Puzzle.Drawing
             {
                 for(int j = 0; j < tileGrid.GetLength(1); j++)
                 {
+                    if (tileGrid[i, j].Sprite == null) tileGrid[i, j].UpdateSprite();
                     if(tileGrid[i, j].Type != TileType.NO_TILE)
                     {
                         tileGrid[i, j].Sprite.Draw(sb, new Point
@@ -44,7 +45,7 @@ namespace Connect4Puzzle.Drawing
                         (tileGrid[i, j].Sprite.Position.Height * 2)), 0f, 
                         new Vector2(tileGrid[i, j].Sprite.Position.Width * 2,
                         tileGrid[i, j].Sprite.Position.Height * 2));
-                    }                    
+                    }
                 }
             }
         }

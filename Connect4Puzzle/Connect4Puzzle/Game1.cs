@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using theNamespace.Graphics;
 using theNamespace.Tiles;
 
 namespace Connect4Puzzle
@@ -37,8 +38,12 @@ namespace Connect4Puzzle
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             MapManager.Instance.Update(gameTime);
-
-            // TODO: Add your update logic here
+            _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
+            _graphics.PreferredBackBufferHeight = (int)Sprite.DEF_HEIGHT;
+            _graphics.ApplyChanges();
+            
+            Sprite.graphics = _graphics;
+            Sprite.texture = Content.Load<Texture2D>("SpriteSheet");
 
             base.Update(gameTime);
         }
