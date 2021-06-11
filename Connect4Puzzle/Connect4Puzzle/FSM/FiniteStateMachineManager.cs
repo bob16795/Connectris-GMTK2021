@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using theNamespace.UI;
 
 namespace Connect4Puzzle.FSM
 {
@@ -34,6 +37,10 @@ namespace Connect4Puzzle.FSM
         public static FiniteStateMachineManager Instance { get { return fsmManager.Value; } }
 
         private GameState currentState;
+        public static SpriteFont font;
+
+        private UIButton playButton;
+
 
         /// <summary>
         /// Creates a new Finite state manager object
@@ -41,17 +48,27 @@ namespace Connect4Puzzle.FSM
         public FiniteStateMachineManager() 
         {
             this.currentState = GameState.MAIN_MENU;
+            playButton = new UIButton(font, new Rectangle(100, 100, 200, 100));
+
+            playButton.Text.Text = "Play Game";
+            playButton.onClick = new UIAction((i) =>
+            {
+                System.Diagnostics.Debug.WriteLine("test");
+                currentState = GameState.INSTRUCTIONS;
+            });
         }
 
         /// <summary>
         /// Draws assets to the screen depending on the state of the game
         /// </summary>
-        public void Draw()
+        public void Draw(SpriteBatch sb, GameTime gt)
         {
             switch (currentState)
             {
                 case GameState.MAIN_MENU:
+                    playButton.Draw(gt, sb);                  
                     break;
+
                 case GameState.INSTRUCTIONS:
                     break;
                 case GameState.MENU:
@@ -69,13 +86,14 @@ namespace Connect4Puzzle.FSM
         /// <summary>
         /// Updates assets depending on the state of the game
         /// </summary>
-        public void Update()
+        public void Update(GameTime gt)
         {
-            SwitchState();
+            UIManager.Instance.Update(gt);
 
             switch (currentState)
             {
                 case GameState.MAIN_MENU:
+                    
                     break;
                 case GameState.INSTRUCTIONS:
                     break;
@@ -88,14 +106,6 @@ namespace Connect4Puzzle.FSM
                 case GameState.WIN:
                     break;
             }
-        }
-
-        /// <summary>
-        /// Switches states given a condition
-        /// </summary>
-        public void SwitchState()
-        {
-
-        }
+        }   
     }
 }
