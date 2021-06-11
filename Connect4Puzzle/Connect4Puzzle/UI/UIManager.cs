@@ -37,10 +37,6 @@ namespace Connect4Puzzle.UI
         public void Update(GameTime gameTime)
         {
             foreach (UIElement e in UIElements)
-                e.ResetActive();
-              
-
-            foreach (UIElement e in UIElements)
             {
                 e.Update(gameTime);
             }
@@ -66,8 +62,8 @@ namespace Connect4Puzzle.UI
         public bool ProcessClick(Point position)
         {
             position -= Sprite.GetOrigin();
-            position.X = (int)(position.X);
-            position.Y = (int)(position.Y);
+            position.X = (int)(position.X / Sprite.GetScale());
+            position.Y = (int)(position.Y / Sprite.GetScale());
             foreach (UIElement e in UIElements)
             {
                 if (e.Bounds.Contains(position) && e.IsActive)
