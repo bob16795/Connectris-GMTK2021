@@ -12,6 +12,10 @@ namespace Connect4Puzzle
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private SpriteFont arial16;
+
+        private int frames;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -30,11 +34,21 @@ namespace Connect4Puzzle
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            arial16 = Content.Load<SpriteFont>("Arial16");
+
             // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
         {
+            frames++;
+
+            if(frames % 60 == 0)
+            {
+                MapManager.Instance.Update(gameTime);
+                frames = 0;
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             MapManager.Instance.Update(gameTime);
