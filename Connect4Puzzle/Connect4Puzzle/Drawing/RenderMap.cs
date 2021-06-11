@@ -42,5 +42,6 @@ namespace Connect4Puzzle.Drawing
                         tileGrid[i, j].Sprite.Position.Height), 0f);
                 }
             }
-        }    }
+        }
+    }
 }
