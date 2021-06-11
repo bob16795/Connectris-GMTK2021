@@ -63,12 +63,11 @@ namespace Connect4Puzzle.UI
         /// </summary>
         /// <param name="position">the position the screen was clicked</param>
         /// <returns>true if the click is used</returns>
-        public bool ProcessClick(Point position, uint button)
+        public bool ProcessClick(Point position)
         {
             position -= Sprite.GetOrigin();
-            position.X = (int)(position.X / Sprite.GetScale());
-            position.Y = (int)(position.Y / Sprite.GetScale());
-            if (button != 0) return false;
+            position.X = (int)(position.X);
+            position.Y = (int)(position.Y);
             foreach (UIElement e in UIElements)
             {
                 if (e.Bounds.Contains(position) && e.IsActive)
