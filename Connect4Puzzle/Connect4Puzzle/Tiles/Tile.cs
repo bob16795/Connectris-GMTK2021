@@ -42,9 +42,9 @@ namespace Connect4Puzzle.Tiles
 
         public static bool CheckHeldHeight(Tile t) {
             if (t.Connection == TileConnection.RIGHT) {
-                return (Tile.Map[t.Position.X + 1, t.Position.Y - 1].Type == TileType.NO_TILE);
+                return (Tile.Map[t.Position.X + 1, t.Position.Y + 1].Type == TileType.NO_TILE);
             } else if (t.Connection == TileConnection.LEFT) {
-                return (Tile.Map[t.Position.X - 1, t.Position.Y - 1].Type == TileType.NO_TILE);
+                return (Tile.Map[t.Position.X - 1, t.Position.Y + 1].Type == TileType.NO_TILE);
             }
             return t.Type != TileType.NO_TILE;
         }

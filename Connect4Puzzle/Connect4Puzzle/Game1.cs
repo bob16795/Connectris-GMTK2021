@@ -41,17 +41,14 @@ namespace Connect4Puzzle
 
         protected override void Update(GameTime gameTime)
         {
-            frames++;
-
-            if(frames % 60 == 0)
-            {
-                MapManager.Instance.Update(gameTime);
-                frames = 0;
-            }
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            if(frames++ % 60 == 0)
+            {
+                MapManager.Instance.DropTiles();
+            }
             MapManager.Instance.Update(gameTime);
+
             _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
             _graphics.PreferredBackBufferHeight = (int)Sprite.DEF_HEIGHT;
             _graphics.ApplyChanges();

@@ -78,6 +78,7 @@ namespace Connect4Puzzle.UI
             }
             return false;
         }
+        
         public void MouseMove(Point position)
         {
             position -= Sprite.GetOrigin();

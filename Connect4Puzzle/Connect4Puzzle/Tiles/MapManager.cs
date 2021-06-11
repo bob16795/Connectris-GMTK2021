@@ -28,7 +28,7 @@ namespace Connect4Puzzle.Tiles
                     }
                 }
             }
-            for (int y = 0; y < 27; y++)
+            for (int y = 27; y > 0; y--)
             {
                 for (int x = 0; x < 7; x++)
                 {
@@ -48,6 +48,8 @@ namespace Connect4Puzzle.Tiles
                 Move(-1);
             }
             if (Keys.Contains(Direction.RIGHT)) {
+                Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.RIGHT, TileType.RED_TILE);
+                Tile.Map[1, 0] = new Tile(new Point(1, 0), TileConnection.LEFT, TileType.RED_TILE);
                 Move(1);
             }
         }
@@ -68,7 +70,6 @@ namespace Connect4Puzzle.Tiles
         }
 
         public void Update(GameTime gt) {
-            DropTiles();
             MoveTiles();
             //SpawnTiles();
         }
