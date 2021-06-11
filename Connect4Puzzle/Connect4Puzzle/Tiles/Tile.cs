@@ -8,9 +8,9 @@ using theNamespace.Graphics;
 namespace theNamespace.Tiles
 {
     public enum TileType {
-        NO_TILE = 0,
-        RED_TILE,
+        RED_TILE = 0,
         GREEN_TILE,
+        NO_TILE,
     }
 
     public enum TileConnection {
