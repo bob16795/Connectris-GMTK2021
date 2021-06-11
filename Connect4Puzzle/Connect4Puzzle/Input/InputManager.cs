@@ -30,6 +30,11 @@ namespace Connect4Puzzle.Input
         private static readonly Lazy<InputManager>
             input = new Lazy<InputManager>(() => new InputManager());
 
+        /// <summary>
+        /// returns the instance of map manager
+        /// </summary>
+        public static InputManager Instance { get { return input.Value; } }
+
         //Fields
         private KeyboardState kb;
         private KeyboardState prevkb;
@@ -81,7 +86,7 @@ namespace Connect4Puzzle.Input
         /// </summary>
         /// <returns>True - single key press
         /// false - multiple frames key press</returns>
-        public bool SingleKeyPress(Keys k)
+        private bool SingleKeyPress(Keys k)
         {
             //Key k was down the previous frame, but is now up
             if (prevkb.IsKeyUp(k))

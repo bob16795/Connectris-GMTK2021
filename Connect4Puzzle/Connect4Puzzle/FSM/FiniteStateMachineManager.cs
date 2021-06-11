@@ -28,6 +28,11 @@ namespace Connect4Puzzle.FSM
         public static readonly Lazy<FiniteStateMachineManager>
             fsmManager = new Lazy<FiniteStateMachineManager>(() => new FiniteStateMachineManager());
 
+        /// <summary>
+        /// returns the instance of the finite state machine manager
+        /// </summary>
+        public static FiniteStateMachineManager Instance { get { return fsmManager.Value; } }
+
         private GameState currentState;
 
         /// <summary>
