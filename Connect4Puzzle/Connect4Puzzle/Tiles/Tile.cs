@@ -23,17 +23,18 @@ namespace Connect4Puzzle.Tiles
 
     public class Tile
     {
-        public static Tile[,] Map = new Tile[7, 28];
+        public static Tile[,] Map = new Tile[7, 20];
         public Point Position;
         public TileType Type;
         public TileConnection Connection;
         public Sprite Sprite;
         public bool controlled;
 
-        public Tile(Point position, TileConnection connection = TileConnection.NONE, TileType type = TileType.NO_TILE) {
+        public Tile(Point position, TileConnection connection = TileConnection.NONE, TileType type = TileType.NO_TILE, bool controlled = false) {
             this.Position = position;
             this.Connection = connection;
             this.Type = type;
+            this.controlled = controlled;
         }
 
         public void UpdateSprite() {
@@ -55,7 +56,7 @@ namespace Connect4Puzzle.Tiles
             } else if (t.Connection == TileConnection.DOWN) {
                 return (Tile.Map[t.Position.X + direction, t.Position.Y + 1].Type == TileType.NO_TILE);
             }
-            return true;
+            return t.Type != TileType.NO_TILE;
         }
     }
 }
