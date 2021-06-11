@@ -10,12 +10,12 @@ namespace Connect4Puzzle.UI
     class UIButton : UIElement
     {
         // Setup constants for sprites
-        private static Rectangle BUTTON_NORMAL_SPRITE = new Rectangle(0, 0, 7, 7);
-        private static Rectangle BUTTON_CLICKED_SPRITE = new Rectangle(7, 0, 7, 7);
+        private static Rectangle BUTTON_NORMAL_SPRITE = new Rectangle(16, 0, 3, 3);
+        private static Rectangle BUTTON_CLICKED_SPRITE = new Rectangle(19, 0, 3, 3);
         private static Rectangle BUTTON_DISABLED_SPRITE = new Rectangle(15, 0, 7, 7);
         private static Rectangle BUTTON_FOCUSED_SPRITE = new Rectangle(21, 0, 7, 7);
-        private static Rectangle BUTTON_NORMAL_CENTER = new Rectangle(3, 3, 1, 1);
-        private static Rectangle BUTTON_CLICKED_CENTER = new Rectangle(9, 3, 1, 1);
+        private static Rectangle BUTTON_NORMAL_CENTER = new Rectangle(17, 1, 1, 1);
+        private static Rectangle BUTTON_CLICKED_CENTER = new Rectangle(20, 1, 1, 1);
         private static Rectangle BUTTON_DISABLED_CENTER = new Rectangle(15, 3, 1, 1);
         private static Rectangle BUTTON_FOCUSED_CENTER = new Rectangle(24, 3, 1, 1);
 
