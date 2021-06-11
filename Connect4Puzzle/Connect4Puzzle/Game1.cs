@@ -54,11 +54,11 @@ namespace Connect4Puzzle
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            MapManager.Instance.Update(gameTime);
             if(frames++ % 60 == 0)
             {
                 MapManager.Instance.DropTiles();
             }
-            MapManager.Instance.Update(gameTime);
             Sprite.texture = Content.Load<Texture2D>("SpriteSheet");
 
             base.Update(gameTime);
