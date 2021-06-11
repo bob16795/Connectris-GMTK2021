@@ -24,14 +24,16 @@ namespace Connect4Puzzle
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
-            _graphics.PreferredBackBufferHeight = (int)Sprite.DEF_HEIGHT;
-            _graphics.ApplyChanges();
+            
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
+            _graphics.PreferredBackBufferHeight = (int)Sprite.DEF_HEIGHT;
+            _graphics.ApplyChanges();
 
             base.Initialize();
         }
