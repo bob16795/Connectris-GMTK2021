@@ -10,8 +10,8 @@ namespace Connect4Puzzle.UI
     public class UIPanel : UIElement
     {
         // Setup constants for sprites
-        private static Rectangle PANEL_NORMAL_SPRITE = new Rectangle(0, 0, 7, 7);
-        private static Rectangle PANEL_NORMAL_CENTER = new Rectangle(3, 3, 1, 1);
+        private static Rectangle PANEL_NORMAL_SPRITE = new Rectangle(16, 0, 3, 3);
+        private static Rectangle PANEL_NORMAL_CENTER = new Rectangle(17, 1, 1, 1);
 
         // Vars
         UISprite NormalSprite;
@@ -42,6 +42,16 @@ namespace Connect4Puzzle.UI
         {
             showtime = ShowTime;
             IsActive = true;
+        }
+
+        public UIPanel(Rectangle bounds) {
+            cond = new ShowCond(() => true);
+            Bounds = bounds;
+            Rectangle TextBounds = new Rectangle(Bounds.Location + new Point(5, 5), Bounds.Size - new Point(10, 10));
+            Text = new UIText(null, TextBounds, 1.5f, Color.Black);
+            NormalTextColor = Color.White;
+            InvertedTextColor = Color.Black;
+            NormalSprite = new UISprite(PANEL_NORMAL_SPRITE, PANEL_NORMAL_CENTER, new Vector2(0, 0), Color.White);
         }
 
         /// <summary>
@@ -90,6 +100,7 @@ namespace Connect4Puzzle.UI
         {
             if (!IsActive) return;
             CurrentSprite().Draw(spriteBatch, Bounds, 0);
+            if (Text.Font != null)
             Text.Draw(gameTime, spriteBatch);
         }
     }

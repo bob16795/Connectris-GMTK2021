@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Connect4Puzzle.Tiles;
+using Connect4Puzzle.UI;
 
 namespace Connect4Puzzle.Drawing
 {
@@ -16,7 +17,8 @@ namespace Connect4Puzzle.Drawing
     {
         //fields
         private Tile[,] tileGrid;
-        
+        private UIPanel bg;
+
         //ctor
 
         /// <summary>
@@ -26,6 +28,7 @@ namespace Connect4Puzzle.Drawing
         public RenderMap(Tile[,] tiles)
         {
             this.tileGrid = tiles;
+            bg = new UIPanel(new Rectangle(0, 0, 24 * 7, 24 * 20));
         }
 
         /// <summary>
@@ -33,6 +36,7 @@ namespace Connect4Puzzle.Drawing
         /// </summary>
         public void Draw(SpriteBatch sb)
         {
+            bg.Draw(new GameTime(), sb);
             for(int i = 0; i < tileGrid.GetLength(0); i++)
             {
                 for(int j = 0; j < tileGrid.GetLength(1); j++)
@@ -41,10 +45,10 @@ namespace Connect4Puzzle.Drawing
                     if(tileGrid[i, j].Type != TileType.NO_TILE)
                     {
                         tileGrid[i, j].Sprite.Draw(sb, new Point
-                        (i * (tileGrid[i, j].Sprite.Position.Width * 2), j *
-                        (tileGrid[i, j].Sprite.Position.Height * 2)), 0f, 
-                        new Vector2(tileGrid[i, j].Sprite.Position.Width * 2,
-                        tileGrid[i, j].Sprite.Position.Height * 2));
+                        (i * (tileGrid[i, j].Sprite.Position.Width * 3), j *
+                        (tileGrid[i, j].Sprite.Position.Height * 3)), 0f, 
+                        new Vector2(tileGrid[i, j].Sprite.Position.Width * 3,
+                        tileGrid[i, j].Sprite.Position.Height * 3));
                     }
                 }
             }
