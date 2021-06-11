@@ -56,6 +56,8 @@ namespace Connect4Puzzle.FSM
                 System.Diagnostics.Debug.WriteLine("test");
                 currentState = GameState.INSTRUCTIONS;
             });
+
+            UIManager.Instance.Add(playButton);
         }
 
         /// <summary>
@@ -66,7 +68,7 @@ namespace Connect4Puzzle.FSM
             switch (currentState)
             {
                 case GameState.MAIN_MENU:
-                    playButton.Draw(gt, sb);                  
+                    UIManager.Instance.Draw(gt, sb);                  
                     break;
 
                 case GameState.INSTRUCTIONS:
