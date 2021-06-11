@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using theNamespace.Graphics;
+using theNamespace.Tiles;
 
 namespace theNamespace
 {
@@ -39,7 +40,7 @@ namespace theNamespace
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            MapManager.Update();
 
             base.Update(gameTime);
         }
