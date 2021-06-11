@@ -50,8 +50,8 @@ namespace Connect4Puzzle.FSM
         {
             this.currentState = GameState.MAIN_MENU;
             playButton = new UIButton(font,
-                new Rectangle(Sprite.graphics.PreferredBackBufferWidth / 2, 
-                Sprite.graphics.PreferredBackBufferHeight / 3,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 130, 
+                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
                 200, 100));
 
             playButton.Text.Text = "Play Game";
