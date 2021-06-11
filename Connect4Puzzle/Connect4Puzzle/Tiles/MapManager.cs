@@ -21,13 +21,20 @@ namespace Connect4Puzzle.Tiles
         public void DropTiles() {
             for (int y = 27; y > 0; y--)
             {
+                Tile[] result = new Tile[7];
                 for (int x = 0; x < 7; x++)
                 {
-                    if (Tile.Map[x, y].Position != new Point(x, y)) Tile.Map[x, y] = new Tile(new Point(x, y));
+                    if (Tile.Map[x, y] == null) Tile.Map[x, y] = new Tile(new Point(x, y));
+                    result[x] = new Tile(new Point(x, y));
                     if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(Tile.Map[x, y - 1])) {
-                        Tile.Map[x, y] = Tile.Map[x, y - 1];
+                        result[x] = Tile.Map[x, y - 1];
                         Tile.Map[x, y - 1] = new Tile(new Point(x, y - 1));
                     }
+                }
+
+                for (int x = 0; x < 7; x++)
+                {
+                    Tile.Map[x, y] = result[x];
                 }
             }
         }
