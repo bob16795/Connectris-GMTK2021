@@ -4,7 +4,7 @@ using System.Text;
 
 namespace theNamespace.FSM
 {
-    public unsafe class StateMachineState
+    public class StateMachineState
     {
         public List<Flag> Conds;
         
