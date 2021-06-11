@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Connect4Puzzle.UI;
 
 namespace Connect4Puzzle.Input
 {
@@ -38,6 +39,8 @@ namespace Connect4Puzzle.Input
         private KeyboardState kb;
         private KeyboardState prevkb;
 
+        private MouseState ms;
+
         //Constructor
 
         /// <summary>
@@ -51,6 +54,7 @@ namespace Connect4Puzzle.Input
         public List<Direction> TrackInput()
         {
             kb = Keyboard.GetState();
+            ms = Mouse.GetState();
 
             List<Direction> dir = new List<Direction>();
 
@@ -73,6 +77,11 @@ namespace Connect4Puzzle.Input
                 || (kb.IsKeyDown(Keys.S) && SingleKeyPress(Keys.S)))
             {
                 dir.Add(Direction.DOWN);
+            }
+
+            if(ms.LeftButton == ButtonState.Pressed)
+            {
+                UIManager.Instance.ProcessClick(ms.Position, 1);
             }
 
             prevkb = kb;
