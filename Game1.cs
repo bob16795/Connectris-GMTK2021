@@ -21,6 +21,7 @@ namespace theNamespace
         {
             _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
             _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_HEIGHT;
+            _graphics.ApplyChanges();
             // TODO: Add your initialization logic here
 
             base.Initialize();
