@@ -54,8 +54,9 @@ namespace Connect4Puzzle
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            FiniteStateMachineManager.Instance.Update(gameTime);
             MapManager.Instance.Update(gameTime);
-            if(frames++ % 60 == 0)
+            if(frames++ % 30 == 0)
             {
                 MapManager.Instance.DropTiles();
             }
