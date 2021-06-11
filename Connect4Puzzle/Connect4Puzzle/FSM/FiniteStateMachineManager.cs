@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Connect4Puzzle.UI;
+using Connect4Puzzle.Graphics;
 
 namespace Connect4Puzzle.FSM
 {
@@ -48,7 +49,10 @@ namespace Connect4Puzzle.FSM
         public FiniteStateMachineManager() 
         {
             this.currentState = GameState.MAIN_MENU;
-            playButton = new UIButton(font, new Rectangle(100, 100, 200, 100));
+            playButton = new UIButton(font,
+                new Rectangle(Sprite.graphics.PreferredBackBufferWidth / 2, 
+                Sprite.graphics.PreferredBackBufferHeight / 3,
+                200, 100));
 
             playButton.Text.Text = "Play Game";
             playButton.onClick = new UIAction((i) =>
