@@ -20,8 +20,7 @@ namespace Connect4Puzzle.Input
     {
         LEFT,
         RIGHT,
-        DOWN,
-        NONE
+        DOWN
     }
 
     class InputManager
