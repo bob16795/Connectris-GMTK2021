@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Connect4Puzzle.Drawing;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using theNamespace.Tiles;
 
 namespace Connect4Puzzle
 {
@@ -44,7 +46,11 @@ namespace Connect4Puzzle
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            // TODO: re implement
+            _spriteBatch.Begin();
+            RenderMap rm = new RenderMap(Tile.Map);
+            rm.Draw(_spriteBatch);
+            _spriteBatch.End(); 
 
             base.Draw(gameTime);
         }
