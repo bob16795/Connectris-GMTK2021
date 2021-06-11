@@ -56,7 +56,7 @@ namespace Connect4Puzzle
                 Exit();
             FiniteStateMachineManager.Instance.Update(gameTime);
             MapManager.Instance.Update(gameTime);
-            if(frames++ % 30 == 0)
+            if(frames++ % 15 == 0)
             {
                 MapManager.Instance.DropTiles();
             }
