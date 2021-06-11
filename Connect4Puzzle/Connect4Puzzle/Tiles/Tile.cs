@@ -22,10 +22,8 @@ namespace theNamespace.Tiles
 
     public class Tile
     {
-        static Tile[,] Map;
-        
-        TileType Type;
-        
-        TileConnection Connection;
+        public static Tile[,] Map; 
+        public TileType Type;
+        public TileConnection Connection;
     }
 }
