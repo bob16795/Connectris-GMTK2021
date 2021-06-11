@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using UpgradePlatformer.Graphics;
+using theNamespace.Graphics;
 
-namespace UpgradePlatformer.UI
+namespace theNamespace.UI
 {
     class UIButton : UIElement
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using UpgradePlatformer.FSM;
+using theNamespace.FSM;
 
-namespace UpgradePlatformer.Graphics
+namespace theNamespace.Graphics
 {
     class AnimationManager
     {

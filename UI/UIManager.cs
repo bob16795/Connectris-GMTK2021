@@ -3,10 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using UpgradePlatformer.Graphics;
-using UpgradePlatformer.Input;
+using theNamespace.Graphics;
+using theNamespace.Input;
 
-namespace UpgradePlatformer.UI
+namespace theNamespace.UI
 {
     public delegate void UIAction(int i);
     class UIManager
