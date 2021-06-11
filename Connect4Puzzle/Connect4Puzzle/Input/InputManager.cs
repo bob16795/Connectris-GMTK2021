@@ -40,6 +40,7 @@ namespace Connect4Puzzle.Input
         private KeyboardState prevkb;
 
         private MouseState ms;
+        private MouseState prevMs;
 
         //Constructor
 
@@ -79,12 +80,14 @@ namespace Connect4Puzzle.Input
                 dir.Add(Direction.DOWN);
             }
 
-            if(ms.LeftButton == ButtonState.Pressed)
+            if(ms.LeftButton == ButtonState.Pressed && SingleMousePress())
             {
+                System.Diagnostics.Debug.WriteLine(ms.X);
                 UIManager.Instance.ProcessClick(ms.Position);
             }
 
             prevkb = kb;
+            prevMs = ms;
 
             return dir;
         }
@@ -104,6 +107,22 @@ namespace Connect4Puzzle.Input
             else
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks for a single mouse press
+        /// </summary>
+        /// <returns></returns>
+        private bool SingleMousePress()
+        {
+            if(prevMs.LeftButton == ButtonState.Pressed)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }
