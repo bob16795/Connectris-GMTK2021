@@ -16,7 +16,8 @@ namespace theNamespace.Tiles
         UP = 0,
         DOWN,
         LEFT,
-        RIGHT
+        RIGHT,
+        NONE,
     }
 
     public class Tile
