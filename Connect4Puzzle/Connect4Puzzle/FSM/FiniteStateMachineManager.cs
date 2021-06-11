@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Connect4Puzzle.UI;
 using Connect4Puzzle.Graphics;
+using Connect4Puzzle.Tiles;
+using Connect4Puzzle.Drawing;
 
 namespace Connect4Puzzle.FSM
 {
@@ -42,6 +44,8 @@ namespace Connect4Puzzle.FSM
 
         private UIButton playButton;
 
+        private RenderMap rm;
+        private int frames;
 
         /// <summary>
         /// Creates a new Finite state manager object
@@ -54,6 +58,9 @@ namespace Connect4Puzzle.FSM
                 (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
                 200, 100));
 
+            frames = 0;
+
+            rm = new RenderMap(Tile.Map);
             playButton.Text.Text = "Play Game";
             playButton.onClick = new UIAction((i) =>
             {
@@ -80,6 +87,7 @@ namespace Connect4Puzzle.FSM
                 case GameState.MENU:
                     break;
                 case GameState.GAME:
+                    rm.Draw(sb);
                     break;
                 case GameState.GAME_OVER:
                     break;
@@ -95,6 +103,7 @@ namespace Connect4Puzzle.FSM
         public void Update(GameTime gt)
         {
             UIManager.Instance.Update(gt);
+            MapManager.Instance.Update(gt);
 
             switch (currentState)
             {
@@ -107,6 +116,10 @@ namespace Connect4Puzzle.FSM
                 case GameState.MENU:
                     break;
                 case GameState.GAME:
+                    if (frames++ % 15 == 0)
+                    {
+                        MapManager.Instance.DropTiles();
+                    }          
                     break;
                 case GameState.GAME_OVER:
                     break;
