@@ -8,6 +8,8 @@ namespace theNamespace.Graphics
 {
     public class Sprite
     {
+        public static float DEF_WIDTH = 600;
+        public static float DEF_HEIGHT = 600;
         public static List<Effect> Shaders;
         public static bool Dim, Light;
         public static Texture2D texture;
@@ -104,7 +106,7 @@ namespace theNamespace.Graphics
         {
             Rectangle result = new Rectangle();
             result.Location = GetOrigin();
-            result.Size = new Point((int)MathF.Min(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - 40f * GetScale()));
+            result.Size = new Point((int)MathF.Min(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight * GetScale()));
             return result;
         }
 
@@ -114,7 +116,7 @@ namespace theNamespace.Graphics
         /// <returns>the size of one unit in the window</returns>
         public static float GetScale()
         {
-            return MathF.Min(graphics.PreferredBackBufferWidth / 630f, graphics.PreferredBackBufferHeight / 670f) ;
+            return MathF.Min(graphics.PreferredBackBufferWidth / DEF_WIDTH, graphics.PreferredBackBufferHeight / DEF_HEIGHT) ;
         }
 
         /// <summary>

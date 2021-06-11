@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace gmtk_GameJam2021_POG
+namespace theNamespace
 {
     public static class Program
     {

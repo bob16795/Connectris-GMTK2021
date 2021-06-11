@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using theNamespace.Graphics;
 
-namespace gmtk_GameJam2021_POG
+namespace theNamespace
 {
     public class Game1 : Game
     {
@@ -18,6 +19,8 @@ namespace gmtk_GameJam2021_POG
 
         protected override void Initialize()
         {
+            _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
+            _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_HEIGHT;
             // TODO: Add your initialization logic here
 
             base.Initialize();
