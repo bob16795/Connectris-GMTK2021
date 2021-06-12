@@ -76,7 +76,7 @@ namespace Connect4Puzzle.Graphics
                 c.B /= 2;
             }
             Rectangle renderRect = Position;
-            renderRect.Location = renderPosition + new Point(0,(int)(40f * GetScale())) + GetOrigin();
+            renderRect.Location = renderPosition + GetOrigin();
             renderRect.Size = Size.ToPoint();
             spriteBatch.Draw(texture, renderRect, Position, c, rotation, Origin, effects, 0f);
         }
@@ -87,7 +87,7 @@ namespace Connect4Puzzle.Graphics
         /// <returns></returns>
         public static Point GetOrigin()
         {
-            Point Size = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - (int)(40f * GetScale()));
+            Point Size = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             if (Size.X > Size.Y)
             {
                 return new Point((Size.X - Size.Y) / 2, 0);

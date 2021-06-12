@@ -19,7 +19,7 @@ namespace Connect4Puzzle.Tiles
         public static MapManager Instance { get { return lazy.Value; } }
     
         public void DropTiles() {
-            for (int y = 27; y > 0; y--)
+            for (int y = 19; y > 0; y--)
             {
                 Tile[] result = new Tile[7];
                 for (int x = 0; x < 7; x++)
@@ -42,35 +42,46 @@ namespace Connect4Puzzle.Tiles
 
         public void MoveTiles() {
             List<Direction> Keys = InputManager.Instance.TrackInput();
+            if (Keys.Contains(Direction.DOWN)) {
+                Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.NONE, TileType.RED_TILE, true); 
+            }
             if (Keys.Contains(Direction.LEFT)) {
-                Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.NONE, TileType.RED_TILE);
-                Move(-1);
+                Move(1);
             }
             if (Keys.Contains(Direction.RIGHT)) {
-                Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.RIGHT, TileType.RED_TILE);
-                Tile.Map[1, 0] = new Tile(new Point(1, 0), TileConnection.LEFT, TileType.RED_TILE);
-                Move(1);
+                //Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.RIGHT, TileType.RED_TILE, true);
+                //Tile.Map[1, 0] = new Tile(new Point(1, 0), TileConnection.LEFT, TileType.GREEN_TILE, true);
+                Move(-1);
             }
         }
 
         public void Move(int direction) {
-            for (int x = 0; x < 7; x++)
+            for (int x = direction < 0 ? 1 : 0; x < (direction > 0 ? 6 : 7); x++)
             {
-                for (int y = 0; y < 27; y++)
+                Tile[] result = new Tile[20];
+                for (int y = 0; y < 19; y++)
                 {
-                    if (!Tile.Map[x, y].controlled) return;
+                    if (Tile.Map[x, y] == null) Tile.Map[x, y] = new Tile(new Point(x, y));
                     if (Tile.Map[x, y].Position != new Point(x, y)) Tile.Map[x, y] = new Tile(new Point(x, y));
-                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldWidth(Tile.Map[x+ direction, y], direction)) {
-                        Tile.Map[x, y + direction] = Tile.Map[x, y];
-                        Tile.Map[x, y + direction] = new Tile(new Point(x, y));
+                    result[y] = Tile.Map[x, y];
+                    if (!Tile.Map[x + direction, y].controlled) continue;
+                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(Tile.Map[x + direction, y])) {
+                        result[y] = Tile.Map[x + direction, y];
+                        Tile.Map[x + direction, y] = new Tile(new Point(x + direction, y));
                     }
+                }
+
+                for (int y = 0; y < 19; y++)
+                {
+                    Tile.Map[x, y] = result[y];
+                    Tile.Map[x, y].Position = new Point(x, y);
                 }
             }
         }
 
         public void Update(GameTime gt) {
             if (Tile.Map[0, 0] == null) {
-                for (int y = 0; y < 28; y++)
+                for (int y = 0; y < 20; y++)
                 {
                     for (int x = 0; x < 7; x++)
                     {
