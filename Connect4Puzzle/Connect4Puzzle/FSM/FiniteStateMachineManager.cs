@@ -88,6 +88,7 @@ namespace Connect4Puzzle.FSM
                 case GameState.GAME:
                     sb.Draw(bgTexture, new Vector2(0), Color.White);
                     rm.Draw(sb);
+                    Tile.ps.Draw(sb);
                     break;
                 case GameState.GAME_OVER:
                     break;
@@ -122,7 +123,8 @@ namespace Connect4Puzzle.FSM
                     if (frames++ % 15 == 0)
                     {
                         MapManager.Instance.DropTiles();
-                    }          
+                    }
+                    Tile.ps.Update(gt);
                     break;
                 case GameState.GAME_OVER:
                     break;
