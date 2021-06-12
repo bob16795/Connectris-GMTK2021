@@ -30,7 +30,8 @@ namespace Connect4Puzzle.UI
         public static UIButton nextButton;
         public static UIButton okButton;
         public static UIButton menuButton;
-        public static UIButton nextTileButton;
+
+        public static UIPanel nextTile;
 
         public static SpriteFont font;
 
@@ -105,13 +106,12 @@ namespace Connect4Puzzle.UI
 
             UIManager.Instance.Add(menuButton);
 
-            nextTileButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth - 100),
+            nextTile = new UIPanel(new Rectangle((Sprite.graphics.PreferredBackBufferWidth - 100),
                 100,
                 50, 80));
 
-            nextTileButton.IsActive = false;
-            UIManager.Instance.Add(nextTileButton);
+            nextTile.IsActive = false;
+            UIManager.Instance.Add(nextTile);
         }
         
         /// <summary>
@@ -121,7 +121,7 @@ namespace Connect4Puzzle.UI
         {
             playButton.IsActive = false;
             okButton.IsActive = false;
-            nextTileButton.IsActive = false;
+            nextTile.IsActive = false;
             nextButton.IsActive = false;
             menuButton.IsActive = false;
         }
