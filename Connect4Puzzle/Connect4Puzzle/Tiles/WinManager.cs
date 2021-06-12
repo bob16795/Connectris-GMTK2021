@@ -38,6 +38,7 @@ namespace Connect4Puzzle.Tiles
         private bool canSearchSW;
         private bool canSearchSouth;
         private bool canSearchSouthEast;
+        private bool canSearchNE;
 
 
         public static readonly Lazy<WinManager>
@@ -70,6 +71,7 @@ namespace Connect4Puzzle.Tiles
             canSearchSW = false;
             canSearchSouth = false;
             canSearchSouthEast = false;
+            canSearchNE = false;
 
         }
 
@@ -253,7 +255,7 @@ namespace Connect4Puzzle.Tiles
                         && canSearchSouthEast)
                     {
                         tileQueue.Push(Tile.Map[location.X + 1, location.Y + 1]);
-                        direction = Directions.SOUTH;
+                        direction = Directions.SE;
                     }
                     else if (CheckInBounds(location.X - 1, location.Y - 1)
                         && Tile.Map[location.X - 1, location.Y - 1].Type == initialTile.Type
@@ -268,6 +270,13 @@ namespace Connect4Puzzle.Tiles
                     {
                         tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
                         direction = Directions.SW;
+                    }
+                    else if (CheckInBounds(location.X + 1, location.Y - 1) &&
+                        Tile.Map[location.X + 1, location.Y - 1].Type == initialTile.Type
+                        && canSearchNE)
+                    {
+                        tileQueue.Push(Tile.Map[location.X + 1, location.Y - 1]);
+                        direction = Directions.NE;
                     }
                     else
                     {
