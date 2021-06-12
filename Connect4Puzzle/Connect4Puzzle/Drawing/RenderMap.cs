@@ -36,6 +36,7 @@ namespace Connect4Puzzle.Drawing
         /// </summary>
         public void Draw(SpriteBatch sb)
         {
+            if (tileGrid == null) return;
             bg.Draw(new GameTime(), sb);
             for(int i = 0; i < tileGrid.GetLength(0); i++)
             {
