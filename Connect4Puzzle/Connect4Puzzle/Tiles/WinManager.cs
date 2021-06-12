@@ -64,7 +64,7 @@ namespace Connect4Puzzle.Tiles
         {
             Tile initialTile = t;
 
-            if(t  == default)
+            if(t  == default || t.controlled)
             {
                 return null;
             }
@@ -307,7 +307,7 @@ namespace Connect4Puzzle.Tiles
         {
             Rectangle r = new Rectangle(0, 0, 8, 20);
 
-            if (r.Contains(new Point(x + 1, y + 1)))
+            if (r.Contains(new Point(x, y)))
             {
                 return true;
             }
