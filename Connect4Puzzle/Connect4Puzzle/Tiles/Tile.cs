@@ -96,7 +96,7 @@ namespace Connect4Puzzle.Tiles
             else if (Connection == TileConnection.RIGHT)
                 Tile.Map[p.X + 1, p.Y].ResetConnection();
             props.Position = p.ToVector2() * 24 + RenderMap.bg.Bounds.Location.ToVector2() + new Vector2(12, -24);
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 25; i++)
             {
                 ps.Emit(Tile.Map[p.X, p.Y].props);
             }
