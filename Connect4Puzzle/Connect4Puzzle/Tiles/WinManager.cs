@@ -29,6 +29,8 @@ namespace Connect4Puzzle.Tiles
         //fields
         private Directions direction;
         private int numSearched;
+        private Random random;
+
 
         public static readonly Lazy<WinManager>
             win = new Lazy<WinManager>(() => new WinManager());
@@ -51,6 +53,7 @@ namespace Connect4Puzzle.Tiles
             direction = default;
             numSearched = 0;
 
+            random = new Random();
             direction = Directions.NONE;
 
         }
@@ -263,10 +266,27 @@ namespace Connect4Puzzle.Tiles
 
             //adds sequence of tiles to list
             List<Tile> tiles = new List<Tile>();
+            List<Tile> reds = new List<Tile>();
             tiles.AddRange(tileQueue);
 
             if (tiles.Count == 4)
             {
+                foreach(Tile tile in Tile.Map)
+                {
+                    if(tile.Type == TileType.RED_TILE)
+                    {
+                        reds.Add(tile);
+                    }
+                }
+
+                for(int i = 0; i < 4; i++)
+                {
+                    int index = random.Next(0, reds.Count);
+
+                    Point p = reds[index].Position;
+
+                    Tile.Remove(p, false);
+                }
                 return tiles;
             }
             else
