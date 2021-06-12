@@ -7,6 +7,7 @@ using Connect4Puzzle.Tiles;
 using Connect4Puzzle.FSM;
 using Connect4Puzzle.UI;
 using Connect4Puzzle.Music;
+using Connect4Puzzle.Input;
 
 namespace Connect4Puzzle
 {
@@ -32,6 +33,7 @@ namespace Connect4Puzzle
         {
             // TODO: Add your initialization logic here
 
+            Window.AllowUserResizing = true;
             _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
             _graphics.PreferredBackBufferHeight = (int)Sprite.DEF_HEIGHT;
             Window.Title = "Connectris";
@@ -57,9 +59,21 @@ namespace Connect4Puzzle
 
         protected override void Update(GameTime gameTime)
         {
+            if (_graphics.PreferredBackBufferWidth != Window.ClientBounds.Width || _graphics.PreferredBackBufferHeight != Window.ClientBounds.Height)
+            {
+                _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+                _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+                _graphics.ApplyChanges();
+            }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            if (InputManager.Instance.TrackInput().Contains(Direction.FS)) {
+                _graphics.IsFullScreen = !_graphics.IsFullScreen;
+                _graphics.ApplyChanges();
+            }
             FiniteStateMachineManager.Instance.Update(gameTime);
+            if (FiniteStateMachineManager.Instance.CurrentState == GameState.GAME && MapManager.Instance.lost)
+                FiniteStateMachineManager.Instance.CurrentState = GameState.GAME_OVER;
                     
             base.Update(gameTime);
         }
