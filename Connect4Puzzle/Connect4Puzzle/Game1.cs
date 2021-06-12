@@ -16,7 +16,7 @@ namespace Connect4Puzzle
 
         private SpriteFont arial16;
 
-        private int frames;
+        
 
         public Game1()
         {
@@ -46,6 +46,7 @@ namespace Connect4Puzzle
             arial16 = Content.Load<SpriteFont>("Arial16");
 
             FiniteStateMachineManager.font = arial16;
+            UIElementsManager.font = arial16;
 
             // TODO: use this.Content to load your game content here
         }
@@ -55,11 +56,7 @@ namespace Connect4Puzzle
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             FiniteStateMachineManager.Instance.Update(gameTime);
-            MapManager.Instance.Update(gameTime);
-            if(frames++ % 15 == 0)
-            {
-                MapManager.Instance.DropTiles();
-            }
+                    
             Sprite.texture = Content.Load<Texture2D>("SpriteSheet");
 
             base.Update(gameTime);
@@ -70,9 +67,8 @@ namespace Connect4Puzzle
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: re implement
-            _spriteBatch.Begin();          
-            RenderMap rm = new RenderMap(Tile.Map);
-            rm.Draw(_spriteBatch);
+            _spriteBatch.Begin();                     
+            
             FiniteStateMachineManager.Instance.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             
