@@ -45,6 +45,7 @@ namespace Connect4Puzzle
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             arial16 = Content.Load<SpriteFont>("Arial16");
+            Sprite.texture = Content.Load<Texture2D>("SpriteSheet");
             FiniteStateMachineManager.font = arial16;
             UIElementsManager.font = arial16;
 
@@ -57,8 +58,6 @@ namespace Connect4Puzzle
                 Exit();
             FiniteStateMachineManager.Instance.Update(gameTime);
                     
-            Sprite.texture = Content.Load<Texture2D>("SpriteSheet");
-
             base.Update(gameTime);
         }
 
