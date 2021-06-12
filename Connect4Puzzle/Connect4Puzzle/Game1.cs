@@ -45,11 +45,10 @@ namespace Connect4Puzzle
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             arial16 = Content.Load<SpriteFont>("Arial16");
-
             FiniteStateMachineManager.font = arial16;
             UIElementsManager.font = arial16;
 
-            // TODO: use this.Content to load your game content here
+            FiniteStateMachineManager.Instance.bgTexture = Content.Load<Texture2D>("Backdrop");
         }
 
         protected override void Update(GameTime gameTime)

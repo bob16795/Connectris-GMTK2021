@@ -41,6 +41,7 @@ namespace Connect4Puzzle.FSM
 
         private GameState currentState;
         public static SpriteFont font;
+        public Texture2D bgTexture;
 
         private RenderMap rm;
         private int frames;
@@ -76,8 +77,6 @@ namespace Connect4Puzzle.FSM
         /// </summary>
         public void Draw(SpriteBatch sb, GameTime gt)
         {
-            UIManager.Instance.Draw(gt, sb);
-
             switch (currentState)
             {                
                 case GameState.MAIN_MENU:                    
@@ -87,14 +86,15 @@ namespace Connect4Puzzle.FSM
                 case GameState.MENU:
                     break;
                 case GameState.GAME:
+                    sb.Draw(bgTexture, new Vector2(0), Color.White);
                     rm.Draw(sb);
                     break;
                 case GameState.GAME_OVER:
                     break;
                 case GameState.WIN:
                     break;
-
             }
+            UIManager.Instance.Draw(gt, sb);
         }
 
         /// <summary>
