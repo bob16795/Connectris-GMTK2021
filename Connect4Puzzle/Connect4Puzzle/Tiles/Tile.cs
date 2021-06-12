@@ -11,6 +11,7 @@ namespace Connect4Puzzle.Tiles
     public enum TileType {
         RED_TILE = 0,
         GREEN_TILE,
+        BAD_TILE,
         NO_TILE,
     }
 
@@ -85,6 +86,11 @@ namespace Connect4Puzzle.Tiles
             Connection = TileConnection.NO_CONNECTION;
         }
 
+        public void MakeBad() {
+            Type = TileType.BAD_TILE;
+            Connection = TileConnection.NO_CONNECTION;
+        }
+
         public void Remove(bool bad) {
             Point p = Position;
             if (Connection == TileConnection.UP)
@@ -103,7 +109,7 @@ namespace Connect4Puzzle.Tiles
             if (Type == TileType.GREEN_TILE) {
                 MapManager.Instance.Score += 100;
             } else if (bad && Type == TileType.RED_TILE) {
-                MapManager.Instance.Score -= 100;
+                MapManager.Instance.Score -= 125;
             }
             Type = TileType.NO_TILE;
             Connection = TileConnection.NO_CONNECTION;

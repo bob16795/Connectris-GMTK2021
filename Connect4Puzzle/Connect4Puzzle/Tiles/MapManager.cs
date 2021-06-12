@@ -97,7 +97,7 @@ namespace Connect4Puzzle.Tiles
 
         public bool Control() {
             if (Stop <= 0) {
-                for (int y = 19; y > 0; y--)
+                for (int y = 19; y >= 0; y--)
                 {
                     for (int x = 0; x < 8; x++)
                     {
