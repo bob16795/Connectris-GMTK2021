@@ -217,11 +217,20 @@ namespace Connect4Puzzle.Tiles
                 }
             }
 
+
             List<Tile> tiles = new List<Tile>();
 
             tiles.AddRange(tileQueue);
 
-            return tiles;
+            if(tiles.Count == 4)
+            {
+                return tiles;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
         /// <summary>
