@@ -28,6 +28,7 @@ namespace Connect4Puzzle.FSM
         WIN,
         GAME_OVER
     }
+
     class FiniteStateMachineManager
     {
         //Singleton
@@ -43,6 +44,7 @@ namespace Connect4Puzzle.FSM
         public static SpriteFont font;
         public Texture2D bgTexture;
 
+        private Sprite titleSprite;
         private RenderMap rm;
         private int frames;
 
@@ -69,7 +71,8 @@ namespace Connect4Puzzle.FSM
             frames = 0;
 
             rm = new RenderMap(Tile.Map);
-            
+
+            titleSprite = new Sprite(new Rectangle(22, 0, 116, 22), new Vector2(0, 0), Color.White);
         }
 
         /// <summary>
@@ -77,16 +80,17 @@ namespace Connect4Puzzle.FSM
         /// </summary>
         public void Draw(SpriteBatch sb, GameTime gt)
         {
+            sb.Draw(bgTexture, new Vector2(0), Color.White);
             switch (currentState)
             {                
-                case GameState.MAIN_MENU:                    
+                case GameState.MAIN_MENU:
+                    titleSprite.Draw(sb, new Point((int)((Sprite.DEF_WIDTH - 116 * 4) / 2), 100), 0, new Vector2(116, 22) * 4);                  
                     break;
                 case GameState.INSTRUCTIONS:
                     break;
                 case GameState.MENU:
                     break;
                 case GameState.GAME:
-                    sb.Draw(bgTexture, new Vector2(0), Color.White);
                     rm.Draw(sb);
                     Tile.ps.Draw(sb);
                     break;
