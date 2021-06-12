@@ -68,8 +68,7 @@ namespace Connect4Puzzle
             GraphicsDevice.Clear(Color.Black);
 
             // TODO: re implement
-            _spriteBatch.Begin();                     
-            
+            _spriteBatch.Begin();
             FiniteStateMachineManager.Instance.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
             
