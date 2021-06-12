@@ -25,6 +25,8 @@ namespace Connect4Puzzle.Tiles
 
         private Random random = new Random();
 
+        private int counter;
+
         public int Stop = 0;
     
         public void DropTiles() {
@@ -76,14 +78,17 @@ namespace Connect4Puzzle.Tiles
         public void MoveTiles() {
             List<Direction> keys = InputManager.Instance.TrackInput();
             if (keys.Contains(Direction.DOWN)) {
-                DropTiles();
+                if (counter ++ % 10 == 0)
+                    DropTiles();
             }
             else if (keys.Contains(Direction.LEFT)) {
-                Move(1);
+                if (counter ++ % 10 == 0)
+                    Move(1);
             }
             else if (keys.Contains(Direction.RIGHT)) {
-                Move(-1);
-            }
+                if (counter ++ % 10 == 0)
+                    Move(-1);
+            } else {counter = 0;}
         }
 
         public void Move(int direction) {
