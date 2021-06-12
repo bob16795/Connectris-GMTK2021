@@ -80,10 +80,10 @@ namespace Connect4Puzzle.Tiles
             List<Direction> Keys = InputManager.Instance.TrackInput();
             if (Keys.Contains(Direction.DOWN)) {
             }
-            if (Keys.Contains(Direction.LEFT)) {
+            else if (Keys.Contains(Direction.LEFT)) {
                 Move(1);
             }
-            if (Keys.Contains(Direction.RIGHT)) {
+            else if (Keys.Contains(Direction.RIGHT)) {
                 Move(-1);
             }
         }
