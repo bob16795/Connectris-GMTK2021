@@ -129,8 +129,6 @@ namespace Connect4Puzzle.Tiles
                 //keeps searching in that direction
                 else if (direction != Directions.NONE && isTileValid(currentVertex))
                 {
-                    numSearched++;
-
                     switch (direction)
                     {
                         case Directions.NORTH:
@@ -138,10 +136,6 @@ namespace Connect4Puzzle.Tiles
                                 Tile.Map[location.X, location.Y - 1].Type == initialTile.Type)
                             {
                                 tileQueue.Push(Tile.Map[location.X, location.Y - 1]);
-                            }
-                            else
-                            {
-                                return null;
                             }
                             break;
 
@@ -151,10 +145,6 @@ namespace Connect4Puzzle.Tiles
                             {
                                 tileQueue.Push(Tile.Map[location.X - 1, location.Y]);
                             }
-                            else
-                            {
-                                return null;
-                            }
                             break;
 
                         case Directions.NW:
@@ -162,10 +152,6 @@ namespace Connect4Puzzle.Tiles
                                 Tile.Map[location.X - 1, location.Y - 1].Type == initialTile.Type)
                             {
                                 tileQueue.Push(Tile.Map[location.X - 1, location.Y - 1]);
-                            }
-                            else
-                            {
-                                return null;
                             }
                             break;
 
@@ -175,12 +161,9 @@ namespace Connect4Puzzle.Tiles
                             {
                                 tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
                             }
-                            else
-                            {
-                                return null;
-                            }
                             break;
                     }
+                    numSearched++;
                 }
 
                 //nothing found, return null
