@@ -75,7 +75,8 @@ namespace Connect4Puzzle.Tiles
                     }
                 }
             }
-            foreach (Tile t in remove)
+            HashSet<Tile> removes = new HashSet<Tile>(remove);
+            foreach (Tile t in removes)
             {
                 t.Remove(true);
             }    
