@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Connect4Puzzle.Graphics
 {
-    struct ParticleProps
+    public struct ParticleProps
     {
         public Vector2 Position;
         public Vector2 Velocity, VelocityVariation;
@@ -14,7 +14,7 @@ namespace Connect4Puzzle.Graphics
         public float SizeStart, SizeEnd;
         public float LifeTime;
     }
-    class ParticleSystem
+    public class ParticleSystem
     {
         private struct Particle
         {
