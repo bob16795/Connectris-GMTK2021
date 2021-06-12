@@ -308,7 +308,7 @@ namespace Connect4Puzzle.Tiles
 
         public bool isTileValid(Tile t)
         {
-            if(t != null)
+            if(t != null && !t.controlled)
             {
                 return true;
             }
