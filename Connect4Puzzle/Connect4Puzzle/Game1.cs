@@ -50,6 +50,7 @@ namespace Connect4Puzzle
             FiniteStateMachineManager.font = arial16;
             UIElementsManager.font = arial16;
             SoundManager.Instance.content = Content;
+            SoundManager.Instance.LoadContent();
 
             FiniteStateMachineManager.Instance.bgTexture = Content.Load<Texture2D>("Backdrop");
         }

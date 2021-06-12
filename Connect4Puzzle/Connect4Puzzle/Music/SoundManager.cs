@@ -37,7 +37,7 @@ namespace Connect4Puzzle.Music
         /// </summary>
         public void LoadContent()
         {
-            Snap = content.Load<SoundEffect>("Music/snap");
+            Snap = content.Load<SoundEffect>("Sounds/snap");
             //buttonClick = content.Load<SoundEffect>("Music/button");
             //menu = content.Load<Song>("Music/menu");
         }
