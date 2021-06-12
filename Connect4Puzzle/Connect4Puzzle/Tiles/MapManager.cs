@@ -22,19 +22,16 @@ namespace Connect4Puzzle.Tiles
     
         public void DropTiles() {
 
-            int i = random.Next(1, 5);
             for (int y = 19; y > 0; y--)
             {
                 Tile[] result = new Tile[7];
                 for (int x = 0; x < 7; x++)
                 {
-                    if (Tile.Map[x, y] == null) Tile.Map[x, y] = new Tile(new Point(x, y));
+                    if (Tile.Map[x, y] == null) Tile.Map[x, y] = new Tile(new Point(x, y)); 
                     result[x] = Tile.Map[x, y];
                     if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(Tile.Map[x, y - 1])) {
                         result[x] = Tile.Map[x, y - 1];
                         Tile.Map[x, y - 1] = new Tile(new Point(x, y - 1));
-                    } else {
-                        Tile.Map[x, y].controlled = false;
                     }
                 }
 
@@ -46,7 +43,29 @@ namespace Connect4Puzzle.Tiles
             }
         }
 
+        public bool Stop() {
+            for (int x = 0; x < 7; x++)
+            {
+                for (int y = 18; y > 0; y--)
+                {
+                    if (Tile.Map[x, y].controlled && Tile.Map[x, y + 1].Type != TileType.NO_TILE) return true;
+                }
+                if (Tile.Map[x, 19].controlled) return true;
+            }
+            return false;
+        }
+
         public bool Control() {
+            if (Stop()) {
+                for (int y = 19; y > 0; y--)
+                {
+                    for (int x = 0; x < 7; x++)
+                    {
+                        Tile.Map[x, y].controlled = false;
+                    }
+                }
+                return true;
+            }
             for (int y = 19; y > 0; y--)
             {
                 for (int x = 0; x < 7; x++)
@@ -61,10 +80,10 @@ namespace Connect4Puzzle.Tiles
             List<Direction> Keys = InputManager.Instance.TrackInput();
             if (Keys.Contains(Direction.DOWN)) {
             }
-            if (Keys.Contains(Direction.LEFT)) {
+            else if (Keys.Contains(Direction.LEFT)) {
                 Move(1);
             }
-            if (Keys.Contains(Direction.RIGHT)) {
+            else if (Keys.Contains(Direction.RIGHT)) {
                 Move(-1);
             }
         }
@@ -95,6 +114,7 @@ namespace Connect4Puzzle.Tiles
         }
 
         public void SpawnTiles() {
+            int i = random.Next(1, 5);
             Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.RIGHT, TileType.RED_TILE, true);
             Tile.Map[1, 0] = new Tile(new Point(1, 0), TileConnection.LEFT, TileType.GREEN_TILE, true);
         }
