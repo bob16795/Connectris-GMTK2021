@@ -7,6 +7,7 @@ using Connect4Puzzle.Tiles;
 using Connect4Puzzle.FSM;
 using Connect4Puzzle.UI;
 using Connect4Puzzle.Music;
+using Connect4Puzzle.Input;
 
 namespace Connect4Puzzle
 {
@@ -66,6 +67,12 @@ namespace Connect4Puzzle
             }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            if (InputManager.Instance.TrackInput().Contains(Direction.FS)) {
+                _graphics.IsFullScreen = !_graphics.IsFullScreen;
+                _graphics.ApplyChanges();
+            }
+            if (FiniteStateMachineManager.Instance.CurrentState == GameState.GAME && MapManager.Instance.lost)
+                FiniteStateMachineManager.Instance.CurrentState = GameState.GAME_OVER;
             FiniteStateMachineManager.Instance.Update(gameTime);
                     
             base.Update(gameTime);

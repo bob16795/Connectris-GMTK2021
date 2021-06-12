@@ -21,7 +21,8 @@ namespace Connect4Puzzle.Input
     {
         LEFT,
         RIGHT,
-        DOWN
+        DOWN,
+        FS
     }
 
     class InputManager
@@ -69,6 +70,11 @@ namespace Connect4Puzzle.Input
                 || (kb.IsKeyDown(Keys.A)))
             {
                 dir.Add(Direction.LEFT);
+            }
+
+            if ((kb.IsKeyDown(Keys.F11)))
+            {
+                dir.Add(Direction.FS);
             }
 
             if ((kb.IsKeyDown(Keys.Down))

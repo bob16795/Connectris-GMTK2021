@@ -33,9 +33,7 @@ namespace Connect4Puzzle.Tiles
 
         public int level => Score / 750 + startLevel;
 
-        private int[] Speeds = {48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 1};
-
-        public int Speed => Speeds[Math.Min(20, level)];
+        public int Speed => 40 / (level + 1) + 1;
     
         private int combo;
 
@@ -163,6 +161,7 @@ namespace Connect4Puzzle.Tiles
         public void SpawnTiles() {
             Stop = 2;
             int i = random.Next(1, 5);
+            i = 1;
             switch (i)
             {
                 case 1:
