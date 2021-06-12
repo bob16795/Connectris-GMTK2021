@@ -125,7 +125,7 @@ namespace Connect4Puzzle.FSM
                     UIElementsManager.ScoreText.IsActive = true;
                     UIElementsManager.nextTile.IsActive = true;
                     UIElementsManager.menuButton.IsActive = true;
-                    if (frames++ % 15 == 0)
+                    if (frames++ % MapManager.Instance.Speed == 0)
                     {
                         MapManager.Instance.DropTiles();
                     }
