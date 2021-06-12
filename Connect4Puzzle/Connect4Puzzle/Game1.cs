@@ -6,6 +6,7 @@ using Connect4Puzzle.Graphics;
 using Connect4Puzzle.Tiles;
 using Connect4Puzzle.FSM;
 using Connect4Puzzle.UI;
+using Connect4Puzzle.Music;
 
 namespace Connect4Puzzle
 {
@@ -48,6 +49,8 @@ namespace Connect4Puzzle
             Sprite.texture = Content.Load<Texture2D>("SpriteSheet");
             FiniteStateMachineManager.font = arial16;
             UIElementsManager.font = arial16;
+            SoundManager.Instance.content = Content;
+            SoundManager.Instance.LoadContent();
 
             FiniteStateMachineManager.Instance.bgTexture = Content.Load<Texture2D>("Backdrop");
         }
