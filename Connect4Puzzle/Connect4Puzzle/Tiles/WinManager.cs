@@ -55,161 +55,191 @@ namespace Connect4Puzzle.Tiles
         /// </summary>
         public List<Tile> BFSearch(Tile t)
         {
+            Tile initialTile = t;
+
             if(t  == default)
             {
                 return null;
             }
 
             ResetBooleans();
-            Queue<Tile> tileQueue = new Queue<Tile>();
-
+            Stack<Tile> tileQueue = new Stack<Tile>();
             Point location = t.Position;
 
-            tileQueue.Enqueue(t);
 
-            while(numSearched < 4)
+
+            tileQueue.Push(t);
+
+            while(numSearched < 3)
             {
                 Tile currentVertex = null;
 
-                if(tileQueue.Count > 0)
+                if (tileQueue.Count > 0)
                 {
                     currentVertex = tileQueue.Peek();
                     location = currentVertex.Position;
                 }
-                               
-                if(direction == default && isTileValid(currentVertex))
+
+                if (direction == Directions.NONE && isTileValid(currentVertex))
                 {
-                    try
+                    if (CheckInBounds(location.X + 1, location.Y) &&
+                        Tile.Map[location.X + 1, location.Y].Type == initialTile.Type)
                     {
-                        if (Tile.Map[location.X + 1, location.Y].Type == TileType.GREEN_TILE)
-                        {
-                            tileQueue.Enqueue(Tile.Map[location.X + 1, location.Y]);
-                            direction = Directions.EAST;
-                        }
-                        else if (Tile.Map[location.X - 1, location.Y].Type == TileType.GREEN_TILE)
-                        {
-                            tileQueue.Enqueue(Tile.Map[location.X - 1, location.Y]);
-                            direction = Directions.WEST;
-                        }
-                        else if (Tile.Map[location.X, location.Y - 1].Type == TileType.GREEN_TILE)
-                        {
-                            tileQueue.Enqueue(Tile.Map[location.X, location.Y - 1]);
-                            direction = Directions.NORTH;
-                        }
-                        else if (Tile.Map[location.X, location.Y + 1].Type == TileType.GREEN_TILE)
-                        {
-                            tileQueue.Enqueue(Tile.Map[location.X, location.Y + 1]);
-                            direction = Directions.SOUTH;
-                        }
-                        else if (Tile.Map[location.X - 1, location.Y - 1].Type == TileType.GREEN_TILE)
-                        {
-                            tileQueue.Enqueue(Tile.Map[location.X - 1, location.Y - 1]);
-                            direction = Directions.NW;
-                        }
-                        else if (Tile.Map[location.X - 1, location.Y + 1].Type == TileType.GREEN_TILE)
-                        {
-                            tileQueue.Enqueue(Tile.Map[location.X - 1, location.Y + 1]);
-                            direction = Directions.SW;
-                        }
-                        else if (Tile.Map[location.X + 1, location.Y - 1].Type == TileType.GREEN_TILE)
-                        {
-                            tileQueue.Enqueue(Tile.Map[location.X + 1, location.Y - 1]);
-                            direction = Directions.NE;
-                        }
-                        else if (Tile.Map[location.X + 1, location.Y + 1].Type == TileType.GREEN_TILE)
-                        {
-                            tileQueue.Enqueue(Tile.Map[location.X + 1, location.Y + 1]);
-                            direction = Directions.SE;
-                        }
-                        else
-                        {
-                            return null;
-                        }
-                        numSearched++;
+                        tileQueue.Push(Tile.Map[location.X + 1, location.Y]);
+                        direction = Directions.EAST;
                     }
-                    catch
+                    else if (CheckInBounds(location.X - 1, location.Y)
+                        && Tile.Map[location.X - 1, location.Y].Type == initialTile.Type)
+                    {
+                        tileQueue.Push(Tile.Map[location.X - 1, location.Y]);
+                        direction = Directions.WEST;
+                    }
+                    else if (CheckInBounds(location.X, location.Y - 1)
+                        && Tile.Map[location.X, location.Y - 1].Type == initialTile.Type)
+                    {
+                        tileQueue.Push(Tile.Map[location.X, location.Y - 1]);
+                        direction = Directions.NORTH;
+                    }
+                    else if (CheckInBounds(location.X, location.Y + 1)
+                        && Tile.Map[location.X, location.Y + 1].Type == initialTile.Type)
+                    {
+                        tileQueue.Push(Tile.Map[location.X, location.Y + 1]);
+                        direction = Directions.SOUTH;
+                    }
+                    else if (CheckInBounds(location.X - 1, location.Y - 1)
+                        && Tile.Map[location.X - 1, location.Y - 1].Type == initialTile.Type)
+                    {
+                        tileQueue.Push(Tile.Map[location.X - 1, location.Y - 1]);
+                        direction = Directions.NW;
+                    }
+                    else if (CheckInBounds(location.X - 1, location.Y + 1) &&
+                        Tile.Map[location.X - 1, location.Y + 1].Type == initialTile.Type)
+                    {
+                        tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
+                        direction = Directions.SW;
+                    }
+                    else if (CheckInBounds(location.X + 1, location.Y - 1) &&
+                        Tile.Map[location.X + 1, location.Y - 1].Type == initialTile.Type)
+                    {
+                        tileQueue.Push(Tile.Map[location.X + 1, location.Y - 1]);
+                        direction = Directions.NE;
+                    }
+                    else if (CheckInBounds(location.X + 1, location.Y + 1) &&
+                        Tile.Map[location.X + 1, location.Y + 1].Type == initialTile.Type)
+                    {
+                        tileQueue.Push(Tile.Map[location.X + 1, location.Y + 1]);
+                        direction = Directions.SE;
+                    }
+                    else
                     {
                         return null;
-                    }                   
+                    }
+                    numSearched++;
                 }
-                else if(direction != default && isTileValid(currentVertex))
+                else if (direction != Directions.NONE && isTileValid(currentVertex))
                 {
-                    try
+                    numSearched++;
+
+                    switch (direction)
                     {
-                        numSearched++;
+                        case Directions.NORTH:
+                            if (CheckInBounds(location.X, location.Y - 1) && isTileValid(Tile.Map[location.X, location.Y - 1]) &&
+                                Tile.Map[location.X, location.Y - 1].Type == initialTile.Type)
+                            {
+                                tileQueue.Push(Tile.Map[location.X, location.Y - 1]);
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                            break;
 
-                        switch (direction)
-                        {
-                            case Directions.NORTH:
-                                if (isTileValid(Tile.Map[location.X, location.Y - 1]) &&
-                                    Tile.Map[location.X, location.Y - 1].Type == TileType.GREEN_TILE)
-                                {
-                                    tileQueue.Enqueue(Tile.Map[location.X, location.Y - 1]);
-                                }
-                                break;
+                        case Directions.SOUTH:
+                            if (CheckInBounds(location.X, location.Y + 1) && isTileValid(Tile.Map[location.X, location.Y + 1]) &&
+                                Tile.Map[location.X, location.Y + 1].Type == initialTile.Type)
+                            {
+                                tileQueue.Push(Tile.Map[location.X, location.Y + 1]);
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                            break;
 
-                            case Directions.SOUTH:
-                                if (isTileValid(Tile.Map[location.X, location.Y + 1]) &&
-                                    Tile.Map[location.X, location.Y + 1].Type == TileType.GREEN_TILE)
-                                {
-                                    tileQueue.Enqueue(Tile.Map[location.X, location.Y + 1]);
-                                }
-                                break;
+                        case Directions.WEST:
+                            if (CheckInBounds(location.X - 1, location.Y) && isTileValid(Tile.Map[location.X - 1, location.Y]) &&
+                                Tile.Map[location.X - 1, location.Y].Type == initialTile.Type)
+                            {
+                                tileQueue.Push(Tile.Map[location.X - 1, location.Y]);
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                            break;
 
-                            case Directions.WEST:
-                                if (isTileValid(Tile.Map[location.X - 1, location.Y]) &&
-                                    Tile.Map[location.X - 1, location.Y].Type == TileType.GREEN_TILE)
-                                {
-                                    tileQueue.Enqueue(Tile.Map[location.X - 1, location.Y]);
-                                }
-                                break;
+                        case Directions.EAST:
+                            if (CheckInBounds(location.X + 1, location.Y) && isTileValid(Tile.Map[location.X + 1, location.Y]) &&
+                                Tile.Map[location.X + 1, location.Y].Type == initialTile.Type)
+                            {
+                                tileQueue.Push(Tile.Map[location.X + 1, location.Y]);
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                            break;
 
-                            case Directions.EAST:
-                                if (isTileValid(Tile.Map[location.X + 1, location.Y]) &&
-                                    Tile.Map[location.X + 1, location.Y].Type == TileType.GREEN_TILE)
-                                {
-                                    tileQueue.Enqueue(Tile.Map[location.X + 1, location.Y]);
-                                }
-                                break;
+                        case Directions.NW:
+                            if (CheckInBounds(location.X - 1, location.Y - 1) && isTileValid(Tile.Map[location.X - 1, location.Y - 1]) &&
+                                Tile.Map[location.X - 1, location.Y - 1].Type == initialTile.Type)
+                            {
+                                tileQueue.Push(Tile.Map[location.X - 1, location.Y - 1]);
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                            break;
 
-                            case Directions.NW:
-                                if (isTileValid(Tile.Map[location.X - 1, location.Y - 1]) &&
-                                    Tile.Map[location.X - 1, location.Y - 1].Type == TileType.GREEN_TILE)
-                                {
-                                    tileQueue.Enqueue(Tile.Map[location.X - 1, location.Y - 1]);
-                                }
-                                break;
+                        case Directions.SW:
+                            if (CheckInBounds(location.X - 1, location.Y + 1) && isTileValid(Tile.Map[location.X - 1, location.Y + 1]) &&
+                                Tile.Map[location.X - 1, location.Y + 1].Type == initialTile.Type)
+                            {
+                                tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                            break;
 
-                            case Directions.SW:
-                                if (isTileValid(Tile.Map[location.X - 1, location.Y + 1]) &&
-                                    Tile.Map[location.X - 1, location.Y + 1].Type == TileType.GREEN_TILE)
-                                {
-                                    tileQueue.Enqueue(Tile.Map[location.X - 1, location.Y + 1]);
-                                }
-                                break;
+                        case Directions.NE:
+                            if (CheckInBounds(location.X + 1, location.Y - 1) && 
+                                isTileValid(Tile.Map[location.X + 1, location.Y - 1]) &&
+                                Tile.Map[location.X + 1, location.Y - 1].Type == initialTile.Type)
+                            {
+                                tileQueue.Push(Tile.Map[location.X + 1, location.Y - 1]);
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                            break;
 
-                            case Directions.NE:
-                                if (isTileValid(Tile.Map[location.X + 1, location.Y - 1]) &&
-                                    Tile.Map[location.X + 1, location.Y - 1].Type == TileType.GREEN_TILE)
-                                {
-                                    tileQueue.Enqueue(Tile.Map[location.X + 1, location.Y - 1]);
-                                }
-                                break;
-
-                            case Directions.SE:
-                                if (isTileValid(Tile.Map[location.X + 1, location.Y + 1]) &&
-                                    Tile.Map[location.X + 1, location.Y + 1].Type == TileType.GREEN_TILE)
-                                {
-                                    tileQueue.Enqueue(Tile.Map[location.X + 1, location.Y + 1]);
-                                }
-                                break;
-                        }
+                        case Directions.SE:
+                            if (CheckInBounds(location.X + 1, location.Y + 1) &&
+                                isTileValid(Tile.Map[location.X + 1, location.Y + 1]) &&
+                                Tile.Map[location.X + 1, location.Y + 1].Type == initialTile.Type)
+                            {
+                                tileQueue.Push(Tile.Map[location.X + 1, location.Y + 1]);
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                            break;
                     }
-                    catch
-                    {
-                        return null;
-                    }
-                    
                 }
                 else
                 {
@@ -219,10 +249,9 @@ namespace Connect4Puzzle.Tiles
 
 
             List<Tile> tiles = new List<Tile>();
-
             tiles.AddRange(tileQueue);
 
-            if(tiles.Count == 4)
+            if (tiles.Count == 4)
             {
                 return tiles;
             }
@@ -230,6 +259,7 @@ namespace Connect4Puzzle.Tiles
             {
                 return null;
             }
+            
             
         }
 
@@ -239,11 +269,31 @@ namespace Connect4Puzzle.Tiles
         public void ResetBooleans()
         {
             direction = Directions.NONE;
+            numSearched = 0;
         }
 
         public bool isTileValid(Tile t)
         {
             if(t != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// checks if a tile is in bounds
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public bool CheckInBounds(int x, int y)
+        {
+            Rectangle r = new Rectangle(0, 0, 8, 20);
+
+            if (r.Contains(new Point(x, y)))
             {
                 return true;
             }
