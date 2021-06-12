@@ -73,7 +73,7 @@ namespace Connect4Puzzle
                 _graphics.ApplyChanges();
             }
             FiniteStateMachineManager.Instance.Update(gameTime);
-            if (FiniteStateMachineManager.Instance.CurrentState == GameState.GAME && MapManager.Instance.lost)
+            if (FiniteStateMachineManager.Instance.CurrentState == GameState.GAME && (MapManager.Instance.lost || MapManager.Instance.Score < 0))
                 FiniteStateMachineManager.Instance.CurrentState = GameState.GAME_OVER;
                     
 #if DEBUG
