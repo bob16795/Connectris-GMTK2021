@@ -13,6 +13,7 @@ namespace Connect4Puzzle.Graphics
         public Color StartColor, EndColor;
         public float SizeStart, SizeEnd;
         public float LifeTime;
+        public float LifeTimeVariation;
     }
     public class ParticleSystem
     {
@@ -99,8 +100,9 @@ namespace Connect4Puzzle.Graphics
             p.EndColor = props.EndColor;
 
             p.LifeTime = props.LifeTime;
+            p.LifeTime += props.LifeTimeVariation * ((float)r.NextDouble() - 0.5f);
 
-            p.LifeRemaining = props.LifeTime;
+            p.LifeRemaining = p.LifeTime;
             p.SizeStart = props.SizeStart;
             p.SizeEnd = props.SizeEnd;
 
