@@ -78,15 +78,15 @@ namespace Connect4Puzzle.Tiles
         public void MoveTiles() {
             List<Direction> keys = InputManager.Instance.TrackInput();
             if (keys.Contains(Direction.DOWN)) {
-                if (counter ++ % 10 == 0)
+                if (counter ++ % 5 == 0)
                     DropTiles();
             }
             else if (keys.Contains(Direction.LEFT)) {
-                if (counter ++ % 10 == 0)
+                if (counter ++ % 5 == 0)
                     Move(1);
             }
             else if (keys.Contains(Direction.RIGHT)) {
-                if (counter ++ % 10 == 0)
+                if (counter ++ % 5 == 0)
                     Move(-1);
             } else {counter = 0;}
         }
