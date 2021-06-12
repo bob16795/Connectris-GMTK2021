@@ -85,10 +85,10 @@ namespace Connect4Puzzle.Tiles
             else if (Tile.Map[p.X, p.Y].Connection == TileConnection.DOWN)
                 Tile.Map[p.X, p.Y + 1].Connection = TileConnection.NONE;
             else if (Tile.Map[p.X, p.Y].Connection == TileConnection.LEFT)
-                Tile.Map[p.X + 1, p.Y].Connection = TileConnection.NONE;
-            else if (Tile.Map[p.X, p.Y].Connection == TileConnection.RIGHT)
                 Tile.Map[p.X - 1, p.Y].Connection = TileConnection.NONE;
-
+            else if (Tile.Map[p.X, p.Y].Connection == TileConnection.RIGHT)
+                Tile.Map[p.X + 1, p.Y].Connection = TileConnection.NONE;
+            Tile.Map[p.X, p.Y].props.Position = p.ToVector2() * 24 + RenderMap.bg.Bounds.Location.ToVector2() + new Vector2(12, -24);
             for (int i = 0; i < 100; i++)
             {
                 ps.Emit(Tile.Map[p.X, p.Y].props);
