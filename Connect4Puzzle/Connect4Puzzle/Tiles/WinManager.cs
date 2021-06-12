@@ -344,6 +344,15 @@ namespace Connect4Puzzle.Tiles
                                 tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
                             }
                             break;
+
+                        case Directions.NE:
+                            if (CheckInBounds(location.X + 1, location.Y - 1) && isTileValid(Tile.Map[location.X + 1, location.Y - 1]) &&
+                                Tile.Map[location.X + 1, location.Y - 1].Type == initialTile.Type
+                                && canSearchNE)
+                            {
+                                tileQueue.Push(Tile.Map[location.X + 1, location.Y - 1]);
+                            }
+                            break;
                     }
                     numSearched++;
                 }
