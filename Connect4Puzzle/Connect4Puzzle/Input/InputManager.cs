@@ -59,30 +59,26 @@ namespace Connect4Puzzle.Input
 
             List<Direction> dir = new List<Direction>();
 
-            if ((kb.IsKeyDown(Keys.Right)
-                && SingleKeyPress(Keys.Right))
-                || (kb.IsKeyDown(Keys.D) && SingleKeyPress(Keys.D)))
+            if ((kb.IsKeyDown(Keys.Right))
+                || (kb.IsKeyDown(Keys.D)))
             {
                 dir.Add(Direction.RIGHT);
             }
 
-            if ((kb.IsKeyDown(Keys.Left)
-                && SingleKeyPress(Keys.Left))
-                || (kb.IsKeyDown(Keys.A) && SingleKeyPress(Keys.A)))
+            if ((kb.IsKeyDown(Keys.Left))
+                || (kb.IsKeyDown(Keys.A)))
             {
                 dir.Add(Direction.LEFT);
             }
 
-            if ((kb.IsKeyDown(Keys.Down)
-                && SingleKeyPress(Keys.Down))
-                || (kb.IsKeyDown(Keys.S) && SingleKeyPress(Keys.S)))
+            if ((kb.IsKeyDown(Keys.Down))
+                || (kb.IsKeyDown(Keys.S)))
             {
                 dir.Add(Direction.DOWN);
             }
 
             if(ms.LeftButton == ButtonState.Pressed && SingleMousePress())
             {
-                System.Diagnostics.Debug.WriteLine(ms.X);
                 UIManager.Instance.ProcessClick(ms.Position);
             }
 
@@ -90,24 +86,6 @@ namespace Connect4Puzzle.Input
             prevMs = ms;
 
             return dir;
-        }
-
-        /// <summary>
-        /// Checks if a single key press occurs
-        /// </summary>
-        /// <returns>True - single key press
-        /// false - multiple frames key press</returns>
-        private bool SingleKeyPress(Keys k)
-        {
-            //Key k was down the previous frame, but is now up
-            if (prevkb.IsKeyUp(k))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         /// <summary>
