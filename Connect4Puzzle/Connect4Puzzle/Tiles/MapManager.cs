@@ -29,7 +29,7 @@ namespace Connect4Puzzle.Tiles
 
         public int Stop = 0;
         
-        private int startLevel = 15;
+        private int startLevel = 0;
 
         public int level => Score / 1500 + startLevel;
 
