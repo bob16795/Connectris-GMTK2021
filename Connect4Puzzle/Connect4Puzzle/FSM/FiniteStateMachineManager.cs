@@ -8,6 +8,7 @@ using Connect4Puzzle.Graphics;
 using Connect4Puzzle.Tiles;
 using Connect4Puzzle.Drawing;
 using Connect4Puzzle.Music;
+using Connect4Puzzle.Input;
 
 namespace Connect4Puzzle.FSM
 {
@@ -109,7 +110,7 @@ namespace Connect4Puzzle.FSM
         public void Update(GameTime gt)
         {
             UIManager.Instance.Update(gt);
-            MapManager.Instance.Update(gt);
+            InputManager.Instance.TrackInput();
 
             switch (currentState)
             {
@@ -125,6 +126,7 @@ namespace Connect4Puzzle.FSM
                     UIElementsManager.okButton.IsActive = true;
                     break;
                 case GameState.GAME:
+                    MapManager.Instance.Update(gt);
                     SoundManager.Instance.PlayMusic("game");
                     UIElementsManager.ScoreText.IsActive = true;
                     UIElementsManager.nextTile.IsActive = true;
