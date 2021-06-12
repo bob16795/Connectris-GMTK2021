@@ -106,8 +106,8 @@ namespace Connect4Puzzle.UI
 
             UIManager.Instance.Add(menuButton);
 
-            nextTile = new UIPanel(new Rectangle((Sprite.graphics.PreferredBackBufferWidth - 100),
-                100,
+            nextTile = new UIPanel(new Rectangle(RenderMap.bg.Bounds.Right,
+                RenderMap.bg.Bounds.Top,
                 50, 80));
 
             nextTile.IsActive = false;

@@ -18,7 +18,7 @@ namespace Connect4Puzzle.Drawing
     {
         //fields
         private Tile[,] tileGrid;
-        private UIPanel bg;
+        public static UIPanel bg = new UIPanel(new Rectangle(((int)Sprite.DEF_WIDTH - 192) / 2 - 1, ((int)Sprite.DEF_HEIGHT - 480) / 2 - 1, 195, 483));
 
         //ctor
 
@@ -29,7 +29,7 @@ namespace Connect4Puzzle.Drawing
         public RenderMap(Tile[,] tiles)
         {
             this.tileGrid = tiles;
-            bg = new UIPanel(new Rectangle(((int)Sprite.DEF_WIDTH - 192) / 2 - 1, ((int)Sprite.DEF_HEIGHT - 480) / 2 - 1, 195, 483));
+            // bg = new UIPanel(new Rectangle(((int)Sprite.DEF_WIDTH - 192) / 2 - 1, ((int)Sprite.DEF_HEIGHT - 480) / 2 - 1, 195, 483));
         }
 
         /// <summary>
