@@ -31,7 +31,7 @@ namespace Connect4Puzzle.Tiles
         
         private int startLevel = 0;
 
-        public int level => Score / 1500 + startLevel;
+        public int level => Score / 750 + startLevel;
 
         private int[] Speeds = {48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 1};
 
