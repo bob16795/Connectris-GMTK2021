@@ -42,10 +42,20 @@ namespace Connect4Puzzle.FSM
         private GameState currentState;
         public static SpriteFont font;
 
-        private UIButton playButton;
-
         private RenderMap rm;
         private int frames;
+
+        private UIElementsManager uiMan;
+
+        /// <summary>
+        /// gets or sets currentState
+        /// </summary>
+        public GameState CurrentState
+        {
+            get { return currentState; }
+            set { currentState = value; }
+        }
+
 
         /// <summary>
         /// Creates a new Finite state manager object
@@ -53,22 +63,12 @@ namespace Connect4Puzzle.FSM
         public FiniteStateMachineManager() 
         {
             this.currentState = GameState.MAIN_MENU;
-            playButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 130, 
-                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
-                200, 100));
+            uiMan = new UIElementsManager();
 
             frames = 0;
 
             rm = new RenderMap(Tile.Map);
-            playButton.Text.Text = "Play Game";
-            playButton.onClick = new UIAction((i) =>
-            {
-                System.Diagnostics.Debug.WriteLine("test");
-                currentState = GameState.INSTRUCTIONS;
-            });
-
-            UIManager.Instance.Add(playButton);
+            
         }
 
         /// <summary>
@@ -108,14 +108,16 @@ namespace Connect4Puzzle.FSM
             switch (currentState)
             {
                 case GameState.MAIN_MENU:
-                    playButton.IsActive = true;
+                    UIElementsManager.playButton.IsActive = true;
                     break;
                 case GameState.INSTRUCTIONS:
-                    playButton.IsActive = false;
+                    UIElementsManager.playButton.IsActive = false;
+                    UIElementsManager.nextButton.IsActive = true;
                     break;
                 case GameState.MENU:
                     break;
                 case GameState.GAME:
+                    UIElementsManager.nextButton.IsActive = false;
                     if (frames++ % 15 == 0)
                     {
                         MapManager.Instance.DropTiles();

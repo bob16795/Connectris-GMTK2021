@@ -46,6 +46,7 @@ namespace Connect4Puzzle
             arial16 = Content.Load<SpriteFont>("Arial16");
 
             FiniteStateMachineManager.font = arial16;
+            UIElementsManager.font = arial16;
 
             // TODO: use this.Content to load your game content here
         }
