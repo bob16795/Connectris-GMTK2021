@@ -18,14 +18,17 @@ namespace Connect4Puzzle.Tiles
                 (() => new MapManager());
         public static MapManager Instance { get { return lazy.Value; } }
 
+
         private Random random = new Random();
+
+        public bool Stop = true;
     
         public void DropTiles() {
 
             for (int y = 19; y > 0; y--)
             {
-                Tile[] result = new Tile[7];
-                for (int x = 0; x < 7; x++)
+                Tile[] result = new Tile[8];
+                for (int x = 0; x < 8; x++)
                 {
                     if (Tile.Map[x, y] == null) Tile.Map[x, y] = new Tile(new Point(x, y)); 
                     result[x] = Tile.Map[x, y];
@@ -35,45 +38,34 @@ namespace Connect4Puzzle.Tiles
                     }
                 }
 
-                for (int x = 0; x < 7; x++)
+                for (int x = 0; x < 8; x++)
                 {
                     Tile.Map[x, y] = result[x];
                     Tile.Map[x, y].Position = new Point(x, y);
                 }
             }
-        }
-
-        public bool Stop() {
-            for (int x = 0; x < 7; x++)
+            for (int x = 0; x < 8 && Stop == false; x++ )
             {
-                for (int y = 18; y > 0; y--)
+                for (int y = 18; y > 0 && Stop == false; y--)
                 {
-                    if (Tile.Map[x, y].controlled && Tile.Map[x, y + 1].Type != TileType.NO_TILE) return true;
+                    if (Tile.Map[x, y].controlled && !Tile.Map[x, y + 1].controlled && Tile.Map[x, y + 1].Type != TileType.NO_TILE) Stop = true;
                 }
-                if (Tile.Map[x, 19].controlled) return true;
+                if (Tile.Map[x, 19].controlled) Stop = true;
             }
-            return false;
         }
 
         public bool Control() {
-            if (Stop()) {
+            if (Stop) {
                 for (int y = 19; y > 0; y--)
                 {
-                    for (int x = 0; x < 7; x++)
+                    for (int x = 0; x < 8; x++)
                     {
                         Tile.Map[x, y].controlled = false;
                     }
                 }
-                return true;
+                return false;
             }
-            for (int y = 19; y > 0; y--)
-            {
-                for (int x = 0; x < 7; x++)
-                {
-                    if (Tile.Map[x, y].controlled) return true;
-                }
-            }
-            return false;
+            return true;
         }
 
         public void MoveTiles() {
@@ -89,9 +81,9 @@ namespace Connect4Puzzle.Tiles
         }
 
         public void Move(int direction) {
-            for (int x2 = 0; x2 < 6; x2++)
+            for (int x2 = 0; x2 < 7; x2++)
             {
-                int x = direction < 0 ? 6 - x2 : x2;
+                int x = direction < 0 ? 7 - x2 : x2;
                 Tile[] result = new Tile[20];
                 for (int y = 0; y < 19; y++)
                 {
@@ -115,23 +107,41 @@ namespace Connect4Puzzle.Tiles
 
         public void SpawnTiles() {
             int i = random.Next(1, 5);
-            Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.RIGHT, TileType.RED_TILE, true);
-            Tile.Map[1, 0] = new Tile(new Point(1, 0), TileConnection.LEFT, TileType.GREEN_TILE, true);
+            switch (i)
+            {
+                case 1:
+                Tile.Map[3, 0] = new Tile(new Point(3, 0), TileConnection.RIGHT, TileType.RED_TILE, true);
+                Tile.Map[4, 0] = new Tile(new Point(4, 0), TileConnection.LEFT, TileType.GREEN_TILE, true);
+                break;
+                case 2:
+                Tile.Map[3, 0] = new Tile(new Point(3, 0), TileConnection.RIGHT, TileType.GREEN_TILE, true);
+                Tile.Map[4, 0] = new Tile(new Point(4, 0), TileConnection.LEFT, TileType.RED_TILE, true);
+                break;
+                case 3:
+                Tile.Map[3, 0] = new Tile(new Point(3, 0), TileConnection.DOWN, TileType.GREEN_TILE, true);
+                Tile.Map[3, 1] = new Tile(new Point(3, 1), TileConnection.UP, TileType.RED_TILE, true);
+                break;
+                case 4:
+                Tile.Map[3, 0] = new Tile(new Point(3, 0), TileConnection.DOWN, TileType.RED_TILE, true);
+                Tile.Map[3, 1] = new Tile(new Point(3, 1), TileConnection.UP, TileType.GREEN_TILE, true);
+                break;
+            }
+            Stop = false;
         }
 
         public void Update(GameTime gt) {   
             if (Tile.Map[0, 0] == null) {
                 for (int y = 0; y < 20; y++)
                 {
-                    for (int x = 0; x < 7; x++)
+                    for (int x = 0; x < 8; x++)
                     {
                             Tile.Map[x, y] = new Tile(new Point(x, y));
                     }
                 }
             }
-            MoveTiles();
             if (!Control())
                 SpawnTiles();
+            MoveTiles();
         }
     }
 }

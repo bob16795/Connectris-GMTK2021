@@ -23,7 +23,7 @@ namespace Connect4Puzzle.Tiles
 
     public class Tile
     {
-        public static Tile[,] Map = new Tile[7, 20];
+        public static Tile[,] Map = new Tile[8, 20];
         public Point Position;
         public TileType Type;
         public TileConnection Connection;
