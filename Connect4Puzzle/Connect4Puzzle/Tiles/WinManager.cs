@@ -33,12 +33,19 @@ namespace Connect4Puzzle.Tiles
         public static readonly Lazy<WinManager>
             win = new Lazy<WinManager>(() => new WinManager());
 
+        /// <summary>
+        /// Returns singleton instance
+        /// </summary>
         public static WinManager Instance { get { return win.Value; } }
 
         //properties
 
 
         //ctor
+
+        /// <summary>
+        /// Creates a win manager object 
+        /// </summary>
         public WinManager()
         {
             direction = default;
@@ -67,19 +74,22 @@ namespace Connect4Puzzle.Tiles
             Point location = t.Position;
 
 
-
+            //pushes the first tile to the queue
             tileQueue.Push(t);
 
+            //loops until three MORE tiles are searched
             while(numSearched < 3)
             {
                 Tile currentVertex = null;
 
+                //peeks to the first tile in the stack
                 if (tileQueue.Count > 0)
                 {
                     currentVertex = tileQueue.Peek();
                     location = currentVertex.Position;
                 }
 
+                //finds direction needed to search
                 if (direction == Directions.NONE && isTileValid(currentVertex))
                 {
                     if (CheckInBounds(location.X + 1, location.Y) &&
@@ -136,6 +146,8 @@ namespace Connect4Puzzle.Tiles
                     }
                     numSearched++;
                 }
+
+                //keeps searching in that direction
                 else if (direction != Directions.NONE && isTileValid(currentVertex))
                 {
                     numSearched++;
@@ -241,13 +253,15 @@ namespace Connect4Puzzle.Tiles
                             break;
                     }
                 }
+
+                //nothing found, return null
                 else
                 {
                     return null;
                 }
             }
 
-
+            //adds sequence of tiles to list
             List<Tile> tiles = new List<Tile>();
             tiles.AddRange(tileQueue);
 
@@ -293,7 +307,7 @@ namespace Connect4Puzzle.Tiles
         {
             Rectangle r = new Rectangle(0, 0, 8, 20);
 
-            if (r.Contains(new Point(x, y)))
+            if (r.Contains(new Point(x + 1, y + 1)))
             {
                 return true;
             }
