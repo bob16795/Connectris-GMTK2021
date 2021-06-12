@@ -161,7 +161,6 @@ namespace Connect4Puzzle.Tiles
         public void SpawnTiles() {
             Stop = 2;
             int i = random.Next(1, 5);
-            i = 1;
             switch (i)
             {
                 case 1:
