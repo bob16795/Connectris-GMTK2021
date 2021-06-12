@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Connect4Puzzle.Graphics;
+using Connect4Puzzle.Drawing;
 
 namespace Connect4Puzzle.Tiles
 {
@@ -23,18 +24,39 @@ namespace Connect4Puzzle.Tiles
 
     public class Tile
     {
+        public static ParticleSystem ps;
         public static Tile[,] Map = new Tile[8, 20];
         public Point Position;
         public TileType Type;
         public TileConnection Connection;
         public Sprite Sprite;
         public bool controlled;
+        private ParticleProps props;
 
         public Tile(Point position, TileConnection connection = TileConnection.NONE, TileType type = TileType.NO_TILE, bool controlled = false) {
+            if (ps == null)
+                ps = new ParticleSystem();
             this.Position = position;
             this.Connection = connection;
             this.Type = type;
             this.controlled = controlled;
+            props = new ParticleProps{
+                Position = this.Position.ToVector2() * 24 + RenderMap.bg.Bounds.Location.ToVector2() + new Vector2(12, -24),
+                Velocity = new Vector2(0, 0),
+                VelocityVariation = new Vector2(100, 100),
+                StartColor = type == TileType.RED_TILE ? Color.Red : Color.Green,
+                EndColor = Color.Gray,
+                SizeStart = 4,
+                SizeEnd = 3,
+                LifeTime = 1.5f,
+                LifeTimeVariation = 1f,
+            };
+            if (Type != TileType.NO_TILE){
+                for (int i = 0; i < 100; i++)
+                {
+                    ps.Emit(props);   
+                }
+            }
         }
 
         public void UpdateSprite() {
@@ -69,6 +91,10 @@ namespace Connect4Puzzle.Tiles
             else if (Tile.Map[p.X, p.Y].Connection == TileConnection.RIGHT)
                 Tile.Map[p.X - 1, p.Y].Connection = TileConnection.NONE;
 
+            for (int i = 0; i < 100; i++)
+            {
+                ps.Emit(Tile.Map[p.X, p.Y].props);
+            }
             Tile.Map[p.X, p.Y] = new Tile(new Point(p.X, p.Y));
         }
     }
