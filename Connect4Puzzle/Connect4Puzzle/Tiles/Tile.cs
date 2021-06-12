@@ -68,6 +68,7 @@ namespace Connect4Puzzle.Tiles
         }
 
         public static bool CheckHeldWidth(Tile t, int direction) {
+            direction *= -1;
             if (t.Connection == TileConnection.UP) {
                 if (t.Position.X + direction < 0 || t.Position.X + direction > 7) return true;
                 return (Tile.Map[t.Position.X + direction, t.Position.Y - 1].Type == TileType.NO_TILE);
