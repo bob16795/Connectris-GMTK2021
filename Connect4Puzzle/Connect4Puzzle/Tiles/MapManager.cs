@@ -58,6 +58,20 @@ namespace Connect4Puzzle.Tiles
                     Tile.Map[x, y].Position = new Point(x, y);
                 }
             }
+            for (int x = 0; x < 8; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    if (Tile.Map[x, y].Type != TileType.NO_TILE) {
+                        List<Tile> rem = WinManager.Instance.BFSearch(Tile.Map[x, y]);
+                        if (rem == null) continue;
+                        foreach (Tile t in rem)
+                        {
+                            Tile.Remove(t.Position, true);
+                        }    
+                    }
+                }
+            }
             for (int x = 0; x < 8 && Stop != 0; x++ )
             {
                 for (int y = 18; y > 0 && Stop != 0; y--)
@@ -125,19 +139,6 @@ namespace Connect4Puzzle.Tiles
         }
 
         public void SpawnTiles() {
-            for (int x = 0; x < 7; x++)
-            {
-                for (int y = 0; y < 20; y++)
-                {
-                    if (Tile.Map[x, y].Type == TileType.NO_TILE) continue;
-                    List<Tile> rem = WinManager.Instance.BFSearch(Tile.Map[x, y]);
-                    if (rem == null) continue;
-                    foreach (Tile t in rem)
-                    {
-                        Tile.Remove(t.Position, true);
-                    }    
-                }
-            }
             int i = random.Next(1, 5);
             switch (i)
             {
