@@ -117,6 +117,19 @@ namespace Connect4Puzzle.Tiles
         }
 
         public void SpawnTiles() {
+            for (int x = 0; x < 7; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    if (Tile.Map[x, y].Type == TileType.NO_TILE) continue;
+                    List<Tile> rem = WinManager.Instance.BFSearch(Tile.Map[x, y]);
+                    if (rem == null) continue;
+                    foreach (Tile t in rem)
+                    {
+                        Tile.Remove(t.Position, true);
+                    }    
+                }
+            }
             int i = random.Next(1, 5);
             switch (i)
             {
