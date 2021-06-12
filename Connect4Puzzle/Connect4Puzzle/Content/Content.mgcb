@@ -32,6 +32,12 @@
 /processorParam:TextureFormat=Color
 /build:backdrop.png
 
+#begin Sounds/snap.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/snap.wav
+
 #begin SpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
