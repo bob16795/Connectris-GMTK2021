@@ -10,8 +10,8 @@ namespace Connect4Puzzle.UI
     public class UIPanel : UIElement
     {
         // Setup constants for sprites
-        private static Rectangle PANEL_NORMAL_SPRITE = new Rectangle(16, 0, 3, 3);
-        private static Rectangle PANEL_NORMAL_CENTER = new Rectangle(17, 1, 1, 1);
+        private static Rectangle PANEL_NORMAL_SPRITE = new Rectangle(16, 3, 3, 3);
+        private static Rectangle PANEL_NORMAL_CENTER = new Rectangle(17, 4, 1, 1);
 
         // Vars
         UISprite NormalSprite;
