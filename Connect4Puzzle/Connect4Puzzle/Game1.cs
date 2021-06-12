@@ -32,6 +32,7 @@ namespace Connect4Puzzle
         {
             // TODO: Add your initialization logic here
 
+            Window.AllowUserResizing = true;
             _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
             _graphics.PreferredBackBufferHeight = (int)Sprite.DEF_HEIGHT;
             Window.Title = "Connectris";
@@ -57,6 +58,12 @@ namespace Connect4Puzzle
 
         protected override void Update(GameTime gameTime)
         {
+            if (_graphics.PreferredBackBufferWidth != Window.ClientBounds.Width || _graphics.PreferredBackBufferHeight != Window.ClientBounds.Height)
+            {
+                _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+                _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+                _graphics.ApplyChanges();
+            }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             FiniteStateMachineManager.Instance.Update(gameTime);
