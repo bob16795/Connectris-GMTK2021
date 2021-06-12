@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Connect4Puzzle.Tiles;
 using Connect4Puzzle.UI;
+using Connect4Puzzle.Graphics;
 
 namespace Connect4Puzzle.Drawing
 {
@@ -28,7 +29,7 @@ namespace Connect4Puzzle.Drawing
         public RenderMap(Tile[,] tiles)
         {
             this.tileGrid = tiles;
-            bg = new UIPanel(new Rectangle(0, 0, 24 * 8, 24 * 20));
+            bg = new UIPanel(new Rectangle(((int)Sprite.DEF_WIDTH - 192) / 2, ((int)Sprite.DEF_HEIGHT - 480) / 2, 192, 480));
         }
 
         /// <summary>
@@ -46,8 +47,10 @@ namespace Connect4Puzzle.Drawing
                     if(tileGrid[i, j].Type != TileType.NO_TILE)
                     {
                         tileGrid[i, j].Sprite.Draw(sb, new Point
-                        (i * (tileGrid[i, j].Sprite.Position.Width * 3), j *
-                        (tileGrid[i, j].Sprite.Position.Height * 3)), 0f, 
+                        (((int)Sprite.DEF_WIDTH - 192) / 2 +
+                        i * (tileGrid[i, j].Sprite.Position.Width * 3),
+                        ((int)Sprite.DEF_HEIGHT - 480) / 2 +
+                        j * (tileGrid[i, j].Sprite.Position.Height * 3)), 0f, 
                         new Vector2(tileGrid[i, j].Sprite.Position.Width * 3,
                         tileGrid[i, j].Sprite.Position.Height * 3));
                     }
