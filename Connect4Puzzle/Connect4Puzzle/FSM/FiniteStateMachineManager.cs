@@ -115,9 +115,15 @@ namespace Connect4Puzzle.FSM
                     UIElementsManager.nextButton.IsActive = true;
                     break;
                 case GameState.MENU:
+                    UIElementsManager.nextTileButton.IsActive = false;
+                    UIElementsManager.menuButton.IsActive = false;
+                    UIElementsManager.okButton.IsActive = true;
                     break;
                 case GameState.GAME:
+                    UIElementsManager.okButton.IsActive = false;
                     UIElementsManager.nextButton.IsActive = false;
+                    UIElementsManager.nextTileButton.IsActive = true;
+                    UIElementsManager.menuButton.IsActive = true;
                     if (frames++ % 15 == 0)
                     {
                         MapManager.Instance.DropTiles();

@@ -39,7 +39,7 @@ namespace Connect4Puzzle.UI
         public UIElementsManager()
         {
             playButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 130,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
                 (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
                 200, 100));
 
@@ -53,7 +53,7 @@ namespace Connect4Puzzle.UI
             UIManager.Instance.Add(playButton);
 
             nextButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 130,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
                 (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
                 200, 100));
 
@@ -69,7 +69,7 @@ namespace Connect4Puzzle.UI
             UIManager.Instance.Add(nextButton);
 
             okButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 130,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
                 (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
                 200, 100));
 
@@ -85,9 +85,9 @@ namespace Connect4Puzzle.UI
             UIManager.Instance.Add(okButton);
 
             menuButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 130,
-                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
-                200, 100));
+                new Rectangle(Sprite.graphics.PreferredBackBufferWidth - 100,
+                50,
+                75, 50));
 
             menuButton.IsActive = false;
 
@@ -102,9 +102,9 @@ namespace Connect4Puzzle.UI
             UIManager.Instance.Add(menuButton);
 
             nextTileButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 130,
-                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
-                200, 100));
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth - 100),
+                100,
+                50, 80));
 
             nextTileButton.IsActive = false;
             UIManager.Instance.Add(nextTileButton);
