@@ -58,5 +58,18 @@ namespace Connect4Puzzle.Tiles
             }
             return t.Type != TileType.NO_TILE;
         }
+
+        public static void Remove(Point p) {
+            if (Tile.Map[p.X, p.Y].Connection == TileConnection.UP)
+                Tile.Map[p.X, p.Y + 1].Connection = TileConnection.NONE;
+            else if (Tile.Map[p.X, p.Y].Connection == TileConnection.DOWN)
+                Tile.Map[p.X, p.Y - 1].Connection = TileConnection.NONE;
+            else if (Tile.Map[p.X, p.Y].Connection == TileConnection.LEFT)
+                Tile.Map[p.X + 1, p.Y].Connection = TileConnection.NONE;
+            else if (Tile.Map[p.X, p.Y].Connection == TileConnection.RIGHT)
+                Tile.Map[p.X - 1, p.Y].Connection = TileConnection.NONE;
+
+            Tile.Map[p.X, p.Y] = new Tile(new Point(p.X, p.Y));
+        }
     }
 }
