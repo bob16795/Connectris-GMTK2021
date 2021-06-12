@@ -37,7 +37,7 @@ namespace Connect4Puzzle.Input
 
         //Fields
         private KeyboardState kb;
-        private KeyboardState prevkb;
+        private KeyboardState prevKb;
 
         private MouseState ms;
         private MouseState prevMs;
@@ -82,7 +82,7 @@ namespace Connect4Puzzle.Input
                 UIManager.Instance.ProcessClick(ms.Position);
             }
 
-            prevkb = kb;
+            prevKb = kb;
             prevMs = ms;
 
             return dir;
