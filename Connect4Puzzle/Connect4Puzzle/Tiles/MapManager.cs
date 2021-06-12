@@ -31,9 +31,9 @@ namespace Connect4Puzzle.Tiles
         
         private int startLevel = 0;
 
-        public int level => Score / 750 + startLevel;
+        public int level => Score / 1000 + startLevel;
 
-        public int Speed => 40 / (level + 1) + 1;
+        public int Speed => 40 / (level + 1) + 3;
     
         private int combo;
 
