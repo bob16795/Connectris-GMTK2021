@@ -42,17 +42,25 @@ namespace Connect4Puzzle.Tiles
             }
         }
 
+        public bool Control() {
+            for (int y = 19; y > 0; y--)
+            {
+                for (int x = 0; x < 7; x++)
+                {
+                    if (Tile.Map[x, y].controlled) return true;
+                }
+            }
+            return false;
+        }
+
         public void MoveTiles() {
             List<Direction> Keys = InputManager.Instance.TrackInput();
             if (Keys.Contains(Direction.DOWN)) {
-                Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.NONE, TileType.RED_TILE, true); 
             }
             if (Keys.Contains(Direction.LEFT)) {
                 Move(1);
             }
             if (Keys.Contains(Direction.RIGHT)) {
-                //Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.RIGHT, TileType.RED_TILE, true);
-                //Tile.Map[1, 0] = new Tile(new Point(1, 0), TileConnection.LEFT, TileType.GREEN_TILE, true);
                 Move(-1);
             }
         }
@@ -82,7 +90,12 @@ namespace Connect4Puzzle.Tiles
             }
         }
 
-        public void Update(GameTime gt) {
+        public void SpawnTiles() {
+            Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.RIGHT, TileType.RED_TILE, true);
+            Tile.Map[1, 0] = new Tile(new Point(1, 0), TileConnection.LEFT, TileType.GREEN_TILE, true);
+        }
+
+        public void Update(GameTime gt) {   
             if (Tile.Map[0, 0] == null) {
                 for (int y = 0; y < 20; y++)
                 {
@@ -93,7 +106,8 @@ namespace Connect4Puzzle.Tiles
                 }
             }
             MoveTiles();
-            //SpawnTiles();
+            if (!Control())
+                SpawnTiles();
         }
     }
 }
