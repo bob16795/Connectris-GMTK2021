@@ -19,7 +19,7 @@ namespace Connect4Puzzle.Tiles
         DOWN,
         LEFT,
         RIGHT,
-        NONE,
+        NO_CONNECTION,
     }
 
     public class Tile
@@ -33,7 +33,7 @@ namespace Connect4Puzzle.Tiles
         public bool controlled;
         private ParticleProps props;
 
-        public Tile(Point position, TileConnection connection = TileConnection.NONE, TileType type = TileType.NO_TILE, bool controlled = false) {
+        public Tile(Point position, TileConnection connection = TileConnection.NO_CONNECTION, TileType type = TileType.NO_TILE, bool controlled = false) {
             if (ps == null)
                 ps = new ParticleSystem();
             this.Position = position;
@@ -79,16 +79,20 @@ namespace Connect4Puzzle.Tiles
             return t.Type != TileType.NO_TILE;
         }
 
+        public void ResetConnection() {
+            Connection = TileConnection.NO_CONNECTION;
+        }
+
         public void Remove(bool bad) {
             Point p = Position;
             if (Connection == TileConnection.UP)
-                Tile.Map[p.X, p.Y - 1].Connection = TileConnection.NONE;
+                Tile.Map[p.X, p.Y - 1].ResetConnection();
             else if (Connection == TileConnection.DOWN)
-                Tile.Map[p.X, p.Y + 1].Connection = TileConnection.NONE;
+                Tile.Map[p.X, p.Y + 1].ResetConnection();
             else if (Connection == TileConnection.LEFT)
-                Tile.Map[p.X - 1, p.Y].Connection = TileConnection.NONE;
+                Tile.Map[p.X - 1, p.Y].ResetConnection();
             else if (Connection == TileConnection.RIGHT)
-                Tile.Map[p.X + 1, p.Y].Connection = TileConnection.NONE;
+                Tile.Map[p.X + 1, p.Y].ResetConnection();
             props.Position = p.ToVector2() * 24 + RenderMap.bg.Bounds.Location.ToVector2() + new Vector2(12, -24);
             for (int i = 0; i < 100; i++)
             {
@@ -100,7 +104,7 @@ namespace Connect4Puzzle.Tiles
                 MapManager.Instance.Score -= 50;
             }
             Type = TileType.NO_TILE;
-            Connection = TileConnection.NONE;
+            Connection = TileConnection.NO_CONNECTION;
         }
     }
 }
