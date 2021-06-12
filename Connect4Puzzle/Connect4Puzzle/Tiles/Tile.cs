@@ -51,12 +51,6 @@ namespace Connect4Puzzle.Tiles
                 LifeTime = 1.5f,
                 LifeTimeVariation = 1f,
             };
-            if (Type != TileType.NO_TILE){
-                for (int i = 0; i < 100; i++)
-                {
-                    ps.Emit(props);   
-                }
-            }
         }
 
         public void UpdateSprite() {
