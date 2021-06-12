@@ -54,7 +54,6 @@ namespace Connect4Puzzle.UI
 
             playButton.onClick = new UIAction((i) =>
             {
-                System.Diagnostics.Debug.WriteLine("test");
                 FiniteStateMachineManager.Instance.CurrentState = GameState.INSTRUCTIONS;
                 ResetButtons();
             });
@@ -70,7 +69,6 @@ namespace Connect4Puzzle.UI
 
             nextButton.onClick = new UIAction((i) =>
             {
-                System.Diagnostics.Debug.WriteLine("test");
                 FiniteStateMachineManager.Instance.CurrentState = GameState.GAME;
                 ResetButtons();
             });
@@ -88,7 +86,6 @@ namespace Connect4Puzzle.UI
 
             okButton.onClick = new UIAction((i) =>
             {
-                System.Diagnostics.Debug.WriteLine("test");
                 FiniteStateMachineManager.Instance.CurrentState = GameState.GAME;
                 ResetButtons();
             });
@@ -105,7 +102,6 @@ namespace Connect4Puzzle.UI
 
             menuButton.onClick = new UIAction((i) =>
             {
-                System.Diagnostics.Debug.WriteLine("test");
                 FiniteStateMachineManager.Instance.CurrentState = GameState.MENU;
                 ResetButtons();
             });
