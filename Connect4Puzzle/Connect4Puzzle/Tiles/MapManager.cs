@@ -28,6 +28,14 @@ namespace Connect4Puzzle.Tiles
         private int counter;
 
         public int Stop = 0;
+        
+        private int startLevel = 15;
+
+        public int level => Score / 1500 + startLevel;
+
+        private int[] Speeds = {48, 43, 38, 33, 28, 23, 18, 13, 8, 6, 5, 5, 5, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 1};
+
+        public int Speed => Speeds[Math.Min(20, level)];
     
         public void DropTiles() {
 

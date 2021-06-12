@@ -38,8 +38,7 @@ namespace Connect4Puzzle.Music
         public void LoadContent()
         {
             Snap = content.Load<SoundEffect>("Sounds/snap");
-            //buttonClick = content.Load<SoundEffect>("Music/button");
-            //menu = content.Load<Song>("Music/menu");
+            menu = content.Load<Song>("Sounds/katyusha");
         }
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace Connect4Puzzle.Music
                 case "pause":
                     MediaPlayer.Pause();
                     break;
-                case "menu":
+                case "game":
                     MediaPlayer.Stop();                  
                     MediaPlayer.Play(menu);
                     MediaPlayer.Volume = 0.25f;
