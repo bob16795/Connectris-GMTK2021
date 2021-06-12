@@ -33,6 +33,7 @@ namespace Connect4Puzzle
 
             _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
             _graphics.PreferredBackBufferHeight = (int)Sprite.DEF_HEIGHT;
+            Window.Title = "Connectris";
             _graphics.ApplyChanges();
             Sprite.graphics = _graphics;
 
@@ -64,7 +65,7 @@ namespace Connect4Puzzle
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: re implement
             _spriteBatch.Begin();                     
