@@ -33,8 +33,9 @@ namespace Connect4Puzzle.UI
 
         public static UIPanel nextTile;
 
-        public static SpriteFont font;
+        public static UIText ScoreText;
 
+        public static SpriteFont font;
 
         //ctor
         public UIElementsManager()
@@ -114,10 +115,11 @@ namespace Connect4Puzzle.UI
             UIManager.Instance.Add(nextTile);
 
             //TODO: Move
-            UIText ScoreText = new UIText(font, new Rectangle(0, 0, 0, 0), 2, Color.White);
+            ScoreText = new UIText(font, new Rectangle(0, 0, 0, 0), 2, Color.White);
             ScoreText.update = new UITextUpdate(() => {
                 return MapManager.Instance.Score.ToString("D8");
             });
+            ScoreText.IsActive = false;
             UIManager.Instance.Add(ScoreText);
         }
         
@@ -126,6 +128,7 @@ namespace Connect4Puzzle.UI
         /// </summary>
         public void ResetButtons()
         {
+            ScoreText.IsActive = false;
             playButton.IsActive = false;
             okButton.IsActive = false;
             nextTile.IsActive = false;

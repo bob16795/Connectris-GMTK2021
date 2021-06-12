@@ -118,6 +118,7 @@ namespace Connect4Puzzle.FSM
                     UIElementsManager.okButton.IsActive = true;
                     break;
                 case GameState.GAME:
+                    UIElementsManager.ScoreText.IsActive = true;
                     UIElementsManager.nextTile.IsActive = true;
                     UIElementsManager.menuButton.IsActive = true;
                     if (frames++ % 15 == 0)
