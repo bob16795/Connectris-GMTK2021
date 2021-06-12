@@ -31,7 +31,6 @@ namespace Connect4Puzzle.Tiles
         private int numSearched;
         private Random random;
 
-
         public static readonly Lazy<WinManager>
             win = new Lazy<WinManager>(() => new WinManager());
 
