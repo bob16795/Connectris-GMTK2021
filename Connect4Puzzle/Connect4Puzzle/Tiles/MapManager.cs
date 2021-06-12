@@ -19,7 +19,7 @@ namespace Connect4Puzzle.Tiles
                 (() => new MapManager());
         public static MapManager Instance { get { return lazy.Value; } }
         
-        public bool lost => Tile.Map[3, 0].controlled == false && Tile.Map[3, 0].Type != TileType.NO_TILE;
+        public bool lost => Tile.Map[3, 0] == null || Tile.Map[3, 0].controlled == false && Tile.Map[3, 0].Type != TileType.NO_TILE;
 
         public int Score;
 

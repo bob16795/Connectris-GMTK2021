@@ -71,9 +71,9 @@ namespace Connect4Puzzle
                 _graphics.IsFullScreen = !_graphics.IsFullScreen;
                 _graphics.ApplyChanges();
             }
+            FiniteStateMachineManager.Instance.Update(gameTime);
             if (FiniteStateMachineManager.Instance.CurrentState == GameState.GAME && MapManager.Instance.lost)
                 FiniteStateMachineManager.Instance.CurrentState = GameState.GAME_OVER;
-            FiniteStateMachineManager.Instance.Update(gameTime);
                     
             base.Update(gameTime);
         }
