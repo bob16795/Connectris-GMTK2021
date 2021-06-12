@@ -27,9 +27,13 @@ namespace Connect4Puzzle.Tiles
     class WinManager
     {
         //fields
-        private bool[,] visited;
         private Directions direction;
         private int numSearched;
+
+        public static readonly Lazy<WinManager>
+            win = new Lazy<WinManager>(() => new WinManager());
+
+        public WinManager Instance { get { return win.Value; } }
 
         //properties
 
@@ -37,9 +41,10 @@ namespace Connect4Puzzle.Tiles
         //ctor
         public WinManager()
         {
-            visited = new bool[7, 7];
             direction = default;
             numSearched = 0;
+
+            direction = Directions.NONE;
 
         }
 
@@ -129,25 +134,87 @@ namespace Connect4Puzzle.Tiles
                 }
                 else if(direction != default && isTileValid(currentVertex))
                 {
-                    switch (direction)
+                    try
                     {
-                        case Directions.NORTH:
-                            if (isTileValid(Tile.Map[location.X, location.Y - 1]) &&
-                                Tile.Map[location.X, location.Y - 1].Type == TileType.GREEN_TILE)
-                            {
-                                tileQueue.Enqueue(Tile.Map[location.X, location.Y - 1]);
-                            }
-                            break;
+                        numSearched++;
+
+                        switch (direction)
+                        {
+                            case Directions.NORTH:
+                                if (isTileValid(Tile.Map[location.X, location.Y - 1]) &&
+                                    Tile.Map[location.X, location.Y - 1].Type == TileType.GREEN_TILE)
+                                {
+                                    tileQueue.Enqueue(Tile.Map[location.X, location.Y - 1]);
+                                }
+                                break;
+
+                            case Directions.SOUTH:
+                                if (isTileValid(Tile.Map[location.X, location.Y + 1]) &&
+                                    Tile.Map[location.X, location.Y + 1].Type == TileType.GREEN_TILE)
+                                {
+                                    tileQueue.Enqueue(Tile.Map[location.X, location.Y + 1]);
+                                }
+                                break;
+
+                            case Directions.WEST:
+                                if (isTileValid(Tile.Map[location.X - 1, location.Y]) &&
+                                    Tile.Map[location.X - 1, location.Y].Type == TileType.GREEN_TILE)
+                                {
+                                    tileQueue.Enqueue(Tile.Map[location.X - 1, location.Y]);
+                                }
+                                break;
+
+                            case Directions.EAST:
+                                if (isTileValid(Tile.Map[location.X + 1, location.Y]) &&
+                                    Tile.Map[location.X + 1, location.Y].Type == TileType.GREEN_TILE)
+                                {
+                                    tileQueue.Enqueue(Tile.Map[location.X + 1, location.Y]);
+                                }
+                                break;
+
+                            case Directions.NW:
+                                if (isTileValid(Tile.Map[location.X - 1, location.Y - 1]) &&
+                                    Tile.Map[location.X - 1, location.Y - 1].Type == TileType.GREEN_TILE)
+                                {
+                                    tileQueue.Enqueue(Tile.Map[location.X - 1, location.Y - 1]);
+                                }
+                                break;
+
+                            case Directions.SW:
+                                if (isTileValid(Tile.Map[location.X - 1, location.Y + 1]) &&
+                                    Tile.Map[location.X - 1, location.Y + 1].Type == TileType.GREEN_TILE)
+                                {
+                                    tileQueue.Enqueue(Tile.Map[location.X - 1, location.Y + 1]);
+                                }
+                                break;
+
+                            case Directions.NE:
+                                if (isTileValid(Tile.Map[location.X + 1, location.Y - 1]) &&
+                                    Tile.Map[location.X + 1, location.Y - 1].Type == TileType.GREEN_TILE)
+                                {
+                                    tileQueue.Enqueue(Tile.Map[location.X + 1, location.Y - 1]);
+                                }
+                                break;
+
+                            case Directions.SE:
+                                if (isTileValid(Tile.Map[location.X + 1, location.Y + 1]) &&
+                                    Tile.Map[location.X + 1, location.Y + 1].Type == TileType.GREEN_TILE)
+                                {
+                                    tileQueue.Enqueue(Tile.Map[location.X + 1, location.Y + 1]);
+                                }
+                                break;
+                        }
                     }
+                    catch
+                    {
+                        return null;
+                    }
+                    
                 }
                 else
                 {
-                    if(tileQueue.Count != 0)
-                    {
-                        tileQueue.Dequeue();
-                    }
+                    return null;
                 }
-                
             }
 
             List<Tile> tiles = new List<Tile>();
@@ -162,8 +229,7 @@ namespace Connect4Puzzle.Tiles
         /// </summary>
         public void ResetBooleans()
         {
-            visited = new bool[7, 7];
-            visited[3, 3] = true;
+            direction = Directions.NONE;
         }
 
         public bool isTileValid(Tile t)
