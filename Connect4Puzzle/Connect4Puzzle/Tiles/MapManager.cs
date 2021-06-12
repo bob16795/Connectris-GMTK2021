@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Connect4Puzzle.Input;
+using Connect4Puzzle.Music;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -64,6 +65,7 @@ namespace Connect4Puzzle.Tiles
                         Tile.Map[x, y].controlled = false;
                     }
                 }
+                SoundManager.Instance.PlaySFX("snap");
                 return false;
             }
             return true;
