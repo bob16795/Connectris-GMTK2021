@@ -55,6 +55,7 @@ namespace Connect4Puzzle
             SoundManager.Instance.LoadContent();
 
             FiniteStateMachineManager.Instance.bgTexture = Content.Load<Texture2D>("Backdrop");
+            FiniteStateMachineManager.Instance.tutTexture = Content.Load<Texture2D>("Tutorial");
         }
 
         protected override void Update(GameTime gameTime)
@@ -75,6 +76,9 @@ namespace Connect4Puzzle
             if (FiniteStateMachineManager.Instance.CurrentState == GameState.GAME && MapManager.Instance.lost)
                 FiniteStateMachineManager.Instance.CurrentState = GameState.GAME_OVER;
                     
+#if DEBUG
+            UIManager.Instance.Update(gameTime);
+#endif
             base.Update(gameTime);
         }
 
