@@ -33,6 +33,8 @@ namespace Connect4Puzzle.Tiles
                     if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(Tile.Map[x, y - 1])) {
                         result[x] = Tile.Map[x, y - 1];
                         Tile.Map[x, y - 1] = new Tile(new Point(x, y - 1));
+                    } else {
+                        Tile.Map[x, y].controlled = false;
                     }
                 }
 
@@ -44,24 +46,33 @@ namespace Connect4Puzzle.Tiles
             }
         }
 
+        public bool Control() {
+            for (int y = 19; y > 0; y--)
+            {
+                for (int x = 0; x < 7; x++)
+                {
+                    if (Tile.Map[x, y].controlled) return true;
+                }
+            }
+            return false;
+        }
+
         public void MoveTiles() {
             List<Direction> Keys = InputManager.Instance.TrackInput();
             if (Keys.Contains(Direction.DOWN)) {
-                Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.NONE, TileType.RED_TILE, true); 
             }
             if (Keys.Contains(Direction.LEFT)) {
                 Move(1);
             }
             if (Keys.Contains(Direction.RIGHT)) {
-                //Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.RIGHT, TileType.RED_TILE, true);
-                //Tile.Map[1, 0] = new Tile(new Point(1, 0), TileConnection.LEFT, TileType.GREEN_TILE, true);
                 Move(-1);
             }
         }
 
         public void Move(int direction) {
-            for (int x = direction < 0 ? 1 : 0; x < (direction > 0 ? 6 : 7); x++)
+            for (int x2 = 0; x2 < 6; x2++)
             {
+                int x = direction < 0 ? 6 - x2 : x2;
                 Tile[] result = new Tile[20];
                 for (int y = 0; y < 19; y++)
                 {
@@ -83,7 +94,12 @@ namespace Connect4Puzzle.Tiles
             }
         }
 
-        public void Update(GameTime gt) {
+        public void SpawnTiles() {
+            Tile.Map[0, 0] = new Tile(new Point(0, 0), TileConnection.RIGHT, TileType.RED_TILE, true);
+            Tile.Map[1, 0] = new Tile(new Point(1, 0), TileConnection.LEFT, TileType.GREEN_TILE, true);
+        }
+
+        public void Update(GameTime gt) {   
             if (Tile.Map[0, 0] == null) {
                 for (int y = 0; y < 20; y++)
                 {
@@ -94,7 +110,8 @@ namespace Connect4Puzzle.Tiles
                 }
             }
             MoveTiles();
-            //SpawnTiles();
+            if (!Control())
+                SpawnTiles();
         }
     }
 }
