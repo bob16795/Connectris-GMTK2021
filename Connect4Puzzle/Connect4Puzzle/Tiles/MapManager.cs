@@ -49,7 +49,7 @@ namespace Connect4Puzzle.Tiles
                     if (Tile.Map[x, y] == null) Tile.Map[x, y] = new Tile(new Point(x, y)); 
                     result[x] = Tile.Map[x, y];
                     if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(Tile.Map[x, y - 1])) {
-                        result[x] = Tile.Map[x, y - 1];
+                        result[x] = new Tile(Tile.Map[x, y - 1]);
                         Tile.Map[x, y - 1] = new Tile(new Point(x, y - 1));
                     }
                 }
@@ -61,6 +61,7 @@ namespace Connect4Puzzle.Tiles
                 }
             }
             int removed = 0;
+            List<Tile> remove = new List<Tile>();
             for (int x = 0; x < 8; x++)
             {
                 for (int y = 0; y < 20; y++)
@@ -70,13 +71,14 @@ namespace Connect4Puzzle.Tiles
                         if (rem == null) continue;
                         if (Tile.Map[x, y].Type == TileType.GREEN_TILE)
                             removed += 1;
-                        foreach (Tile t in rem)
-                        {
-                            t.Remove(true);
-                        }    
+                        remove.AddRange(rem);
                     }
                 }
             }
+            foreach (Tile t in remove)
+            {
+                t.Remove(true);
+            }    
             if (removed != 0) {
                 combo += removed;
                 SoundManager.Instance.PlayCombo(combo);
