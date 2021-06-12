@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -31,6 +32,14 @@ namespace Connect4Puzzle.Tiles
         private int numSearched;
         private Random random;
 
+        private bool canSearchNorth;
+        private bool canSearchWest;
+        private bool canSearchNW;
+        private bool canSearchSW;
+        private bool canSearchSouth;
+        private bool canSearchSouthEast;
+
+
         public static readonly Lazy<WinManager>
             win = new Lazy<WinManager>(() => new WinManager());
 
@@ -54,6 +63,13 @@ namespace Connect4Puzzle.Tiles
 
             random = new Random();
             direction = Directions.NONE;
+
+            canSearchNorth = false;
+            canSearchWest= false;
+            canSearchNW = false;
+            canSearchSW = false;
+            canSearchSouth = false;
+            canSearchSouthEast = false;
 
         }
 
@@ -79,105 +95,46 @@ namespace Connect4Puzzle.Tiles
             //pushes the first tile to the queue
             tileQueue.Push(t);
 
-            //loops until three MORE tiles are searched
-            while(numSearched < 3)
-            {
-                Tile currentVertex = null;
-
-                //peeks to the first tile in the stack
-                if (tileQueue.Count > 0)
-                {
-                    currentVertex = tileQueue.Peek();
-                    location = currentVertex.Position;
-                }
-
-                //finds direction needed to search
-                if (direction == Directions.NONE && isTileValid(currentVertex))
-                {
-                    if (CheckInBounds(location.X - 1, location.Y)
-                        && Tile.Map[location.X - 1, location.Y].Type == initialTile.Type)
-                    {
-                        tileQueue.Push(Tile.Map[location.X - 1, location.Y]);
-                        direction = Directions.WEST;
-                    }
-                    else if (CheckInBounds(location.X, location.Y - 1)
-                        && Tile.Map[location.X, location.Y - 1].Type == initialTile.Type)
-                    {
-                        tileQueue.Push(Tile.Map[location.X, location.Y - 1]);
-                        direction = Directions.NORTH;
-                    }
-                    else if (CheckInBounds(location.X - 1, location.Y - 1)
-                        && Tile.Map[location.X - 1, location.Y - 1].Type == initialTile.Type)
-                    {
-                        tileQueue.Push(Tile.Map[location.X - 1, location.Y - 1]);
-                        direction = Directions.NW;
-                    }
-                    else if (CheckInBounds(location.X - 1, location.Y + 1) &&
-                        Tile.Map[location.X - 1, location.Y + 1].Type == initialTile.Type)
-                    {
-                        tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
-                        direction = Directions.SW;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                    numSearched++;
-                }
-
-                //keeps searching in that direction
-                else if (direction != Directions.NONE && isTileValid(currentVertex))
-                {
-                    switch (direction)
-                    {
-                        case Directions.NORTH:
-                            if (CheckInBounds(location.X, location.Y - 1) && isTileValid(Tile.Map[location.X, location.Y - 1]) &&
-                                Tile.Map[location.X, location.Y - 1].Type == initialTile.Type)
-                            {
-                                tileQueue.Push(Tile.Map[location.X, location.Y - 1]);
-                            }
-                            break;
-
-                        case Directions.WEST:
-                            if (CheckInBounds(location.X - 1, location.Y) && isTileValid(Tile.Map[location.X - 1, location.Y]) &&
-                                Tile.Map[location.X - 1, location.Y].Type == initialTile.Type)
-                            {
-                                tileQueue.Push(Tile.Map[location.X - 1, location.Y]);
-                            }
-                            break;
-
-                        case Directions.NW:
-                            if (CheckInBounds(location.X - 1, location.Y - 1) && isTileValid(Tile.Map[location.X - 1, location.Y - 1]) &&
-                                Tile.Map[location.X - 1, location.Y - 1].Type == initialTile.Type)
-                            {
-                                tileQueue.Push(Tile.Map[location.X - 1, location.Y - 1]);
-                            }
-                            break;
-
-                        case Directions.SW:
-                            if (CheckInBounds(location.X - 1, location.Y + 1) && isTileValid(Tile.Map[location.X - 1, location.Y + 1]) &&
-                                Tile.Map[location.X - 1, location.Y + 1].Type == initialTile.Type)
-                            {
-                                tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
-                            }
-                            break;
-                    }
-                    numSearched++;
-                }
-
-                //nothing found, return null
-                else
-                {
-                    return null;
-                }
-            }
+            SearchForDirections(location, tileQueue, initialTile);
+            
 
             //adds sequence of tiles to list
             List<Tile> tiles = new List<Tile>();
             List<Tile> reds = new List<Tile>();
             tiles.AddRange(tileQueue);
 
-            if (tiles.Count == 4)
+            if(tileQueue.Count < 4)
+            {
+                while (tileQueue.Count < 4)
+                {
+                    tileQueue = new Stack<Tile>();
+
+                    tileQueue.Push(t);
+                    numSearched = 0;
+                    switch (direction)
+                    {
+                        case Directions.NORTH:
+                            canSearchNorth = false;
+                            break;
+                        case Directions.WEST:
+                            canSearchWest = false;
+                            break;
+                        case Directions.NW:
+                            canSearchNW = false;
+                            break;
+                        case Directions.SW:
+                            canSearchSW = false;
+                            break;
+                        default:
+                            return null;
+                    }
+                    direction = Directions.NONE;
+
+                    SearchForDirections(location, tileQueue, initialTile);
+                }
+            }
+            
+            else if (tiles.Count == 4)
             {
                 foreach(Tile tile in Tile.Map)
                 {
@@ -189,6 +146,7 @@ namespace Connect4Puzzle.Tiles
 
                 if (reds.Count <= 4)
                     return tiles;
+
                 for(int i = 0; i < 4; i++)
                 {
                     int index = random.Next(0, reds.Count);
@@ -197,12 +155,13 @@ namespace Connect4Puzzle.Tiles
                 }
                 return tiles;
             }
+            
             else
             {
                 return null;
             }
-            
-            
+
+            return null;
         }
 
         /// <summary>
@@ -212,6 +171,12 @@ namespace Connect4Puzzle.Tiles
         {
             direction = Directions.NONE;
             numSearched = 0;
+            canSearchWest = true;
+            canSearchSW = true;
+            canSearchNW = true;
+            canSearchNorth = true;
+            canSearchSouth = true;
+            canSearchSouthEast = true;
         }
 
         public bool isTileValid(Tile t)
@@ -242,6 +207,143 @@ namespace Connect4Puzzle.Tiles
             else
             {
                 return false;
+            }
+        }
+
+        public void SearchForDirections(Point location, Stack<Tile> tileQueue, Tile initialTile)
+        {
+            //loops until three MORE tiles are searched
+            while (numSearched < 3)
+            {
+                Tile currentVertex = null;
+
+                //peeks to the first tile in the stack
+                if (tileQueue.Count > 0)
+                {
+                    currentVertex = tileQueue.Peek();
+                    location = currentVertex.Position;
+                }
+
+                //finds direction needed to search
+                if (direction == Directions.NONE && isTileValid(currentVertex))
+                {
+                    if (CheckInBounds(location.X - 1, location.Y)
+                        && Tile.Map[location.X - 1, location.Y].Type == initialTile.Type
+                        && canSearchWest)
+                    {
+                        tileQueue.Push(Tile.Map[location.X - 1, location.Y]);
+                        direction = Directions.WEST;
+                    }
+                    else if (CheckInBounds(location.X, location.Y - 1)
+                        && Tile.Map[location.X, location.Y - 1].Type == initialTile.Type
+                        && canSearchNorth)
+                    {
+                        tileQueue.Push(Tile.Map[location.X, location.Y - 1]);
+                        direction = Directions.NORTH;
+                    }
+                    else if (CheckInBounds(location.X, location.Y + 1)
+                        && Tile.Map[location.X, location.Y + 1].Type == initialTile.Type
+                        && canSearchSouth)
+                    {
+                        tileQueue.Push(Tile.Map[location.X, location.Y + 1]);
+                        direction = Directions.SOUTH;
+                    }
+                    else if (CheckInBounds(location.X + 1, location.Y + 1)
+                        && Tile.Map[location.X + 1, location.Y + 1].Type == initialTile.Type
+                        && canSearchSouthEast)
+                    {
+                        tileQueue.Push(Tile.Map[location.X + 1, location.Y + 1]);
+                        direction = Directions.SOUTH;
+                    }
+                    else if (CheckInBounds(location.X - 1, location.Y - 1)
+                        && Tile.Map[location.X - 1, location.Y - 1].Type == initialTile.Type
+                        && canSearchNW)
+                    {
+                        tileQueue.Push(Tile.Map[location.X - 1, location.Y - 1]);
+                        direction = Directions.NW;
+                    }
+                    else if (CheckInBounds(location.X - 1, location.Y + 1) &&
+                        Tile.Map[location.X - 1, location.Y + 1].Type == initialTile.Type
+                        && canSearchSW)
+                    {
+                        tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
+                        direction = Directions.SW;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    numSearched++;
+                }
+
+                //keeps searching in that direction
+                else if (direction != Directions.NONE && isTileValid(currentVertex))
+                {
+                    switch (direction)
+                    {
+                        case Directions.NORTH:
+                            if (CheckInBounds(location.X, location.Y - 1) && isTileValid(Tile.Map[location.X, location.Y - 1]) &&
+                                Tile.Map[location.X, location.Y - 1].Type == initialTile.Type
+                                && canSearchNorth)
+                            {
+                                tileQueue.Push(Tile.Map[location.X, location.Y - 1]);
+                            }
+                            break;
+
+                        case Directions.SOUTH:
+                            if (CheckInBounds(location.X, location.Y + 1) && isTileValid(Tile.Map[location.X, location.Y + 1]) &&
+                                Tile.Map[location.X, location.Y + 1].Type == initialTile.Type
+                                && canSearchSouth)
+                            {
+                                tileQueue.Push(Tile.Map[location.X, location.Y + 1]);
+                            }
+                            break;
+
+
+                        case Directions.WEST:
+                            if (CheckInBounds(location.X - 1, location.Y) && isTileValid(Tile.Map[location.X - 1, location.Y]) &&
+                                Tile.Map[location.X - 1, location.Y].Type == initialTile.Type
+                                && canSearchWest)
+                            {
+                                tileQueue.Push(Tile.Map[location.X - 1, location.Y]);
+                            }
+                            break;
+
+                        case Directions.NW:
+                            if (CheckInBounds(location.X - 1, location.Y - 1) && isTileValid(Tile.Map[location.X - 1, location.Y - 1]) &&
+                                Tile.Map[location.X - 1, location.Y - 1].Type == initialTile.Type
+                                && canSearchNW)
+                            {
+                                tileQueue.Push(Tile.Map[location.X - 1, location.Y - 1]);
+                            }
+                            break;
+
+                        case Directions.SE:
+                            if (CheckInBounds(location.X + 1, location.Y + 1) && isTileValid(Tile.Map[location.X + 1, location.Y + 1]) &&
+                                Tile.Map[location.X + 1, location.Y + 1].Type == initialTile.Type
+                                && canSearchSouthEast)
+                            {
+                                tileQueue.Push(Tile.Map[location.X + 1, location.Y + 1]);
+                            }
+                            break;
+
+                        case Directions.SW:
+                            if (CheckInBounds(location.X - 1, location.Y + 1) && isTileValid(Tile.Map[location.X - 1, location.Y + 1]) &&
+                                Tile.Map[location.X - 1, location.Y + 1].Type == initialTile.Type
+                                && canSearchSW)
+                            {
+                                tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
+                            }
+                            break;
+                    }
+                    numSearched++;
+                }
+
+                //nothing found, return null
+                else
+                {
+                    return;
+                }
             }
         }
     }
