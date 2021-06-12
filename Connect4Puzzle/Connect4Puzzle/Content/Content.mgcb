@@ -32,6 +32,18 @@
 /processorParam:TextureFormat=Color
 /build:backdrop.png
 
+#begin Sounds/katyusha.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/katyusha.mp3
+
+#begin Sounds/snap.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/snap.wav
+
 #begin Sounds/snap.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

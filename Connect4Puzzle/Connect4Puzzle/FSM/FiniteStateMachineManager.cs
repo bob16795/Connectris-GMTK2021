@@ -7,6 +7,7 @@ using Connect4Puzzle.UI;
 using Connect4Puzzle.Graphics;
 using Connect4Puzzle.Tiles;
 using Connect4Puzzle.Drawing;
+using Connect4Puzzle.Music;
 
 namespace Connect4Puzzle.FSM
 {
@@ -113,15 +114,18 @@ namespace Connect4Puzzle.FSM
             switch (currentState)
             {
                 case GameState.MAIN_MENU:
+                    SoundManager.Instance.PlayMusic("pause");
                     UIElementsManager.playButton.IsActive = true;
                     break;
                 case GameState.INSTRUCTIONS:
                     UIElementsManager.nextButton.IsActive = true;
                     break;
                 case GameState.MENU:
+                    SoundManager.Instance.PlayMusic("pause");
                     UIElementsManager.okButton.IsActive = true;
                     break;
                 case GameState.GAME:
+                    SoundManager.Instance.PlayMusic("game");
                     UIElementsManager.ScoreText.IsActive = true;
                     UIElementsManager.nextTile.IsActive = true;
                     UIElementsManager.menuButton.IsActive = true;
