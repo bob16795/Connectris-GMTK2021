@@ -160,23 +160,22 @@ namespace Connect4Puzzle.Tiles
 
         public void SpawnTiles() {
             Stop = 2;
-            int i = random.Next(1, 5);
-            i = 1;
+            int i = (int)(random.NextDouble() * 4);
             switch (i)
             {
-                case 1:
+                case 0:
                 Tile.Map[3, 0] = new Tile(new Point(3, 0), TileConnection.RIGHT, TileType.RED_TILE, true);
                 Tile.Map[4, 0] = new Tile(new Point(4, 0), TileConnection.LEFT, TileType.GREEN_TILE, true);
                 break;
-                case 2:
+                case 1:
                 Tile.Map[3, 0] = new Tile(new Point(3, 0), TileConnection.RIGHT, TileType.GREEN_TILE, true);
                 Tile.Map[4, 0] = new Tile(new Point(4, 0), TileConnection.LEFT, TileType.RED_TILE, true);
                 break;
-                case 3:
+                case 2:
                 Tile.Map[3, 0] = new Tile(new Point(3, 0), TileConnection.DOWN, TileType.GREEN_TILE, true);
                 Tile.Map[3, 1] = new Tile(new Point(3, 1), TileConnection.UP, TileType.RED_TILE, true);
                 break;
-                case 4:
+                case 3:
                 Tile.Map[3, 0] = new Tile(new Point(3, 0), TileConnection.DOWN, TileType.RED_TILE, true);
                 Tile.Map[3, 1] = new Tile(new Point(3, 1), TileConnection.UP, TileType.GREEN_TILE, true);
                 break;
