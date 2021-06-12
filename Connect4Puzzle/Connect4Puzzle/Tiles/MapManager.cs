@@ -37,6 +37,8 @@ namespace Connect4Puzzle.Tiles
 
         public int Speed => Speeds[Math.Min(20, level)];
     
+        private int combo;
+
         public void DropTiles() {
 
             for (int y = 19; y > 0; y--)
@@ -58,6 +60,7 @@ namespace Connect4Puzzle.Tiles
                     Tile.Map[x, y].Position = new Point(x, y);
                 }
             }
+            int removed = 0;
             for (int x = 0; x < 8; x++)
             {
                 for (int y = 0; y < 20; y++)
@@ -65,13 +68,22 @@ namespace Connect4Puzzle.Tiles
                     if (Tile.Map[x, y].Type != TileType.NO_TILE) {
                         List<Tile> rem = WinManager.Instance.BFSearch(Tile.Map[x, y]);
                         if (rem == null) continue;
+                        if (Tile.Map[x, y].Type == TileType.GREEN_TILE)
+                            removed += 1;
                         foreach (Tile t in rem)
                         {
-                            Tile.Remove(t.Position, true);
+                            t.Remove(true);
                         }    
                     }
                 }
             }
+            if (removed != 0) {
+                combo += removed;
+                SoundManager.Instance.PlayCombo(combo);
+            } else {
+                combo -= 1;
+            }
+
             for (int x = 0; x < 8 && Stop != 0; x++ )
             {
                 for (int y = 18; y > 0 && Stop != 0; y--)
@@ -83,7 +95,7 @@ namespace Connect4Puzzle.Tiles
         }
 
         public bool Control() {
-            if (Stop == 0) {
+            if (Stop <= 0) {
                 for (int y = 19; y > 0; y--)
                 {
                     for (int x = 0; x < 8; x++)
@@ -94,7 +106,14 @@ namespace Connect4Puzzle.Tiles
                 SoundManager.Instance.PlaySFX("snap");
                 return false;
             }
-            return true;
+            for (int y = 19; y >= 0; y--)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    if (Tile.Map[x, y].controlled == true) return true;
+                }
+            }
+            return false;
         }
 
         public void MoveTiles() {
@@ -139,6 +158,7 @@ namespace Connect4Puzzle.Tiles
         }
 
         public void SpawnTiles() {
+            Stop = 2;
             int i = random.Next(1, 5);
             switch (i)
             {
@@ -159,7 +179,6 @@ namespace Connect4Puzzle.Tiles
                 Tile.Map[3, 1] = new Tile(new Point(3, 1), TileConnection.UP, TileType.GREEN_TILE, true);
                 break;
             }
-            Stop = 2;
         }
 
         public void Update(GameTime gt) {   

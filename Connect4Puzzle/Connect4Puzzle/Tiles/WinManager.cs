@@ -273,19 +273,19 @@ namespace Connect4Puzzle.Tiles
             {
                 foreach(Tile tile in Tile.Map)
                 {
-                    if(tile.Type == TileType.RED_TILE)
+                    if(tile.Type == TileType.RED_TILE && tile.controlled == false)
                     {
                         reds.Add(tile);
                     }
                 }
 
+                if (reds.Count <= 4)
+                    return tiles;
                 for(int i = 0; i < 4; i++)
                 {
                     int index = random.Next(0, reds.Count);
 
-                    Point p = reds[index].Position;
-
-                    Tile.Remove(p, false);
+                    reds[index].Remove(false);
                 }
                 return tiles;
             }

@@ -79,26 +79,28 @@ namespace Connect4Puzzle.Tiles
             return t.Type != TileType.NO_TILE;
         }
 
-        public static void Remove(Point p, bool bad) {
-            if (Tile.Map[p.X, p.Y].Connection == TileConnection.UP)
+        public void Remove(bool bad) {
+            Point p = Position;
+            if (Connection == TileConnection.UP)
                 Tile.Map[p.X, p.Y - 1].Connection = TileConnection.NONE;
-            else if (Tile.Map[p.X, p.Y].Connection == TileConnection.DOWN)
+            else if (Connection == TileConnection.DOWN)
                 Tile.Map[p.X, p.Y + 1].Connection = TileConnection.NONE;
-            else if (Tile.Map[p.X, p.Y].Connection == TileConnection.LEFT)
+            else if (Connection == TileConnection.LEFT)
                 Tile.Map[p.X - 1, p.Y].Connection = TileConnection.NONE;
-            else if (Tile.Map[p.X, p.Y].Connection == TileConnection.RIGHT)
+            else if (Connection == TileConnection.RIGHT)
                 Tile.Map[p.X + 1, p.Y].Connection = TileConnection.NONE;
-            Tile.Map[p.X, p.Y].props.Position = p.ToVector2() * 24 + RenderMap.bg.Bounds.Location.ToVector2() + new Vector2(12, -24);
+            props.Position = p.ToVector2() * 24 + RenderMap.bg.Bounds.Location.ToVector2() + new Vector2(12, -24);
             for (int i = 0; i < 100; i++)
             {
                 ps.Emit(Tile.Map[p.X, p.Y].props);
             }
-            if (Tile.Map[p.X, p.Y].Type == TileType.GREEN_TILE) {
+            if (Type == TileType.GREEN_TILE) {
                 MapManager.Instance.Score += 100;
-            } else if (bad && Tile.Map[p.X, p.Y].Type == TileType.RED_TILE) {
+            } else if (bad && Type == TileType.RED_TILE) {
                 MapManager.Instance.Score -= 50;
             }
-            Tile.Map[p.X, p.Y] = new Tile(new Point(p.X, p.Y));
+            Type = TileType.NO_TILE;
+            Connection = TileConnection.NONE;
         }
     }
 }

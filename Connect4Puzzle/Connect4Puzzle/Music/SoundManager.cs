@@ -27,6 +27,7 @@ namespace Connect4Puzzle.Music
         public bool Muted {get {return MediaPlayer.IsMuted; } set {MediaPlayer.IsMuted = value;}}
         private SoundEffect buttonClick;
         private SoundEffect Snap;
+        private SoundEffect combo;
 
         private Song menu;
 
@@ -38,7 +39,12 @@ namespace Connect4Puzzle.Music
         public void LoadContent()
         {
             Snap = content.Load<SoundEffect>("Sounds/snap");
+            combo = content.Load<SoundEffect>("Sounds/combo");
             menu = content.Load<Song>("Sounds/katyusha");
+        }
+
+        public void PlayCombo(int level) {
+            combo.Play(0.5f, 1 / (float)level , 0);
         }
 
         /// <summary>
