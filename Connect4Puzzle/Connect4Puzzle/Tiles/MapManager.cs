@@ -29,6 +29,8 @@ namespace Connect4Puzzle.Tiles
                     if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(Tile.Map[x, y - 1])) {
                         result[x] = Tile.Map[x, y - 1];
                         Tile.Map[x, y - 1] = new Tile(new Point(x, y - 1));
+                    } else {
+                        Tile.Map[x, y].controlled = false;
                     }
                 }
 
@@ -56,8 +58,9 @@ namespace Connect4Puzzle.Tiles
         }
 
         public void Move(int direction) {
-            for (int x = direction < 0 ? 1 : 0; x < (direction > 0 ? 6 : 7); x++)
+            for (int x2 = 0; x2 < 6; x2++)
             {
+                int x = direction < 0 ? 6 - x2 : x2;
                 Tile[] result = new Tile[20];
                 for (int y = 0; y < 19; y++)
                 {
