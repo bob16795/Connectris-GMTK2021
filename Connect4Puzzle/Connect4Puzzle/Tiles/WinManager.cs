@@ -33,7 +33,7 @@ namespace Connect4Puzzle.Tiles
         public static readonly Lazy<WinManager>
             win = new Lazy<WinManager>(() => new WinManager());
 
-        public WinManager Instance { get { return win.Value; } }
+        public static WinManager Instance { get { return win.Value; } }
 
         //properties
 
