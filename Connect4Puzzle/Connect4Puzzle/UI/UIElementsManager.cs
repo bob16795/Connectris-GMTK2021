@@ -112,6 +112,13 @@ namespace Connect4Puzzle.UI
 
             nextTile.IsActive = false;
             UIManager.Instance.Add(nextTile);
+
+            //TODO: Move
+            UIText ScoreText = new UIText(font, new Rectangle(0, 0, 0, 0), 2, Color.White);
+            ScoreText.update = new UITextUpdate(() => {
+                return MapManager.Instance.Score.ToString("D8");
+            });
+            UIManager.Instance.Add(ScoreText);
         }
         
         /// <summary>

@@ -75,7 +75,7 @@ namespace Connect4Puzzle.Tiles
             return t.Type != TileType.NO_TILE;
         }
 
-        public static void Remove(Point p) {
+        public static void Remove(Point p, bool bad) {
             if (Tile.Map[p.X, p.Y].Connection == TileConnection.UP)
                 Tile.Map[p.X, p.Y + 1].Connection = TileConnection.NONE;
             else if (Tile.Map[p.X, p.Y].Connection == TileConnection.DOWN)
@@ -88,6 +88,11 @@ namespace Connect4Puzzle.Tiles
             for (int i = 0; i < 100; i++)
             {
                 ps.Emit(Tile.Map[p.X, p.Y].props);
+            }
+            if (Tile.Map[p.X, p.Y].Type == TileType.GREEN_TILE) {
+                MapManager.Instance.Score += 100;
+            } else if (bad && Tile.Map[p.X, p.Y].Type == TileType.RED_TILE) {
+                MapManager.Instance.Score -= 10;
             }
             Tile.Map[p.X, p.Y] = new Tile(new Point(p.X, p.Y));
         }

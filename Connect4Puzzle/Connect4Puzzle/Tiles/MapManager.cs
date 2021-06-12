@@ -18,6 +18,7 @@ namespace Connect4Puzzle.Tiles
                 (() => new MapManager());
         public static MapManager Instance { get { return lazy.Value; } }
 
+        public int Score;
 
         private Random random = new Random();
 
