@@ -44,7 +44,7 @@ namespace Connect4Puzzle.FSM
 
         private GameState currentState;
         public static SpriteFont font;
-        public Texture2D bgTexture;
+        public Texture2D bgTexture, tutTexture;
 
         private Sprite titleSprite;
         private RenderMap rm;
@@ -89,6 +89,8 @@ namespace Connect4Puzzle.FSM
                     titleSprite.Draw(sb, new Point((int)((Sprite.DEF_WIDTH - 116 * 4) / 2), 100), 0, new Vector2(116, 22) * 4);                  
                     break;
                 case GameState.INSTRUCTIONS:
+                    Point pos = new Point((int)((Sprite.DEF_WIDTH * Sprite.GetScale() - tutTexture.Bounds.Width) / 2),(int)(Sprite.DEF_HEIGHT * Sprite.GetScale() - tutTexture.Bounds.Height) / 2);
+                    sb.Draw(tutTexture, pos.ToVector2(), Color.White);
                     break;
                 case GameState.MENU:
                     break;
