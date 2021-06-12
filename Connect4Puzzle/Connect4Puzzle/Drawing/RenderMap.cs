@@ -28,7 +28,7 @@ namespace Connect4Puzzle.Drawing
         public RenderMap(Tile[,] tiles)
         {
             this.tileGrid = tiles;
-            bg = new UIPanel(new Rectangle(0, 0, 24 * 7, 24 * 20));
+            bg = new UIPanel(new Rectangle(0, 0, 24 * 8, 24 * 20));
         }
 
         /// <summary>
