@@ -54,17 +54,16 @@ namespace Connect4Puzzle.Music
         public void PlaySFX(string action)
         {
             if (Muted) return;
-            try {
-                switch (action.ToLower().Trim())
-                {
-                    case "snap":
-                        Snap.Play(1f, 0, 0);
-                        break;
-                    case "button":
-                        buttonClick.Play(1f, 0, 0);
-                        break;
-                }
-            } catch {}
+
+            switch (action.ToLower().Trim())
+            {
+                case "snap":
+                    Snap.Play(1f, 0, 0);
+                    break;
+                case "button":
+                    buttonClick.Play(1f, 0, 0);
+                    break;
+            }
         }
 
         /// <summary>
