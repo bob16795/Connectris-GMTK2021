@@ -22,7 +22,7 @@ namespace Connect4Puzzle.Tiles
 
         private Random random = new Random();
 
-        public bool Stop = true;
+        public int Stop = 0;
     
         public void DropTiles() {
 
@@ -45,18 +45,18 @@ namespace Connect4Puzzle.Tiles
                     Tile.Map[x, y].Position = new Point(x, y);
                 }
             }
-            for (int x = 0; x < 8 && Stop == false; x++ )
+            for (int x = 0; x < 8 && Stop != 0; x++ )
             {
-                for (int y = 18; y > 0 && Stop == false; y--)
+                for (int y = 18; y > 0 && Stop != 0; y--)
                 {
-                    if (Tile.Map[x, y].controlled && !Tile.Map[x, y + 1].controlled && Tile.Map[x, y + 1].Type != TileType.NO_TILE) Stop = true;
+                    if (Tile.Map[x, y].controlled && !Tile.Map[x, y + 1].controlled && Tile.Map[x, y + 1].Type != TileType.NO_TILE) {Stop --; return;}
                 }
-                if (Tile.Map[x, 19].controlled) Stop = true;
+                if (Tile.Map[x, 19].controlled) {Stop --; return;}
             }
         }
 
         public bool Control() {
-            if (Stop) {
+            if (Stop == 0) {
                 for (int y = 19; y > 0; y--)
                 {
                     for (int x = 0; x < 8; x++)
@@ -86,19 +86,19 @@ namespace Connect4Puzzle.Tiles
             {
                 int x = direction < 0 ? 7 - x2 : x2;
                 Tile[] result = new Tile[20];
-                for (int y = 0; y < 19; y++)
+                for (int y = 0; y < 20; y++)
                 {
                     if (Tile.Map[x, y] == null) Tile.Map[x, y] = new Tile(new Point(x, y));
                     if (Tile.Map[x, y].Position != new Point(x, y)) Tile.Map[x, y] = new Tile(new Point(x, y));
                     result[y] = Tile.Map[x, y];
                     if (!Tile.Map[x + direction, y].controlled) continue;
-                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(Tile.Map[x + direction, y])) {
+                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldWidth(Tile.Map[x + direction, y], direction)) {
                         result[y] = Tile.Map[x + direction, y];
                         Tile.Map[x + direction, y] = new Tile(new Point(x + direction, y));
                     }
                 }
 
-                for (int y = 0; y < 19; y++)
+                for (int y = 0; y < 20; y++)
                 {
                     Tile.Map[x, y] = result[y];
                     Tile.Map[x, y].Position = new Point(x, y);
@@ -127,7 +127,7 @@ namespace Connect4Puzzle.Tiles
                 Tile.Map[3, 1] = new Tile(new Point(3, 1), TileConnection.UP, TileType.GREEN_TILE, true);
                 break;
             }
-            Stop = false;
+            Stop = 2;
         }
 
         public void Update(GameTime gt) {   
