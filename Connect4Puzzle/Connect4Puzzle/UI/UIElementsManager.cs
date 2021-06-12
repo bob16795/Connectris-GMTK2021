@@ -57,7 +57,7 @@ namespace Connect4Puzzle.UI
 
             nextButton = new UIButton(font,
                 new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
-                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
+                (2 * Sprite.graphics.PreferredBackBufferHeight / 3),
                 200, 100));
 
             nextButton.Text.Text = "Next";
