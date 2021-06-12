@@ -103,7 +103,7 @@ namespace Connect4Puzzle.Tiles
             if (Type == TileType.GREEN_TILE) {
                 MapManager.Instance.Score += 100;
             } else if (bad && Type == TileType.RED_TILE) {
-                MapManager.Instance.Score -= 50;
+                MapManager.Instance.Score -= 100;
             }
             Type = TileType.NO_TILE;
             Connection = TileConnection.NO_CONNECTION;
