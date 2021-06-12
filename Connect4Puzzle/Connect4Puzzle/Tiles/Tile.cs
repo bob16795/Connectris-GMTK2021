@@ -33,6 +33,8 @@ namespace Connect4Puzzle.Tiles
         public bool controlled;
         private ParticleProps props;
 
+        public Tile(Tile t) : this(t.Position, t.Connection, t.Type, t.controlled) {}
+
         public Tile(Point position, TileConnection connection = TileConnection.NO_CONNECTION, TileType type = TileType.NO_TILE, bool controlled = false) {
             if (ps == null)
                 ps = new ParticleSystem();
