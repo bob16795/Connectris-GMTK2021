@@ -96,7 +96,7 @@ namespace Connect4Puzzle.Tiles
             if (Tile.Map[p.X, p.Y].Type == TileType.GREEN_TILE) {
                 MapManager.Instance.Score += 100;
             } else if (bad && Tile.Map[p.X, p.Y].Type == TileType.RED_TILE) {
-                MapManager.Instance.Score -= 10;
+                MapManager.Instance.Score -= 50;
             }
             Tile.Map[p.X, p.Y] = new Tile(new Point(p.X, p.Y));
         }

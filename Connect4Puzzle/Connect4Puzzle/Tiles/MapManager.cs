@@ -18,10 +18,14 @@ namespace Connect4Puzzle.Tiles
             new Lazy<MapManager>
                 (() => new MapManager());
         public static MapManager Instance { get { return lazy.Value; } }
+        
+        public bool lost => Tile.Map[3, 0].controlled == false && Tile.Map[3, 0].Type != TileType.NO_TILE;
 
         public int Score;
 
         private Random random = new Random();
+
+        private int counter;
 
         public int Stop = 0;
     
@@ -72,15 +76,19 @@ namespace Connect4Puzzle.Tiles
         }
 
         public void MoveTiles() {
-            List<Direction> Keys = InputManager.Instance.TrackInput();
-            if (Keys.Contains(Direction.DOWN)) {
+            List<Direction> keys = InputManager.Instance.TrackInput();
+            if (keys.Contains(Direction.DOWN)) {
+                if (counter ++ % 5 == 0)
+                    DropTiles();
             }
-            else if (Keys.Contains(Direction.LEFT)) {
-                Move(1);
+            else if (keys.Contains(Direction.LEFT)) {
+                if (counter ++ % 5 == 0)
+                    Move(1);
             }
-            else if (Keys.Contains(Direction.RIGHT)) {
-                Move(-1);
-            }
+            else if (keys.Contains(Direction.RIGHT)) {
+                if (counter ++ % 5 == 0)
+                    Move(-1);
+            } else {counter = 0;}
         }
 
         public void Move(int direction) {
