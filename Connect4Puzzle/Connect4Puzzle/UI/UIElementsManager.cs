@@ -18,11 +18,6 @@ namespace Connect4Puzzle.UI
     //========================================================
     class UIElementsManager
     {
-#if DEBUG
-        double frameRate = 0.0;
-        double secondTimer = 0.0f;
-        int frameCounter;
-#endif
         //singleton
         public static readonly Lazy<UIElementsManager> elements
             = new Lazy<UIElementsManager>(() => new UIElementsManager());
@@ -118,27 +113,11 @@ namespace Connect4Puzzle.UI
             //TODO: Move
             ScoreText = new UIText(font, new Rectangle(0, 0, 0, 0), 2, Color.White);
             ScoreText.update = new UITextUpdate(() => {
-#if DEBUG
-                return MapManager.Instance.Score.ToString("D8") + "\n" + frameRate;
-#else
                 return MapManager.Instance.Score.ToString("D8");
-#endif
             });
             ScoreText.IsActive = false;
             UIManager.Instance.Add(ScoreText);
         }
-#if DEBUG
-        public void Update(GameTime gt) {
-            secondTimer += gt.ElapsedGameTime.TotalSeconds;
-            if (secondTimer > 1.0)
-            {
-                frameRate = (double)frameCounter / secondTimer;
-                secondTimer = 0;
-                frameCounter = 0;
-            }
-            frameCounter++;
-        }
-#endif
         
         /// <summary>
         /// Resets all buttons to false
