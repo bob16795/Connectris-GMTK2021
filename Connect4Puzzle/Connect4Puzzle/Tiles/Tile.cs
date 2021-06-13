@@ -91,6 +91,15 @@ namespace Connect4Puzzle.Tiles
         public void MakeBad() {
             Type = TileType.BAD_TILE;
             Connection = TileConnection.NO_CONNECTION;
+            Point p = Position;
+            if (Connection == TileConnection.UP)
+                Tile.Map[p.X, p.Y - 1].ResetConnection();
+            else if (Connection == TileConnection.DOWN)
+                Tile.Map[p.X, p.Y + 1].ResetConnection();
+            else if (Connection == TileConnection.LEFT)
+                Tile.Map[p.X - 1, p.Y].ResetConnection();
+            else if (Connection == TileConnection.RIGHT)
+                Tile.Map[p.X + 1, p.Y].ResetConnection();
         }
 
         public static void Remove(Tile t, bool bad) {

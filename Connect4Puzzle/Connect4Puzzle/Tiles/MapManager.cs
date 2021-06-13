@@ -215,22 +215,23 @@ namespace Connect4Puzzle.Tiles
                     }
                 }
             }
+            List<TileType> non = new List<TileType>{TileType.NO_TILE, TileType.BAD_TILE};
             for (int x = 0; x < 8; x++)
             {
                 for (int y = 0; y < 20; y++)
                 {
                     switch (Tile.Map[x, y].Connection) {
                         case TileConnection.UP:
-                            if (Tile.Map[x, y - 1].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                            if (non.Contains(Tile.Map[x, y - 1].Type)) Tile.Map[x, y].ResetConnection();
                             break;
                         case TileConnection.DOWN:
-                            if (Tile.Map[x, y + 1].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                            if (non.Contains(Tile.Map[x, y + 1].Type)) Tile.Map[x, y].ResetConnection();
                             break;
                         case TileConnection.LEFT:
-                            if (Tile.Map[x - 1, y].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                            if (non.Contains(Tile.Map[x - 1, y].Type)) Tile.Map[x, y].ResetConnection();
                             break;
                         case TileConnection.RIGHT:
-                            if (Tile.Map[x + 1, y].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                            if (non.Contains(Tile.Map[x + 1, y].Type)) Tile.Map[x, y].ResetConnection();
                             break;
                         default:
                             Tile.Map[x, y].ResetConnection();
