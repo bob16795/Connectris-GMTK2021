@@ -44,6 +44,18 @@
 /processorParam:Quality=Best
 /build:Sounds/katyusha.mp3
 
+#begin Sounds/lose.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/lose.wav
+
+#begin Sounds/reds.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/reds.wav
+
 #begin Sounds/snap.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

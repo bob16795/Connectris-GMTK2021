@@ -29,6 +29,9 @@ namespace Connect4Puzzle.Music
         private SoundEffect Snap;
         private SoundEffect combo;
 
+        private SoundEffect red;
+        private SoundEffect gameOver;
+
         private Song menu;
         private Song title;
 
@@ -43,6 +46,8 @@ namespace Connect4Puzzle.Music
             combo = content.Load<SoundEffect>("Sounds/combo");
             menu = content.Load<Song>("Sounds/katyusha");
             title = content.Load<Song>("Sounds/title");
+            red = content.Load<SoundEffect>("Sounds/reds");
+            gameOver = content.Load<SoundEffect>("Sounds/lose");
         }
 
         public void PlayCombo(int level) {
