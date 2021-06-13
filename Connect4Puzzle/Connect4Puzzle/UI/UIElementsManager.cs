@@ -8,6 +8,7 @@ using Connect4Puzzle.Graphics;
 using Connect4Puzzle.Tiles;
 using Connect4Puzzle.Drawing;
 using Connect4Puzzle.FSM;
+using Connect4Puzzle.Music;
 
 namespace Connect4Puzzle.UI
 {
@@ -68,7 +69,9 @@ namespace Connect4Puzzle.UI
             nextButton.onClick = new UIAction((i) =>
             {
                 FiniteStateMachineManager.Instance.Reset();
-                FiniteStateMachineManager.Instance.CurrentState = GameState.GAME;               
+                FiniteStateMachineManager.Instance.CurrentState = GameState.GAME;
+                SoundManager.Instance.PlayMusic("game");
+                
                 ResetButtons();
                 UIElementsManager.ScoreText.IsActive = true;
                 UIElementsManager.nextTile.IsActive = true;

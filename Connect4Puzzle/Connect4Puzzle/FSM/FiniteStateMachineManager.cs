@@ -134,6 +134,7 @@ namespace Connect4Puzzle.FSM
                 case GameState.GAME:
                     MapManager.Instance.Update(gt);
                     SoundManager.Instance.PlayMusic("game");
+                    SoundManager.Instance.ResumeMusic();
                     
                     if (frames++ % MapManager.Instance.Speed == 0)
                     {

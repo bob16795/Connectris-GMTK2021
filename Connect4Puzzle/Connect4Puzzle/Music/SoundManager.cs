@@ -118,7 +118,12 @@ namespace Connect4Puzzle.Music
 
         public void StopMusic()
         {
-            MediaPlayer.Stop();
+            MediaPlayer.Pause();
+        }
+
+        public void ResumeMusic()
+        {
+            MediaPlayer.Resume();
         }
     }
 }
