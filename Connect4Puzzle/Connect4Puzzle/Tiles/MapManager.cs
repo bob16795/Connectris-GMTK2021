@@ -88,13 +88,12 @@ namespace Connect4Puzzle.Tiles
             {
                 for (int y = 0; y < 20; y++)
                 {
-                    if (Tile.Map[x, y].Type != TileType.NO_TILE) {
-                        List<Tile> rem = WinManager.Instance.BFSearch(Tile.Map[x, y]);
-                        if (rem == null) continue;
-                        if (Tile.Map[x, y].Type == TileType.GREEN_TILE)
-                            removed += 1;
-                        remove.AddRange(rem);
-                    }
+                    if (Tile.Map[x, y].Type == TileType.NO_TILE || Tile.Map[x, y].controlled) continue;
+                    List<Tile> rem = WinManager.Instance.BFSearch(new Point(x, y), Point.Zero, Tile.Map[x, y].Type);
+                    if (rem.Count == 0) continue;
+                    if (Tile.Map[x, y].Type == TileType.GREEN_TILE)
+                        removed += 1;
+                    remove.AddRange(rem);
                 }
             }
             HashSet<Tile> removes = new HashSet<Tile>(remove);
@@ -105,7 +104,6 @@ namespace Connect4Puzzle.Tiles
             if (removed != 0) {
                 combo += removed;
                 SoundManager.Instance.PlayCombo(combo);
-                DropTiles();
             } else {
                 combo -= 1;
             }
