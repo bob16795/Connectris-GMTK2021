@@ -68,9 +68,12 @@ namespace Connect4Puzzle.UI
             nextButton.IsActive = false;
 
             nextButton.onClick = new UIAction((i) =>
-            {
+            {                
                 FiniteStateMachineManager.Instance.CurrentState = GameState.GAME;
                 ResetButtons();
+                UIElementsManager.ScoreText.IsActive = true;
+                UIElementsManager.nextTile.IsActive = true;
+                UIElementsManager.menuButton.IsActive = true;
             });
 
             UIManager.Instance.Add(nextButton);
@@ -82,12 +85,15 @@ namespace Connect4Puzzle.UI
 
             okButton.IsActive = false;
 
-            okButton.Text.Text = "OK";
+            okButton.Text.Text = "Return to game";
 
             okButton.onClick = new UIAction((i) =>
             {
                 FiniteStateMachineManager.Instance.CurrentState = GameState.GAME;
                 ResetButtons();
+                UIElementsManager.ScoreText.IsActive = true;
+                UIElementsManager.nextTile.IsActive = true;
+                UIElementsManager.menuButton.IsActive = true;
             });
             UIManager.Instance.Add(okButton);
 
@@ -145,12 +151,12 @@ namespace Connect4Puzzle.UI
         /// </summary>
         public void ResetButtons()
         {
-            ScoreText.IsActive = false;
-            playButton.IsActive = false;
-            okButton.IsActive = false;
-            nextTile.IsActive = false;
-            nextButton.IsActive = false;
-            menuButton.IsActive = false;
+            UIElementsManager.ScoreText.IsActive = false;
+            UIElementsManager.playButton.IsActive = false;
+            UIElementsManager.okButton.IsActive = false;
+            UIElementsManager.nextTile.IsActive = false;
+            UIElementsManager.nextButton.IsActive = false;
+            UIElementsManager.menuButton.IsActive = false;
         }
     }
 }
