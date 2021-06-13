@@ -30,6 +30,8 @@ namespace Connect4Puzzle.UI
         public static UIButton nextButton;
         public static UIButton okButton;
         public static UIButton menuButton;
+        public static UIButton creditsButton;
+        public static UIButton backButton;
 
         public static UIPanel nextTile;
 
@@ -124,6 +126,37 @@ namespace Connect4Puzzle.UI
             });
             ScoreText.IsActive = false;
             UIManager.Instance.Add(ScoreText);
+
+            creditsButton = new UIButton(font,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
+                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) + 50,
+                200, 100));
+            creditsButton.IsActive = true;
+            creditsButton.Text.Text = "Credits";
+            UIManager.Instance.Add(creditsButton);
+
+            creditsButton.onClick = new UIAction((i) =>
+            {
+                FiniteStateMachineManager.Instance.CurrentState = GameState.CREDITS;
+                ResetButtons();
+                UIElementsManager.backButton.IsActive = true;
+            });
+
+            backButton = new UIButton(font,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
+                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) + 50,
+                200, 100));
+            backButton.IsActive = false;
+            backButton.Text.Text = "Back";
+            UIManager.Instance.Add(backButton);
+
+            backButton.onClick = new UIAction((i) =>
+            {
+                FiniteStateMachineManager.Instance.CurrentState = GameState.MAIN_MENU;
+                ResetButtons();
+                UIElementsManager.creditsButton.IsActive = true;
+            });
+
         }
         
         /// <summary>
@@ -137,6 +170,8 @@ namespace Connect4Puzzle.UI
             UIElementsManager.nextTile.IsActive = false;
             UIElementsManager.nextButton.IsActive = false;
             UIElementsManager.menuButton.IsActive = false;
+            UIElementsManager.creditsButton.IsActive = false;
+            UIElementsManager.backButton.IsActive = false;
         }
     }
 }
