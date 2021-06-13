@@ -79,6 +79,9 @@ namespace Connect4Puzzle.Music
                 case "button":
                     buttonClick.Play(1f, 0, 0);
                     break;
+                case "gameover":
+                    gameOver.Play(1f, 0, 0);
+                    break;
             }
         }
 
@@ -111,6 +114,11 @@ namespace Connect4Puzzle.Music
                     MediaPlayer.IsRepeating = true;
                     break;
             }
+        }
+
+        public void StopMusic()
+        {
+            MediaPlayer.Stop();
         }
     }
 }

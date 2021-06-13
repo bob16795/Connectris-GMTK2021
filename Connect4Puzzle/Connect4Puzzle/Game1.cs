@@ -76,6 +76,8 @@ namespace Connect4Puzzle
             if (FiniteStateMachineManager.Instance.CurrentState == GameState.GAME && (MapManager.Instance.lost || MapManager.Instance.Score < 0))
             {
                 FiniteStateMachineManager.Instance.CurrentState = GameState.GAME_OVER;
+                SoundManager.Instance.StopMusic();
+                SoundManager.Instance.PlaySFX("gameover");
                 UIElementsManager.menuButton.IsActive = false;
                 UIElementsManager.ScoreText.IsActive = false;
             }
