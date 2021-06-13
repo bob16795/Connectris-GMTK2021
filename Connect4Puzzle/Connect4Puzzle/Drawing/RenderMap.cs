@@ -26,18 +26,14 @@ namespace Connect4Puzzle.Drawing
         /// Creates a new RenderMap object
         /// </summary>
         /// <param name="tiles">The tiles being rendered</param>
-        public RenderMap(Tile[,] tiles)
-        {
-            this.tileGrid = tiles;
-            // bg = new UIPanel(new Rectangle(((int)Sprite.DEF_WIDTH - 192) / 2 - 1, ((int)Sprite.DEF_HEIGHT - 480) / 2 - 1, 195, 483));
-        }
+        public RenderMap() { }
 
         /// <summary>
         /// Draws the tiles to the screen
         /// </summary>
         public void Draw(SpriteBatch sb)
         {
-            if (tileGrid == null) return;
+            Tile[,] tileGrid = Tile.Map;
             bg.Draw(new GameTime(), sb);
             for(int i = 0; i < tileGrid.GetLength(0); i++)
             {

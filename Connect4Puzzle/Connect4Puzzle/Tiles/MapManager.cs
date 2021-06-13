@@ -97,8 +97,28 @@ namespace Connect4Puzzle.Tiles
                 }
             }
             HashSet<Tile> removes = new HashSet<Tile>(remove);
+            List<Point> reds = new List<Point>();
+            List<Point> all = new List<Point>();
+            if (removes.Count != 0) {
+                foreach (Tile s in Tile.Map) {
+                    if (s.controlled || s.Type == TileType.NO_TILE || s.Type == TileType.BAD_TILE || remove.Contains(s)) continue;
+                    all.Add(s.Position);
+                    if (s.Type == TileType.RED_TILE) {
+                        reds.Add(s.Position);
+                    }
+                }
+            }
             foreach (Tile t in removes)
             {
+                if (t.Type == TileType.RED_TILE && all.Count != 0) {
+                    int r = random.Next(0, all.Count);
+                    Tile.Map[all[r].X, all[r].Y].MakeBad();
+                    all.RemoveAt(r);
+                } else if (t.Type == TileType.GREEN_TILE && reds.Count != 0) {
+                    int r = random.Next(0, reds.Count);
+                    Tile.Remove(Tile.Map[all[r].X, all[r].Y], false);
+                    reds.RemoveAt(r);
+                }
                 Tile.Remove(t, true);
             }
             if (removed != 0) {
