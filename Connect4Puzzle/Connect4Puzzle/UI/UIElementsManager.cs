@@ -36,6 +36,7 @@ namespace Connect4Puzzle.UI
         public static UIPanel nextTile;
 
         public static UIText ScoreText;
+        public static UIText attributionsText;
 
         public static SpriteFont font;
 
@@ -127,6 +128,17 @@ namespace Connect4Puzzle.UI
             ScoreText.IsActive = false;
             UIManager.Instance.Add(ScoreText);
 
+            attributionsText = new UIText(font, new Rectangle(0, 0, 0, 0), 2, Color.White);
+            attributionsText.update = new UITextUpdate(() => {
+                return MapManager.Instance.Score.ToString("         Main Programmers\n---------------------------------------------------"
+                    + "\n              prestosilver\n              sciencedoge\n\n" +
+                    "                  Assets\n-------------------------------------------------------------------------\n" +
+                    "     remaxim - OpenGameArt\n" +
+                    "CC-BY-SA 3.0, GPL 2.0, GPL 3.0");
+            });
+            attributionsText.IsActive = false;
+            UIManager.Instance.Add(attributionsText);
+
             creditsButton = new UIButton(font,
                 new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
                 (2 * Sprite.graphics.PreferredBackBufferHeight / 3) + 50,
@@ -138,6 +150,7 @@ namespace Connect4Puzzle.UI
             creditsButton.onClick = new UIAction((i) =>
             {
                 FiniteStateMachineManager.Instance.CurrentState = GameState.CREDITS;
+                attributionsText.IsActive = true;
                 ResetButtons();
                 UIElementsManager.backButton.IsActive = true;
             });
@@ -147,6 +160,7 @@ namespace Connect4Puzzle.UI
                 (2 * Sprite.graphics.PreferredBackBufferHeight / 3) + 50,
                 200, 100));
             backButton.IsActive = false;
+            
             backButton.Text.Text = "Back";
             UIManager.Instance.Add(backButton);
 
@@ -154,6 +168,7 @@ namespace Connect4Puzzle.UI
             {
                 FiniteStateMachineManager.Instance.CurrentState = GameState.MAIN_MENU;
                 ResetButtons();
+                attributionsText.IsActive = false;
                 UIElementsManager.creditsButton.IsActive = true;
             });
 
