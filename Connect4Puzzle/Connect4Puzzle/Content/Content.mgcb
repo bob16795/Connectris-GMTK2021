@@ -50,6 +50,12 @@
 /processorParam:Quality=Best
 /build:Sounds/snap.wav
 
+#begin Sounds/Title.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/Title.ogg
+
 #begin SpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor

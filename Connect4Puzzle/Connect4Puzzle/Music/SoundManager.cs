@@ -30,6 +30,7 @@ namespace Connect4Puzzle.Music
         private SoundEffect combo;
 
         private Song menu;
+        private Song title;
 
         private String playing;
 
@@ -41,6 +42,7 @@ namespace Connect4Puzzle.Music
             Snap = content.Load<SoundEffect>("Sounds/snap");
             combo = content.Load<SoundEffect>("Sounds/combo");
             menu = content.Load<Song>("Sounds/katyusha");
+            title = content.Load<Song>("Sounds/title");
         }
 
         public void PlayCombo(int level) {
@@ -85,6 +87,12 @@ namespace Connect4Puzzle.Music
                 case "game":
                     MediaPlayer.Stop();                  
                     MediaPlayer.Play(menu);
+                    MediaPlayer.Volume = 0.25f;
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case "menu":
+                    MediaPlayer.Stop();                  
+                    MediaPlayer.Play(title);
                     MediaPlayer.Volume = 0.25f;
                     MediaPlayer.IsRepeating = true;
                     break;
