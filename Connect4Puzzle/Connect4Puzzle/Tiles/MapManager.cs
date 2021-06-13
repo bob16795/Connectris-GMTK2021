@@ -19,7 +19,7 @@ namespace Connect4Puzzle.Tiles
                 (() => new MapManager());
         public static MapManager Instance { get { return lazy.Value; } }
         
-        public bool lost => Tile.Map[3, 0] == null || Tile.Map[3, 0].controlled == false && Tile.Map[3, 0].Type != TileType.NO_TILE;
+        public bool lost;
 
         public int Score;
 
@@ -183,6 +183,7 @@ namespace Connect4Puzzle.Tiles
 
         public void SpawnTiles() {
             Stop = 2;
+            lost = Tile.Map[3, 0].Type != TileType.NO_TILE;
             int i = (int)(random.NextDouble() * 4);
             switch (i)
             {
@@ -215,6 +216,7 @@ namespace Connect4Puzzle.Tiles
                     }
                 }
             }
+            if (Score < 0) lost = true;
             if (!Control())
                 SpawnTiles();
             MoveTiles();
