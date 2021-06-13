@@ -63,8 +63,9 @@ namespace Connect4Puzzle.UI
             nextButton.IsActive = false;
 
             nextButton.onClick = new UIAction((i) =>
-            {                
-                FiniteStateMachineManager.Instance.CurrentState = GameState.GAME;
+            {
+                FiniteStateMachineManager.Instance.Reset();
+                FiniteStateMachineManager.Instance.CurrentState = GameState.GAME;               
                 ResetButtons();
                 UIElementsManager.ScoreText.IsActive = true;
                 UIElementsManager.nextTile.IsActive = true;
