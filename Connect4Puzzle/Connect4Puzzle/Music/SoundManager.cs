@@ -55,6 +55,15 @@ namespace Connect4Puzzle.Music
         }
 
         /// <summary>
+        /// Plays Red combo
+        /// </summary>
+        /// <param name="level"></param>
+        public void PlayRedCombo(int level)
+        {
+            red.Play(0.5f, 1 / (float)level, 0);
+        }
+
+        /// <summary>
         /// plays a sound effect with a given action
         /// </summary>
         /// <param name="action">action of the player</param>
