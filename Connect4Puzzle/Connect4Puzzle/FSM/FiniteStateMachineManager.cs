@@ -100,8 +100,6 @@ namespace Connect4Puzzle.FSM
                     break;
                 case GameState.GAME_OVER:
                     break;
-                case GameState.WIN:
-                    break;
             }
             UIManager.Instance.Draw(gt, sb);
         }
