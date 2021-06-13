@@ -46,7 +46,7 @@ namespace Connect4Puzzle.FSM
         public static SpriteFont font;
         public Texture2D bgTexture, tutTexture;
 
-        private Sprite titleSprite;
+        private Sprite titleSprite, pausedSprite, gameOverSprite;
         private RenderMap rm;
         private int frames;
 
@@ -75,6 +75,8 @@ namespace Connect4Puzzle.FSM
             rm = new RenderMap();
 
             titleSprite = new Sprite(new Rectangle(22, 0, 116, 22), new Vector2(0, 0), Color.White);
+            gameOverSprite = new Sprite(new Rectangle(24, 43, 111, 23), new Vector2(0, 0), Color.White);
+            pausedSprite = new Sprite(new Rectangle(24, 22, 76, 21), new Vector2(0, 0), Color.White);
         }
 
         /// <summary>
@@ -93,12 +95,14 @@ namespace Connect4Puzzle.FSM
                     sb.Draw(tutTexture, new Rectangle(0, 0, Sprite.graphics.PreferredBackBufferWidth, Sprite.graphics.PreferredBackBufferHeight), Color.White);
                     break;
                 case GameState.MENU:
+                    pausedSprite.Draw(sb, new Point((int)((Sprite.DEF_WIDTH - 76 * 4) / 2), 100), 0, new Vector2(76, 21) * 4);                  
                     break;
                 case GameState.GAME:
                     rm.Draw(sb);
                     Tile.ps.Draw(sb);
                     break;
                 case GameState.GAME_OVER:
+                    gameOverSprite.Draw(sb, new Point((int)((Sprite.DEF_WIDTH - 111 * 4) / 2), 100), 0, new Vector2(111, 23) * 4);                  
                     break;
             }
             UIManager.Instance.Draw(gt, sb);
