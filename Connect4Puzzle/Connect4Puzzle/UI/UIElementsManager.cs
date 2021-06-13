@@ -120,7 +120,6 @@ namespace Connect4Puzzle.UI
             nextTile.IsActive = false;
             UIManager.Instance.Add(nextTile);
 
-            //TODO: Move
             ScoreText = new UIText(font, new Rectangle(0, 0, 0, 0), 2, Color.White);
             ScoreText.update = new UITextUpdate(() => {
                 return MapManager.Instance.Score.ToString("D8") + "\n\n" + MapManager.Instance.level.ToString("D2");
