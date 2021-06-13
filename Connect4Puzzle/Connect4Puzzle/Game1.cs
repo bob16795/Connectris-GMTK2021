@@ -74,7 +74,11 @@ namespace Connect4Puzzle
             }
             FiniteStateMachineManager.Instance.Update(gameTime);
             if (FiniteStateMachineManager.Instance.CurrentState == GameState.GAME && (MapManager.Instance.lost || MapManager.Instance.Score < 0))
+            {
                 FiniteStateMachineManager.Instance.CurrentState = GameState.GAME_OVER;
+                UIElementsManager.elements.Value.ResetButtons();
+            }
+                
                     
 #if DEBUG
             UIManager.Instance.Update(gameTime);

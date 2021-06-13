@@ -32,6 +32,8 @@ namespace Connect4Puzzle.Tiles
         private int numSearched;
         private Random random;
 
+        private List<List<Tile>> removedTiles;
+
         private bool canSearchNorth;
         private bool canSearchWest;
         private bool canSearchNW;
@@ -39,6 +41,7 @@ namespace Connect4Puzzle.Tiles
         private bool canSearchSouth;
         private bool canSearchSouthEast;
         private bool canSearchNE;
+        private bool canSearchEast;
 
 
         public static readonly Lazy<WinManager>
@@ -73,6 +76,9 @@ namespace Connect4Puzzle.Tiles
             canSearchSouthEast = false;
             canSearchNE = false;
 
+            removedTiles = new List<List<Tile>>();
+            removedTiles.Capacity = 10;
+
         }
 
         //methods
@@ -105,38 +111,8 @@ namespace Connect4Puzzle.Tiles
             List<Tile> reds = new List<Tile>();
             tiles.AddRange(tileQueue);
 
-            if(tileQueue.Count < 4)
-            {
-                while (tileQueue.Count < 4)
-                {
-                    tileQueue = new Stack<Tile>();
-
-                    tileQueue.Push(t);
-                    numSearched = 0;
-                    switch (direction)
-                    {
-                        case Directions.NORTH:
-                            canSearchNorth = false;
-                            break;
-                        case Directions.WEST:
-                            canSearchWest = false;
-                            break;
-                        case Directions.NW:
-                            canSearchNW = false;
-                            break;
-                        case Directions.SW:
-                            canSearchSW = false;
-                            break;
-                        default:
-                            return null;
-                    }
-                    direction = Directions.NONE;
-
-                    SearchForDirections(location, tileQueue, initialTile);
-                }
-            }
             
-            else if (tiles.Count == 4)
+            if (tiles.Count >= 4)
             {
                 foreach(Tile tile in Tile.Map)
                 {
@@ -156,11 +132,6 @@ namespace Connect4Puzzle.Tiles
                     reds[index].Remove(false);
                 }
                 return tiles;
-            }
-            
-            else
-            {
-                return null;
             }
 
             return null;
@@ -222,9 +193,13 @@ namespace Connect4Puzzle.Tiles
                 //peeks to the first tile in the stack
                 if (tileQueue.Count > 0)
                 {
-                    currentVertex = tileQueue.Peek();
+                    currentVertex = initialTile;
                     location = currentVertex.Position;
                 }
+
+                removedTiles.Add(new List<Tile>());
+
+                int initialStackCapacity = tileQueue.Count;
 
                 //finds direction needed to search
                 if (direction == Directions.NONE && isTileValid(currentVertex))
@@ -233,50 +208,57 @@ namespace Connect4Puzzle.Tiles
                         && Tile.Map[location.X - 1, location.Y].Type == initialTile.Type
                         && canSearchWest)
                     {
-                        tileQueue.Push(Tile.Map[location.X - 1, location.Y]);
+                        removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X - 1, location.Y]);
                         direction = Directions.WEST;
+                        tileQueue.Push(Tile.Map[location.X - 1, location.Y]);
                     }
                     else if (CheckInBounds(location.X, location.Y - 1)
                         && Tile.Map[location.X, location.Y - 1].Type == initialTile.Type
                         && canSearchNorth)
                     {
-                        tileQueue.Push(Tile.Map[location.X, location.Y - 1]);
+                        removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X, location.Y - 1]);
                         direction = Directions.NORTH;
+                        tileQueue.Push(Tile.Map[location.X, location.Y - 1]);
                     }
                     else if (CheckInBounds(location.X, location.Y + 1)
                         && Tile.Map[location.X, location.Y + 1].Type == initialTile.Type
                         && canSearchSouth)
                     {
-                        tileQueue.Push(Tile.Map[location.X, location.Y + 1]);
+                        removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X, location.Y + 1]);
                         direction = Directions.SOUTH;
+                        tileQueue.Push(Tile.Map[location.X, location.Y + 1]);
                     }
                     else if (CheckInBounds(location.X + 1, location.Y + 1)
                         && Tile.Map[location.X + 1, location.Y + 1].Type == initialTile.Type
                         && canSearchSouthEast)
                     {
-                        tileQueue.Push(Tile.Map[location.X + 1, location.Y + 1]);
+                        removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X + 1, location.Y + 1]);
                         direction = Directions.SE;
+                        tileQueue.Push(Tile.Map[location.X + 1, location.Y + 1]);
                     }
                     else if (CheckInBounds(location.X - 1, location.Y - 1)
                         && Tile.Map[location.X - 1, location.Y - 1].Type == initialTile.Type
                         && canSearchNW)
                     {
-                        tileQueue.Push(Tile.Map[location.X - 1, location.Y - 1]);
+                        removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X - 1, location.Y - 1]);
                         direction = Directions.NW;
+                        tileQueue.Push(Tile.Map[location.X - 1, location.Y - 1]);
                     }
                     else if (CheckInBounds(location.X - 1, location.Y + 1) &&
                         Tile.Map[location.X - 1, location.Y + 1].Type == initialTile.Type
                         && canSearchSW)
                     {
-                        tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
+                        removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X - 1, location.Y + 1]);
                         direction = Directions.SW;
+                        tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
                     }
                     else if (CheckInBounds(location.X + 1, location.Y - 1) &&
                         Tile.Map[location.X + 1, location.Y - 1].Type == initialTile.Type
                         && canSearchNE)
                     {
-                        tileQueue.Push(Tile.Map[location.X + 1, location.Y - 1]);
+                        removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X + 1, location.Y - 1]);
                         direction = Directions.NE;
+                        tileQueue.Push(Tile.Map[location.X + 1, location.Y - 1]);
                     }
                     else
                     {
@@ -295,6 +277,7 @@ namespace Connect4Puzzle.Tiles
                                 Tile.Map[location.X, location.Y - 1].Type == initialTile.Type
                                 && canSearchNorth)
                             {
+                                removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X, location.Y - 1]);
                                 tileQueue.Push(Tile.Map[location.X, location.Y - 1]);
                             }
                             break;
@@ -304,6 +287,7 @@ namespace Connect4Puzzle.Tiles
                                 Tile.Map[location.X, location.Y + 1].Type == initialTile.Type
                                 && canSearchSouth)
                             {
+                                removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X, location.Y + 1]);
                                 tileQueue.Push(Tile.Map[location.X, location.Y + 1]);
                             }
                             break;
@@ -314,6 +298,7 @@ namespace Connect4Puzzle.Tiles
                                 Tile.Map[location.X - 1, location.Y].Type == initialTile.Type
                                 && canSearchWest)
                             {
+                                removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X - 1, location.Y]);
                                 tileQueue.Push(Tile.Map[location.X - 1, location.Y]);
                             }
                             break;
@@ -323,6 +308,7 @@ namespace Connect4Puzzle.Tiles
                                 Tile.Map[location.X - 1, location.Y - 1].Type == initialTile.Type
                                 && canSearchNW)
                             {
+                                removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X - 1, location.Y - 1]);
                                 tileQueue.Push(Tile.Map[location.X - 1, location.Y - 1]);
                             }
                             break;
@@ -332,6 +318,7 @@ namespace Connect4Puzzle.Tiles
                                 Tile.Map[location.X + 1, location.Y + 1].Type == initialTile.Type
                                 && canSearchSouthEast)
                             {
+                                removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X + 1, location.Y + 1]);
                                 tileQueue.Push(Tile.Map[location.X + 1, location.Y + 1]);
                             }
                             break;
@@ -341,6 +328,7 @@ namespace Connect4Puzzle.Tiles
                                 Tile.Map[location.X - 1, location.Y + 1].Type == initialTile.Type
                                 && canSearchSW)
                             {
+                                removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X - 1, location.Y + 1]);
                                 tileQueue.Push(Tile.Map[location.X - 1, location.Y + 1]);
                             }
                             break;
@@ -350,11 +338,51 @@ namespace Connect4Puzzle.Tiles
                                 Tile.Map[location.X + 1, location.Y - 1].Type == initialTile.Type
                                 && canSearchNE)
                             {
+                                removedTiles[tileQueue.Count - 1].Add(Tile.Map[location.X + 1, location.Y - 1]);
                                 tileQueue.Push(Tile.Map[location.X + 1, location.Y - 1]);
                             }
                             break;
+
+                        default:
+                            tileQueue.Pop();
+
+                            switch (direction)
+                            {
+                                case Directions.NORTH:
+                                    canSearchNorth = false;
+                                    break;
+                                case Directions.WEST:
+                                    canSearchWest = false;
+                                    break;
+                                case Directions.NW:
+                                    canSearchNW = false;
+                                    break;
+                                case Directions.SW:
+                                    canSearchSW = false;
+                                    break;
+                                case Directions.SOUTH:
+                                    canSearchSouth = false;
+                                    break;
+                                case Directions.NE:
+                                    canSearchNE= false;
+                                    break;
+                                case Directions.SE:
+                                    canSearchSouthEast = false;
+                                    break;
+                                default:
+                                    return;
+                            }
+
+                            direction = Directions.NONE;
+                            break;
                     }
                     numSearched++;
+                }
+
+                if(tileQueue.Count > 0 && tileQueue.Count < 4
+                    && initialStackCapacity != tileQueue.Count)
+                {
+                    SearchForDirections(location, tileQueue, tileQueue.Peek());
                 }
 
                 //nothing found, return null
