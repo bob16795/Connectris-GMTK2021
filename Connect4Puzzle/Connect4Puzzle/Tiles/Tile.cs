@@ -11,6 +11,7 @@ namespace Connect4Puzzle.Tiles
     public enum TileType {
         RED_TILE = 0,
         GREEN_TILE,
+        BAD_TILE,
         NO_TILE,
     }
 
@@ -85,28 +86,33 @@ namespace Connect4Puzzle.Tiles
             Connection = TileConnection.NO_CONNECTION;
         }
 
-        public void Remove(bool bad) {
-            Point p = Position;
-            if (Connection == TileConnection.UP)
+        public void MakeBad() {
+            Type = TileType.BAD_TILE;
+            Connection = TileConnection.NO_CONNECTION;
+        }
+
+        public static void Remove(Tile t, bool bad) {
+            Point p = t.Position;
+            if (t.Connection == TileConnection.UP)
                 Tile.Map[p.X, p.Y - 1].ResetConnection();
-            else if (Connection == TileConnection.DOWN)
+            else if (t.Connection == TileConnection.DOWN)
                 Tile.Map[p.X, p.Y + 1].ResetConnection();
-            else if (Connection == TileConnection.LEFT)
+            else if (t.Connection == TileConnection.LEFT)
                 Tile.Map[p.X - 1, p.Y].ResetConnection();
-            else if (Connection == TileConnection.RIGHT)
+            else if (t.Connection == TileConnection.RIGHT)
                 Tile.Map[p.X + 1, p.Y].ResetConnection();
-            props.Position = p.ToVector2() * 24 + RenderMap.bg.Bounds.Location.ToVector2() + new Vector2(12, -24);
+            t.props.Position = p.ToVector2() * 24 + RenderMap.bg.Bounds.Location.ToVector2() + new Vector2(12, -24);
             for (int i = 0; i < 25; i++)
             {
                 ps.Emit(Tile.Map[p.X, p.Y].props);
             }
-            if (Type == TileType.GREEN_TILE) {
+            if (t.Type == TileType.GREEN_TILE) {
                 MapManager.Instance.Score += 100;
-            } else if (bad && Type == TileType.RED_TILE) {
-                MapManager.Instance.Score -= 100;
+            } else if (bad && t.Type == TileType.RED_TILE) {
+                MapManager.Instance.Score -= 125;
             }
-            Type = TileType.NO_TILE;
-            Connection = TileConnection.NO_CONNECTION;
+            t.Type = TileType.NO_TILE;
+            t.Connection = TileConnection.NO_CONNECTION;
         }
     }
 }

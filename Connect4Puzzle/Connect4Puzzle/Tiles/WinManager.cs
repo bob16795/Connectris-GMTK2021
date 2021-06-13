@@ -128,8 +128,10 @@ namespace Connect4Puzzle.Tiles
                 for(int i = 0; i < 4; i++)
                 {
                     int index = random.Next(0, reds.Count);
-
-                    reds[index].Remove(false);
+                    if (t.Type == TileType.GREEN_TILE)
+                        Tile.Remove(reds[index], false);
+                    else
+                        reds[index].MakeBad();
                 }
                 return tiles;
             }

@@ -19,7 +19,7 @@ namespace Connect4Puzzle.Tiles
                 (() => new MapManager());
         public static MapManager Instance { get { return lazy.Value; } }
         
-        public bool lost = false;
+        public bool lost => Tile.Map[3, 0] == null || Tile.Map[3, 0].controlled == false && Tile.Map[3, 0].Type != TileType.NO_TILE;
 
         public int Score;
 
@@ -38,6 +38,30 @@ namespace Connect4Puzzle.Tiles
         private int combo;
 
         public void DropTiles() {
+            int i = 0;
+            foreach (Tile t in Tile.Map)
+            {
+                i += 1;
+                int x = t.Position.X;
+                int y = t.Position.Y;
+                switch (Tile.Map[x, y].Connection) {
+                    case TileConnection.UP:
+                        if (Tile.Map[x, y - 1].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                        break;
+                    case TileConnection.DOWN:
+                        if (Tile.Map[x, y + 1].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                        break;
+                    case TileConnection.LEFT:
+                        if (Tile.Map[x - 1, y].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                        break;
+                    case TileConnection.RIGHT:
+                        if (Tile.Map[x + 1, y].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                        break;
+                    default:
+                        Tile.Map[x, y].ResetConnection();
+                        break;
+                }
+            }
 
             for (int y = 19; y > 0; y--)
             {
@@ -76,11 +100,12 @@ namespace Connect4Puzzle.Tiles
             HashSet<Tile> removes = new HashSet<Tile>(remove);
             foreach (Tile t in removes)
             {
-                t.Remove(true);
-            }    
+                Tile.Remove(t, true);
+            }
             if (removed != 0) {
                 combo += removed;
                 SoundManager.Instance.PlayCombo(combo);
+                DropTiles();
             } else {
                 combo -= 1;
             }
@@ -97,7 +122,7 @@ namespace Connect4Puzzle.Tiles
 
         public bool Control() {
             if (Stop <= 0) {
-                for (int y = 19; y > 0; y--)
+                for (int y = 19; y >= 0; y--)
                 {
                     for (int x = 0; x < 8; x++)
                     {
@@ -160,7 +185,6 @@ namespace Connect4Puzzle.Tiles
 
         public void SpawnTiles() {
             Stop = 2;
-            if (Tile.Map[3, 0].Type != TileType.NO_TILE) lost = true;
             int i = (int)(random.NextDouble() * 4);
             switch (i)
             {

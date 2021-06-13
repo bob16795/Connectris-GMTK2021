@@ -117,7 +117,7 @@ namespace Connect4Puzzle.FSM
             switch (currentState)
             {
                 case GameState.MAIN_MENU:
-                    SoundManager.Instance.PlayMusic("pause");
+                    SoundManager.Instance.PlayMusic("menu");
                     UIElementsManager.playButton.IsActive = true;
                     break;
                 case GameState.INSTRUCTIONS:
