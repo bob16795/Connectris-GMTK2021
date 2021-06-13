@@ -35,7 +35,7 @@ namespace Connect4Puzzle.UI
 
         public static UIPanel nextTile;
 
-        public static UIText ScoreText;
+        public static UIText ScoreText, ScoreText2;
         public static UIText attributionsText;
 
         public static SpriteFont font;
@@ -44,8 +44,8 @@ namespace Connect4Puzzle.UI
         public UIElementsManager()
         {
             playButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
-                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 100,
+                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 50,
                 200, 100));
 
             playButton.Text.Text = "Play Game";
@@ -58,7 +58,7 @@ namespace Connect4Puzzle.UI
             UIManager.Instance.Add(playButton);
 
             nextButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 100,
                 (2 * Sprite.graphics.PreferredBackBufferHeight / 3),
                 200, 100));
 
@@ -78,7 +78,7 @@ namespace Connect4Puzzle.UI
             UIManager.Instance.Add(nextButton);
 
             okButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 100,
                 (2 * Sprite.graphics.PreferredBackBufferHeight / 3) - 100,
                 200, 100));
 
@@ -122,11 +122,18 @@ namespace Connect4Puzzle.UI
 
             ScoreText = new UIText(font, new Rectangle(0, 0, 0, 0), 2, Color.White);
             ScoreText.update = new UITextUpdate(() => {
-                return MapManager.Instance.Score.ToString("D8") + "\n\n" + MapManager.Instance.level.ToString("D2");
+                return "Score: " + MapManager.Instance.Score.ToString("D8") + "\nLevel: " + MapManager.Instance.level.ToString("D2");
             });
             ScoreText.IsActive = false;
             UIManager.Instance.Add(ScoreText);
 
+            ScoreText2 = new UIText(font, new Rectangle(0, 0, 600, 600), 2, Color.White);
+            ScoreText2.update = new UITextUpdate(() => {
+                return "Score: " + MapManager.Instance.Score.ToString("D8");
+            });
+            ScoreText2.Centered = true;
+            ScoreText2.IsActive = false;
+            UIManager.Instance.Add(ScoreText2);
             attributionsText = new UIText(font, new Rectangle(0, 0, 0, 0), 2, Color.White);
             attributionsText.update = new UITextUpdate(() => {
                 return MapManager.Instance.Score.ToString("         Main Programmers\n---------------------------------------------------"
@@ -139,8 +146,8 @@ namespace Connect4Puzzle.UI
             UIManager.Instance.Add(attributionsText);
 
             creditsButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
-                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) + 50,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 100,
+                (2 * Sprite.graphics.PreferredBackBufferHeight / 3) + 70,
                 200, 100));
             creditsButton.IsActive = true;
             creditsButton.Text.Text = "Credits";
@@ -155,7 +162,7 @@ namespace Connect4Puzzle.UI
             });
 
             backButton = new UIButton(font,
-                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 110,
+                new Rectangle((Sprite.graphics.PreferredBackBufferWidth / 2) - 100,
                 (2 * Sprite.graphics.PreferredBackBufferHeight / 3) + 50,
                 200, 100));
             backButton.IsActive = false;
@@ -179,6 +186,7 @@ namespace Connect4Puzzle.UI
         public void ResetButtons()
         {
             UIElementsManager.ScoreText.IsActive = false;
+            UIElementsManager.ScoreText2.IsActive = false;
             UIElementsManager.playButton.IsActive = false;
             UIElementsManager.okButton.IsActive = false;
             UIElementsManager.nextTile.IsActive = false;

@@ -144,7 +144,7 @@ namespace Connect4Puzzle.FSM
                     
                     break;
                 case GameState.GAME_OVER:
-                    
+                    UIElementsManager.ScoreText2.IsActive = true;
                     UIElementsManager.playButton.IsActive = true;
                     UIElementsManager.playButton.Text.Text = "Play Again";
                     break;
