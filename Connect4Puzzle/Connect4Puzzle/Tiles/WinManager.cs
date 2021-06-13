@@ -41,6 +41,8 @@ namespace Connect4Puzzle.Tiles
         private bool canSearchSouthEast;
         private bool canSearchNE;
 
+        private Tile original;
+
 
         public static readonly Lazy<WinManager>
             win = new Lazy<WinManager>(() => new WinManager());
@@ -74,6 +76,8 @@ namespace Connect4Puzzle.Tiles
             canSearchSouthEast = false;
             canSearchNE = false;
 
+            original = default;
+
         }
 
         //methods
@@ -83,7 +87,7 @@ namespace Connect4Puzzle.Tiles
         /// </summary>
         public List<Tile> BFSearch(Tile t)
         {
-            Tile initialTile = t;
+            original = t;
 
             if (t == default || t.controlled)
             {
@@ -98,7 +102,7 @@ namespace Connect4Puzzle.Tiles
             //pushes the first tile to the queue
             tileQueue.Push(t);
 
-            SearchForDirections(location, tileQueue, initialTile);
+            SearchForDirections(location, tileQueue, original);
 
 
             //adds sequence of tiles to list
@@ -106,67 +110,45 @@ namespace Connect4Puzzle.Tiles
             List<Tile> reds = new List<Tile>();
             tiles.AddRange(tileQueue);
 
-            if (tileQueue.Count < 4)
+            if (tiles.Count >= 4)
             {
-                while (tileQueue.Count < 4)
+                if(original.Type == TileType.GREEN_TILE)
                 {
-                    tileQueue = new Stack<Tile>();
-
-                    tileQueue.Push(t);
-                    numSearched = 0;
-                    switch (direction)
+                    foreach (Tile tile in Tile.Map)
                     {
-                        case Directions.NORTH:
-                            canSearchNorth = false;
-                            break;
-                        case Directions.WEST:
-                            canSearchWest = false;
-                            break;
-                        case Directions.NW:
-                            canSearchNW = false;
-                            break;
-                        case Directions.SW:
-                            canSearchSW = false;
-                            break;
-                        default:
-                            return null;
+                        if (tile.Type == TileType.RED_TILE && tile.controlled == false)
+                        {
+                            reds.Add(tile);
+                        }
                     }
-                    direction = Directions.NONE;
 
-                    SearchForDirections(location, tileQueue, initialTile);
-                }
-            }
+                    if (reds.Count <= 4)
+                        return tiles;
 
-            else if (tiles.Count == 4)
-            {
-                foreach (Tile tile in Tile.Map)
-                {
-                    if (tile.Type == TileType.RED_TILE && tile.controlled == false)
+                    for (int i = 0; i < 2; i++)
                     {
-                        reds.Add(tile);
-                    }
+                        int index = random.Next(0, reds.Count);
+                        if (t.Type == TileType.GREEN_TILE)
+                            tiles.Add(reds[index]);
+
+                    }                   
                 }
-
-                if (reds.Count <= 4)
-                    return tiles;
-
-                for (int i = 0; i < 4; i++)
+                else if(original.Type == TileType.RED_TILE)
                 {
-                    int index = random.Next(0, reds.Count);
-                    if (t.Type == TileType.GREEN_TILE)
-                        Tile.Remove(reds[index], false);
-                    else
-                        reds[index].MakeBad();
+                    //reds[index].MakeBad();
+                    
                 }
+
                 return tiles;
+
+
+
             }
 
             else
             {
                 return null;
             }
-
-            return null;
         }
 
         /// <summary>
@@ -281,15 +263,11 @@ namespace Connect4Puzzle.Tiles
                         tileQueue.Push(Tile.Map[location.X + 1, location.Y - 1]);
                         direction = Directions.NE;
                     }
-                    else
-                    {
-                        return;
-                    }
                     numSearched++;
                 }
 
                 //keeps searching in that direction
-                else if (direction != Directions.NONE && isTileValid(currentVertex))
+                else if (direction != Directions.NONE && isTileValid(currentVertex) && direction != default)
                 {
                     switch (direction)
                     {
@@ -356,8 +334,20 @@ namespace Connect4Puzzle.Tiles
                                 tileQueue.Push(Tile.Map[location.X + 1, location.Y - 1]);
                             }
                             break;
+                        default:
+                            CreateNewStack(tileQueue);
+                            break;
                     }
-                    numSearched++;
+
+                    if(tileQueue.Count == 0)
+                    {
+                        tileQueue.Push(original);
+                    }
+                    else
+                    {
+                        numSearched++;
+                    }
+                    
                 }
 
                 //nothing found, return null
@@ -366,6 +356,39 @@ namespace Connect4Puzzle.Tiles
                     return;
                 }
             }
+        }
+
+
+        public void CreateNewStack(Stack<Tile> tileQueue)
+        {
+            tileQueue = new Stack<Tile>();
+
+            numSearched = 0;
+            switch (direction)
+            {
+                case Directions.NORTH:
+                    canSearchNorth = false;
+                    break;
+                case Directions.WEST:
+                    canSearchWest = false;
+                    break;
+                case Directions.NW:
+                    canSearchNW = false;
+                    break;
+                case Directions.SW:
+                    canSearchSW = false;
+                    break;
+                case Directions.NE:
+                    canSearchNE = false;
+                    break;
+                case Directions.SE:
+                    canSearchSouthEast = false;
+                    break;
+                case Directions.SOUTH:
+                    canSearchSouth = false;
+                    break;
+            }
+            direction = Directions.NONE;
         }
     }
 }
