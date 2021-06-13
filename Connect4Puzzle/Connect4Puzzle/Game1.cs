@@ -31,8 +31,6 @@ namespace Connect4Puzzle
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             Window.AllowUserResizing = true;
             _graphics.PreferredBackBufferWidth = (int)Sprite.DEF_WIDTH;
             _graphics.PreferredBackBufferHeight = (int)Sprite.DEF_HEIGHT;
@@ -89,7 +87,6 @@ namespace Connect4Puzzle
         {
             GraphicsDevice.Clear(Color.Black);
 
-            // TODO: re implement
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             FiniteStateMachineManager.Instance.Draw(_spriteBatch, gameTime);
             _spriteBatch.End();
