@@ -131,7 +131,7 @@ namespace Connect4Puzzle.UI
             attributionsText.update = new UITextUpdate(() => {
                 return MapManager.Instance.Score.ToString("         Main Programmers\n---------------------------------------------------"
                     + "\n              prestosilver\n              sciencedoge\n\n" +
-                    "                  Assets\n-------------------------------------------------------------------------\n" +
+                    "                   ssets\n-------------------------------------------------------------------------\n" +
                     "     remaxim - OpenGameArt\n" +
                     "CC-BY-SA 3.0, GPL 2.0, GPL 3.0");
             });
