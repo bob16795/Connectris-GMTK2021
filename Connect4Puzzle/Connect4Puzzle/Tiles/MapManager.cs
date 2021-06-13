@@ -38,6 +38,30 @@ namespace Connect4Puzzle.Tiles
         private int combo;
 
         public void DropTiles() {
+            int i = 0;
+            foreach (Tile t in Tile.Map)
+            {
+                i += 1;
+                int x = t.Position.X;
+                int y = t.Position.Y;
+                switch (Tile.Map[x, y].Connection) {
+                    case TileConnection.UP:
+                        if (Tile.Map[x, y - 1].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                        break;
+                    case TileConnection.DOWN:
+                        if (Tile.Map[x, y + 1].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                        break;
+                    case TileConnection.LEFT:
+                        if (Tile.Map[x - 1, y].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                        break;
+                    case TileConnection.RIGHT:
+                        if (Tile.Map[x + 1, y].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                        break;
+                    default:
+                        Tile.Map[x, y].ResetConnection();
+                        break;
+                }
+            }
 
             for (int y = 19; y > 0; y--)
             {
@@ -76,11 +100,12 @@ namespace Connect4Puzzle.Tiles
             HashSet<Tile> removes = new HashSet<Tile>(remove);
             foreach (Tile t in removes)
             {
-                t.Remove(true);
-            }    
+                Tile.Remove(t, true);
+            }
             if (removed != 0) {
                 combo += removed;
                 SoundManager.Instance.PlayCombo(combo);
+                DropTiles();
             } else {
                 combo -= 1;
             }
