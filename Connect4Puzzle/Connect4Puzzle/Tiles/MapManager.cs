@@ -130,7 +130,7 @@ namespace Connect4Puzzle.Tiles
 
             for (int x = 0; x < 8 && Stop != 0; x++ )
             {
-                for (int y = 18; y > 0 && Stop != 0; y--)
+                for (int y = 18; y >= 0 && Stop != 0; y--)
                 {
                     if (Tile.Map[x, y].controlled && !Tile.Map[x, y + 1].controlled && Tile.Map[x, y + 1].Type != TileType.NO_TILE) {Stop --; return;}
                 }
@@ -203,7 +203,8 @@ namespace Connect4Puzzle.Tiles
 
         public void SpawnTiles() {
             Stop = 2;
-            lost = Tile.Map[3, 0].Type != TileType.NO_TILE;
+
+            lost = Tile.Map[3, 0].Type != TileType.NO_TILE && !Tile.Map[3, 0].controlled;
             int i = (int)(random.NextDouble() * 4);
             switch (i)
             {
