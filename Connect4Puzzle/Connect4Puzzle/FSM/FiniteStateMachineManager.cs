@@ -90,7 +90,7 @@ namespace Connect4Puzzle.FSM
                     break;
                 case GameState.INSTRUCTIONS:
                     Point pos = new Point((int)((Sprite.DEF_WIDTH * Sprite.GetScale() - tutTexture.Bounds.Width) / 2),(int)(Sprite.DEF_HEIGHT * Sprite.GetScale() - tutTexture.Bounds.Height) / 2);
-                    sb.Draw(tutTexture, pos.ToVector2(), Color.White);
+                    sb.Draw(tutTexture, new Rectangle(0, 0, Sprite.graphics.PreferredBackBufferWidth, Sprite.graphics.PreferredBackBufferHeight), Color.White);
                     break;
                 case GameState.MENU:
                     break;
