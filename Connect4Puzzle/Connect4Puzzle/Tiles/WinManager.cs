@@ -153,7 +153,7 @@ namespace Connect4Puzzle.Tiles
                 {
                     int index = random.Next(0, reds.Count);
                     if (t.Type == TileType.GREEN_TILE)
-                        reds[index].Remove(false);
+                        Tile.Remove(reds[index], false);
                     else
                         reds[index].MakeBad();
                 }
