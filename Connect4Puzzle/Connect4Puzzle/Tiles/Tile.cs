@@ -60,14 +60,16 @@ namespace Connect4Puzzle.Tiles
             Sprite = new Sprite(new Rectangle(8 * (int)(Type), 8 * (int)(Connection), 8, 8), -new Vector2(0, 0), Color.White);
         }
 
-        public static bool CheckHeldHeight(Tile t) {
-            if (t.Position.Y == 19) return true;
-            if (t.Connection == TileConnection.RIGHT) {
-                return (Tile.Map[t.Position.X + 1, t.Position.Y + 1].Type == TileType.NO_TILE);
-            } else if (t.Connection == TileConnection.LEFT) {
-                return (Tile.Map[t.Position.X - 1, t.Position.Y + 1].Type == TileType.NO_TILE);
+        public static bool CheckHeldHeight(Point p) {
+            if (p.Y == 19) return true;
+            if (Tile.Map[p.X, p.Y].Connection == TileConnection.RIGHT) {
+                //if (Tile.Map[p.X + 1, p.Y].Type == TileType.NO_TILE) Tile.Map[p.X, p.Y].ResetConnection();
+                return (Tile.Map[p.X + 1, p.Y + 1].Type == TileType.NO_TILE);
+            } else if (Tile.Map[p.X, p.Y].Connection == TileConnection.LEFT) {
+                //if (Tile.Map[p.X - 1, p.Y].Type == TileType.NO_TILE) Tile.Map[p.X, p.Y].ResetConnection();
+                return (Tile.Map[p.X - 1, p.Y + 1].Type == TileType.NO_TILE);
             }
-            return t.Type != TileType.NO_TILE;
+            return Tile.Map[p.X, p.Y].Type != TileType.NO_TILE;
         }
 
         public static bool CheckHeldWidth(Tile t, int direction) {
