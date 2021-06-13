@@ -44,10 +44,12 @@ namespace Connect4Puzzle.Tiles
                 for (int x = 0; x < 8; x++)
                 {
                     if (Tile.Map[x, y] == null) Tile.Map[x, y] = new Tile(new Point(x, y)); 
-                    result[x] = Tile.Map[x, y];
+                    result[x] = new Tile(Tile.Map[x, y]);
                     if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(new Point(x, y - 1))) {
                         result[x] = new Tile(Tile.Map[x, y - 1]);
                         Tile.Map[x, y - 1] = new Tile(new Point(x, y - 1));
+                    } else {
+                        result[x] = new Tile(Tile.Map[x, y]);
                     }
                 }
 
@@ -200,6 +202,7 @@ namespace Connect4Puzzle.Tiles
                 Tile.Map[3, 1] = new Tile(new Point(3, 1), TileConnection.UP, TileType.GREEN_TILE, true);
                 break;
             }
+            DropTiles();
         }
 
         public void Update(GameTime gt) {   
