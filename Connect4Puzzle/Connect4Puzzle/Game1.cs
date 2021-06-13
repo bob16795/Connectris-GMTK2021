@@ -79,10 +79,6 @@ namespace Connect4Puzzle
                 UIElementsManager.elements.Value.ResetButtons();
             }
                 
-                    
-#if DEBUG
-            UIManager.Instance.Update(gameTime);
-#endif
             base.Update(gameTime);
         }
 
