@@ -38,31 +38,6 @@ namespace Connect4Puzzle.Tiles
         private int combo;
 
         public void DropTiles() {
-            int i = 0;
-            foreach (Tile t in Tile.Map)
-            {
-                i += 1;
-                int x = t.Position.X;
-                int y = t.Position.Y;
-                switch (Tile.Map[x, y].Connection) {
-                    case TileConnection.UP:
-                        if (Tile.Map[x, y - 1].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
-                        break;
-                    case TileConnection.DOWN:
-                        if (Tile.Map[x, y + 1].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
-                        break;
-                    case TileConnection.LEFT:
-                        if (Tile.Map[x - 1, y].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
-                        break;
-                    case TileConnection.RIGHT:
-                        if (Tile.Map[x + 1, y].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
-                        break;
-                    default:
-                        Tile.Map[x, y].ResetConnection();
-                        break;
-                }
-            }
-
             for (int y = 19; y > 0; y--)
             {
                 Tile[] result = new Tile[8];
@@ -70,7 +45,7 @@ namespace Connect4Puzzle.Tiles
                 {
                     if (Tile.Map[x, y] == null) Tile.Map[x, y] = new Tile(new Point(x, y)); 
                     result[x] = Tile.Map[x, y];
-                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(Tile.Map[x, y - 1])) {
+                    if (Tile.Map[x, y].Type == TileType.NO_TILE && Tile.CheckHeldHeight(new Point(x, y - 1))) {
                         result[x] = new Tile(Tile.Map[x, y - 1]);
                         Tile.Map[x, y - 1] = new Tile(new Point(x, y - 1));
                     }
@@ -234,6 +209,29 @@ namespace Connect4Puzzle.Tiles
                     for (int x = 0; x < 8; x++)
                     {
                             Tile.Map[x, y] = new Tile(new Point(x, y));
+                    }
+                }
+            }
+            for (int x = 0; x < 8; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    switch (Tile.Map[x, y].Connection) {
+                        case TileConnection.UP:
+                            if (Tile.Map[x, y - 1].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                            break;
+                        case TileConnection.DOWN:
+                            if (Tile.Map[x, y + 1].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                            break;
+                        case TileConnection.LEFT:
+                            if (Tile.Map[x - 1, y].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                            break;
+                        case TileConnection.RIGHT:
+                            if (Tile.Map[x + 1, y].Type == TileType.NO_TILE) Tile.Map[x, y].ResetConnection();
+                            break;
+                        default:
+                            Tile.Map[x, y].ResetConnection();
+                            break;
                     }
                 }
             }
