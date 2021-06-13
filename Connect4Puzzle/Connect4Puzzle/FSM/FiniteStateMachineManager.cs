@@ -28,7 +28,8 @@ namespace Connect4Puzzle.FSM
         GAME,
         INSTRUCTIONS,
         WIN,
-        GAME_OVER
+        GAME_OVER,
+        CREDITS
     }
 
     class FiniteStateMachineManager
