@@ -72,7 +72,7 @@ namespace Connect4Puzzle.FSM
 
             frames = 0;
 
-            rm = new RenderMap(Tile.Map);
+            rm = new RenderMap();
 
             titleSprite = new Sprite(new Rectangle(22, 0, 116, 22), new Vector2(0, 0), Color.White);
         }
