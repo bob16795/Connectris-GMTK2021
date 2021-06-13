@@ -29,6 +29,9 @@ namespace Connect4Puzzle.Music
         private SoundEffect Snap;
         private SoundEffect combo;
 
+        private SoundEffect red;
+        private SoundEffect gameOver;
+
         private Song menu;
         private Song title;
 
@@ -43,10 +46,21 @@ namespace Connect4Puzzle.Music
             combo = content.Load<SoundEffect>("Sounds/combo");
             menu = content.Load<Song>("Sounds/katyusha");
             title = content.Load<Song>("Sounds/title");
+            red = content.Load<SoundEffect>("Sounds/reds");
+            gameOver = content.Load<SoundEffect>("Sounds/lose");
         }
 
         public void PlayCombo(int level) {
             combo.Play(0.5f, 1 / (float)level , 0);
+        }
+
+        /// <summary>
+        /// Plays Red combo
+        /// </summary>
+        /// <param name="level"></param>
+        public void PlayRedCombo(int level)
+        {
+            red.Play(0.5f, 1 / (float)level, 0);
         }
 
         /// <summary>
@@ -64,6 +78,9 @@ namespace Connect4Puzzle.Music
                     break;
                 case "button":
                     buttonClick.Play(1f, 0, 0);
+                    break;
+                case "gameover":
+                    gameOver.Play(1f, 0, 0);
                     break;
             }
         }
@@ -97,6 +114,11 @@ namespace Connect4Puzzle.Music
                     MediaPlayer.IsRepeating = true;
                     break;
             }
+        }
+
+        public void StopMusic()
+        {
+            MediaPlayer.Stop();
         }
     }
 }
