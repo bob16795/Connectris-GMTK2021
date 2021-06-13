@@ -130,16 +130,17 @@ namespace Connect4Puzzle.FSM
                 case GameState.GAME:
                     MapManager.Instance.Update(gt);
                     SoundManager.Instance.PlayMusic("game");
-                    UIElementsManager.ScoreText.IsActive = true;
-                    UIElementsManager.nextTile.IsActive = true;
-                    UIElementsManager.menuButton.IsActive = true;
+                    
                     if (frames++ % MapManager.Instance.Speed == 0)
                     {
                         MapManager.Instance.DropTiles();
                     }
                     Tile.ps.Update(gt);
+                    
+                    
                     break;
                 case GameState.GAME_OVER:
+                    UIElementsManager.playButton.IsActive = true;
                     break;
                 case GameState.WIN:
                     break;
