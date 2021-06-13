@@ -145,6 +145,20 @@ namespace Connect4Puzzle.FSM
                 case GameState.WIN:
                     break;
             }
-        }   
+        } 
+        
+        public void Reset()
+        {
+            
+            MapManager.Instance.Score = 0;
+
+            for (int y = 0; y < 20; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    Tile.Map[x, y] = new Tile(new Point(x, y));
+                }
+            }
+        }
     }
 }
