@@ -119,6 +119,7 @@ namespace Connect4Puzzle.FSM
                 case GameState.MAIN_MENU:
                     SoundManager.Instance.PlayMusic("menu");
                     UIElementsManager.playButton.IsActive = true;
+                    UIElementsManager.playButton.Text.Text = "Start";
                     break;
                 case GameState.INSTRUCTIONS:
                     UIElementsManager.nextButton.IsActive = true;
@@ -141,6 +142,7 @@ namespace Connect4Puzzle.FSM
                     break;
                 case GameState.GAME_OVER:
                     UIElementsManager.playButton.IsActive = true;
+                    UIElementsManager.playButton.Text.Text = "Play Again";
                     break;
                 case GameState.WIN:
                     break;
@@ -157,6 +159,7 @@ namespace Connect4Puzzle.FSM
                 for (int x = 0; x < 8; x++)
                 {
                     Tile.Map[x, y] = new Tile(new Point(x, y));
+                    Tile.ps = new ParticleSystem();
                 }
             }
         }
